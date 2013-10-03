@@ -1,6 +1,6 @@
 package com.stewsters.util.pathing.threeDimention.searcher;
-import com.stewsters.util.pathing.threeDimention.shared.*;
 
+import com.stewsters.util.pathing.threeDimention.shared.*;
 
 import java.util.ArrayList;
 
@@ -62,7 +62,7 @@ public class DjikstraSearcher implements Searcher {
         // while we haven't exceeded our max search depth
         int maxDepth = 0;
         PathNode target = null;
-       FullPath path = null;
+        FullPath path = null;
         while ((maxDepth < maxSearchDistance) && (open.size() != 0)) {
             // pull out the first PathNode in our open list, this is determined to
             // be the most likely to be the next step based on our heuristic
@@ -70,7 +70,7 @@ public class DjikstraSearcher implements Searcher {
             PathNode current = getFirstInOpen();
 
 
-            if ( objective.satisfiedBy(current)) {
+            if (objective.satisfiedBy(current)) {
                 //TODO: this should set the answer location
                 target = current;
                 break;
@@ -252,7 +252,7 @@ public class DjikstraSearcher implements Searcher {
         boolean invalid = (x < 0) || (y < 0) || (z < 0) || (x >= map.getWidthInTiles()) || (y >= map.getHeightInTiles()) || (z >= map.getDepthInTiles());
 
         if ((!invalid) && ((sx != x) || (sy != y))) {
-            invalid = map.blocked(mover, nodes[x][ y][ z]);
+            invalid = map.blocked(mover, nodes[x][y][z]);
         }
 
         return !invalid;
@@ -271,7 +271,6 @@ public class DjikstraSearcher implements Searcher {
     public float getMovementCost(Mover mover, int sx, int sy, int sz, int tx, int ty, int tz) {
         return map.getCost(mover, sx, sy, sz, tx, ty, tz);
     }
-
 
 
 }

@@ -1,4 +1,4 @@
-package com.stewsters.util;
+package com.stewsters.util.math;
 
 
 import java.util.ArrayList;

@@ -1,6 +1,5 @@
-package com.stewsters.util;
+package com.stewsters.util.math;
 
-//import com.badlogic.gdx.math.MathUtils;
 
 public enum Facing {
     NORTH(0, 1, 0),
@@ -21,7 +20,7 @@ public enum Facing {
     }
 
     public static Facing random() {
-        switch (MathUtils.getIntInRange(0,5)) {
+        switch (MathUtils.getIntInRange(0, 5)) {
             case 0:
                 return NORTH;
             case 1:

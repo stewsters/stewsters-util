@@ -1,4 +1,4 @@
-package com.stewsters.util;
+package com.stewsters.util.noise;
 
 /**
  * http://www.java-gaming.org/index.php?topic=23962.0

@@ -1,4 +1,4 @@
-package com.stewsters.util;
+package com.stewsters.util.noise;
 
 // http://pastebin.com/354PnhnX
 

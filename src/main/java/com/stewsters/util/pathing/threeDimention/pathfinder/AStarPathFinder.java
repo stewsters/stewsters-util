@@ -50,7 +50,7 @@ public class AStarPathFinder implements PathFinder {
      * @param allowDiagMovement True if the search should try diagonal movement
      */
     public AStarPathFinder(TileBasedMap map, int maxSearchDistance, boolean allowDiagMovement) {
-        this(map, maxSearchDistance, allowDiagMovement,(AStarHeuristic) new ClosestHeuristic());
+        this(map, maxSearchDistance, allowDiagMovement, (AStarHeuristic) new ClosestHeuristic());
     }
 
     /**
@@ -84,7 +84,7 @@ public class AStarPathFinder implements PathFinder {
     public FullPath findPath(Mover mover, int sx, int sy, int sz, int tx, int ty, int tz) {
         // easy first check, if the destination is blocked, we can't get there
 
-        if (map.blocked(mover, nodes[tx][ ty][ tz])) {
+        if (map.blocked(mover, nodes[tx][ty][tz])) {
             return null;
         }
 
@@ -285,7 +285,7 @@ public class AStarPathFinder implements PathFinder {
         boolean invalid = (x < 0) || (y < 0) || (z < 0) || (x >= map.getWidthInTiles()) || (y >= map.getHeightInTiles()) || (z >= map.getDepthInTiles());
 
         if ((!invalid) && ((sx != x) || (sy != y))) {
-            invalid = map.blocked(mover,nodes[x][ y][ z]);
+            invalid = map.blocked(mover, nodes[x][y][z]);
         }
 
         return !invalid;

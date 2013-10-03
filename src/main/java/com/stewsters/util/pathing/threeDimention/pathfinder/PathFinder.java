@@ -1,8 +1,8 @@
 package com.stewsters.util.pathing.threeDimention.pathfinder;
 
 
-import com.stewsters.util.pathing.threeDimention.shared.Mover;
 import com.stewsters.util.pathing.threeDimention.shared.FullPath;
+import com.stewsters.util.pathing.threeDimention.shared.Mover;
 
 /**
  * A description of an implementation that can find a path from one

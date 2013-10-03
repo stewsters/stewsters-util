@@ -46,9 +46,9 @@ public interface TileBasedMap {
      * Check if the given location is blocked, i.e. blocks movement of
      * the supplied mover.
      *
-     * @param mover The mover that is potentially moving through the specified
-     *              tile.
-     * @param pathNode     The location of the tile to check
+     * @param mover    The mover that is potentially moving through the specified
+     *                 tile.
+     * @param pathNode The location of the tile to check
      * @return True if the location is blocked
      */
 //    public boolean blocked(Mover mover, int x, int y, int z);

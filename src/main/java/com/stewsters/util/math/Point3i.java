@@ -1,4 +1,4 @@
-package com.stewsters.util;
+package com.stewsters.util.math;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -123,7 +123,6 @@ public class Point3i {
     public String toString() {
         return String.valueOf(x) + " " + String.valueOf(y) + " " + String.valueOf(z);
     }
-
 
 
     public Point3i copy() {
