@@ -1,7 +1,10 @@
 package com.stewsters.util.math;
 
 
+import javax.swing.*;
+import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 
 public class MathUtils {
@@ -59,10 +62,10 @@ public class MathUtils {
         return source.get(id);
     }
 
-//    public static def randVal(def source) {
-//        int id = getIntInRange(0, source.size() - 1);
-//        return source.get(id);
-//    }
+    public static <T> T randVal(T[] source) {
+        int id = getIntInRange(0, source.length - 1);
+        return source[id];
+    }
 
     public static int limit(int number, int low, int high) {
         return Math.max(low, Math.min(high, number));
@@ -81,16 +84,18 @@ public class MathUtils {
         return random.nextGaussian() * stdDeviation;
     }
 
-
-//    public static String getChoice(Map choicesMap) {
-//        int totalChances = choicesMap.values().sum() //check that shit out, groovy ftw
-//        int dice = MathUtils.getIntInRange(0, totalChances);
-//        int runningTotal = 0;
-//        for (def keyValue : choicesMap) {
-//            runningTotal += keyValue.value;
-//            if (dice <= runningTotal)
-//                return keyValue.key;
-//        }
-//        return null;
-//    }
+    public static String getChoice(Map<String,Integer> choicesMap) {
+        int totalChances = 0;
+        for(Integer value: choicesMap.values()){
+         totalChances+=value;
+        }
+        int dice = MathUtils.getIntInRange(0, totalChances);
+        int runningTotal = 0;
+        for (Map.Entry<String,Integer> keyValue : choicesMap.entrySet()) {
+            runningTotal += keyValue.getValue();
+            if (dice <= runningTotal)
+                return keyValue.getKey();
+        }
+        return null;
+    }
 }
