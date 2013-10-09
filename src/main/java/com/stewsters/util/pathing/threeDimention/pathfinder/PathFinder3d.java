@@ -1,8 +1,8 @@
 package com.stewsters.util.pathing.threeDimention.pathfinder;
 
 
-import com.stewsters.util.pathing.threeDimention.shared.FullPath;
-import com.stewsters.util.pathing.threeDimention.shared.Mover;
+import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
+import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
 
 /**
  * A description of an implementation that can find a path from one
@@ -10,9 +10,9 @@ import com.stewsters.util.pathing.threeDimention.shared.Mover;
  * by that tile map.
  *
  * @author Kevin Glass
- * @see com.stewsters.util.pathing.threeDimention.shared.TileBasedMap
+ * @see com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d
  */
-public interface PathFinder {
+public interface PathFinder3d {
 
     /**
      * Find a path from the starting location provided (sx,sy) to the target
@@ -28,5 +28,5 @@ public interface PathFinder {
      * @param ty    Teh y coordinate of the target location
      * @return The path found from start to end, or null if no path can be found.
      */
-    public FullPath findPath(Mover mover, int sx, int sy, int sz, int tx, int ty, int tz);
+    public FullPath3d findPath(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz);
 }

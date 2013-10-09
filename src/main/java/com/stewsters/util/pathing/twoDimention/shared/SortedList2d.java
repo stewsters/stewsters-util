@@ -1,4 +1,4 @@
-package com.stewsters.util.pathing.threeDimention.shared;
+package com.stewsters.util.pathing.twoDimention.shared;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +8,7 @@ import java.util.Collections;
  *
  * @author kevin
  */
-public class SortedList {
+public class SortedList2d {
     /**
      * The list of elements
      */

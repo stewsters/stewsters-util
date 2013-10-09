@@ -1,7 +1,7 @@
-package com.stewsters.util.pathing.threeDimention.pathfinder;
+package com.stewsters.util.pathing.twoDimention.pathfinder;
 
-import com.stewsters.util.pathing.threeDimention.shared.Mover;
-import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap;
+import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
+import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
 /**
  * The description of a class providing a cost for a given tile based
@@ -10,7 +10,7 @@ import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap;
  *
  * @author Kevin Glass
  */
-public interface AStarHeuristic {
+public interface AStarHeuristic2d {
 
     /**
      * Get the additional heuristic cost of the given tile. This controls the
@@ -26,5 +26,5 @@ public interface AStarHeuristic {
      * @param ty    Teh y coordinate of the target location
      * @return The cost associated with the given tile
      */
-    public float getCost(TileBasedMap map, Mover mover, int x, int y, int z, int tx, int ty, int tz);
+    public float getCost(TileBasedMap2d map, Mover2d mover, int x, int y, int tx, int ty);
 }

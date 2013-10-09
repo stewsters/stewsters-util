@@ -1,11 +1,16 @@
-package com.stewsters.util.pathing.threeDimention.searcher;
+package com.stewsters.util.pathing.twoDimention.pathfinder;
 
-import com.stewsters.util.pathing.threeDimention.shared.*;
+import com.stewsters.util.pathing.twoDimention.shared.*;
 
 import java.util.ArrayList;
 
-public class DjikstraSearcher implements Searcher {
-
+/**
+ * A path finder implementation that uses the AStar heuristic based algorithm
+ * to determine a path.
+ *
+ * @author Kevin Glass
+ */
+public class AStarPathFinder2d implements PathFinder2d {
     /**
      * The set of nodes that have been searched through
      */
@@ -13,12 +18,12 @@ public class DjikstraSearcher implements Searcher {
     /**
      * The set of nodes that we do not yet consider fully searched
      */
-    private SortedList open = new SortedList();
+    private SortedList2d open = new SortedList2d();
 
     /**
      * The map being searched
      */
-    private TileBasedMap map;
+    private TileBasedMap2d map;
     /**
      * The maximum depth of search we're willing to accept before giving up
      */
@@ -27,60 +32,90 @@ public class DjikstraSearcher implements Searcher {
     /**
      * The complete set of nodes across the map
      */
-    private PathNode[][][] nodes;
+    private PathNode2d[][] nodes;
     /**
      * True if we allow diaganol movement
      */
     private boolean allowDiagMovement;
+    /**
+     * The heuristic we're applying to determine which nodes to search first
+     */
+    private AStarHeuristic2d heuristic;
 
-    public DjikstraSearcher(TileBasedMap map, int maxSearchDistance, boolean allowDiagMovement) {
+    /**
+     * Create a path finder with the default heuristic - closest to target.
+     *
+     * @param map               The map to be searched
+     * @param maxSearchDistance The maximum depth we'll search before giving up
+     * @param allowDiagMovement True if the search should try diagonal movement
+     */
+    public AStarPathFinder2d(TileBasedMap2d map, int maxSearchDistance, boolean allowDiagMovement) {
+        this(map, maxSearchDistance, allowDiagMovement, (AStarHeuristic2d) new ClosestHeuristic2d());
+    }
+
+    /**
+     * Create a path finder
+     *
+     * @param heuristic         The heuristic used to determine the search order of the map
+     * @param map               The map to be searched
+     * @param maxSearchDistance The maximum depth we'll search before giving up
+     * @param allowDiagMovement True if the search should try diaganol movement
+     */
+    public AStarPathFinder2d(TileBasedMap2d map, int maxSearchDistance,
+                             boolean allowDiagMovement, AStarHeuristic2d heuristic) {
+        this.heuristic = heuristic;
         this.map = map;
         this.maxSearchDistance = maxSearchDistance;
         this.allowDiagMovement = allowDiagMovement;
 
-        nodes = new PathNode[map.getWidthInTiles()][map.getHeightInTiles()][map.getDepthInTiles()];
+        nodes = new PathNode2d[map.getWidthInTiles()][map.getHeightInTiles()];
         for (int x = 0; x < map.getWidthInTiles(); x++) {
             for (int y = 0; y < map.getHeightInTiles(); y++) {
-                for (int z = 0; z < map.getDepthInTiles(); z++) {
-                    nodes[x][y][z] = new PathNode(x, y, z);
-                }
+
+                nodes[x][y] = new PathNode2d(x, y);
+
             }
         }
     }
 
-    @Override
-    public FullPath search(Mover mover, int sx, int sy, int sz, Objective objective) {
+    /**
+     * @see PathFinder2d#findPath(com.stewsters.util.pathing.twoDimention.shared.Mover2d, int, int, int, int, int, int)
+     */
+    public FullPath2d findPath(Mover2d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
+        // easy first check, if the destination is blocked, we can't get there
 
-        nodes[sx][sy][sz].cost = 0;
-        nodes[sx][sy][sz].depth = 0;
+        if (map.blocked(mover, nodes[tx][ty])) {
+            return null;
+        }
+
+        // initial state for A*. The closed group is empty. Only the starting
+        // tile is in the open list and it's already there
+        nodes[sx][sy].cost = 0;
+        nodes[sx][sy].depth = 0;
         closed.clear();
         open.clear();
-        open.add(nodes[sx][sy][sz]);
+        open.add(nodes[sx][sy]);
 
-        //TODO: had to comment this out, it will provide some crucial errors later on
-//        nodes[tx][ty][tz].parent = null;
+        nodes[tx][ty].parent = null;
+
         // while we haven't exceeded our max search depth
         int maxDepth = 0;
-        PathNode target = null;
-        FullPath path = null;
         while ((maxDepth < maxSearchDistance) && (open.size() != 0)) {
             // pull out the first PathNode in our open list, this is determined to
             // be the most likely to be the next step based on our heuristic
 
-            PathNode current = getFirstInOpen();
-
-
-            if (objective.satisfiedBy(current)) {
-                //TODO: this should set the answer location
-                target = current;
+            PathNode2d current = getFirstInOpen();
+            if (current == nodes[tx][ty]) {
                 break;
             }
+
             removeFromOpen(current);
             addToClosed(current);
 
             // search through all the neighbours of the current PathNode evaluating
 
             // them as next steps
+
             for (int x = -1; x < 2; x++) {
                 for (int y = -1; y < 2; y++) {
                     for (int z = -1; z < 2; z++) {
@@ -94,9 +129,7 @@ public class DjikstraSearcher implements Searcher {
                         // one of x or y can be set
 
                         if (!allowDiagMovement) {
-                            if (((x != 0) && (y != 0)) ||
-                                    ((y != 0) && (z != 0)) ||
-                                    ((z != 0) && (x != 0))) {
+                            if ((x != 0) && (y != 0) && (z != 0)) {
                                 continue;
                             }
                         }
@@ -105,16 +138,15 @@ public class DjikstraSearcher implements Searcher {
 
                         int xp = x + current.x;
                         int yp = y + current.y;
-                        int zp = z + current.z;
 
-                        if (isValidLocation(mover, sx, sy, sz, xp, yp, zp)) {
+                        if (isValidLocation(mover, sx, sy, xp, yp)) {
                             // the cost to get to this PathNode is cost the current plus the movement
                             // cost to reach this node. Note that the heuristic value is only used
                             // in the sorted open list
 
-                            float nextStepCost = current.cost + getMovementCost(mover, current.x, current.y, current.z, xp, yp, zp);
-                            PathNode neighbour = nodes[xp][yp][zp];
-                            map.pathFinderVisited(xp, yp, zp);
+                            float nextStepCost = current.cost + getMovementCost(mover, current.x, current.y, xp, yp);
+                            PathNode2d neighbour = nodes[xp][yp];
+                            map.pathFinderVisited(xp, yp);
 
                             // if the new cost we've determined for this PathNode is lower than
                             // it has been previously,
@@ -136,7 +168,7 @@ public class DjikstraSearcher implements Searcher {
 
                             if (!inOpenList(neighbour) && !(inClosedList(neighbour))) {
                                 neighbour.cost = nextStepCost;
-                                neighbour.heuristic = 0; //getHeuristicCost(mover, xp, yp, zp, tx, ty, tz);
+                                neighbour.heuristic = getHeuristicCost(mover, xp, yp, tx, ty);
                                 maxDepth = Math.max(maxDepth, neighbour.setParent(current));
                                 addToOpen(neighbour);
                             }
@@ -149,7 +181,7 @@ public class DjikstraSearcher implements Searcher {
         // since we'e've run out of search
         // there was no path. Just return null
 
-        if (target == null) {
+        if (nodes[tx][ty].parent == null) {
             return null;
         }
 
@@ -159,17 +191,17 @@ public class DjikstraSearcher implements Searcher {
 
         // to the start recording the nodes on the way.
 
-        path = new FullPath();
-        while (target != nodes[sx][sy][sz]) {
-            path.prependStep(target.x, target.y, target.z);
+        FullPath2d path = new FullPath2d();
+        PathNode2d target = nodes[tx][ty];
+        while (target != nodes[sx][sy]) {
+            path.prependStep(target.x, target.y);
             target = target.parent;
         }
-        path.prependStep(sx, sy, sz);
+        path.prependStep(sx, sy);
 
-//        jobPath.path = path;
         // thats it, we have our path
-        return path;
 
+        return path;
     }
 
     /**
@@ -178,8 +210,8 @@ public class DjikstraSearcher implements Searcher {
      *
      * @return The first element in the open list
      */
-    protected PathNode getFirstInOpen() {
-        return (PathNode) open.first();
+    protected PathNode2d getFirstInOpen() {
+        return (PathNode2d) open.first();
     }
 
     /**
@@ -187,7 +219,7 @@ public class DjikstraSearcher implements Searcher {
      *
      * @param node The PathNode to be added to the open list
      */
-    protected void addToOpen(PathNode node) {
+    protected void addToOpen(PathNode2d node) {
         open.add(node);
     }
 
@@ -197,7 +229,7 @@ public class DjikstraSearcher implements Searcher {
      * @param node The PathNode to check for
      * @return True if the PathNode given is in the open list
      */
-    protected boolean inOpenList(PathNode node) {
+    protected boolean inOpenList(PathNode2d node) {
         return open.contains(node);
     }
 
@@ -206,7 +238,7 @@ public class DjikstraSearcher implements Searcher {
      *
      * @param node The PathNode to remove from the open list
      */
-    protected void removeFromOpen(PathNode node) {
+    protected void removeFromOpen(PathNode2d node) {
         open.remove(node);
     }
 
@@ -215,7 +247,7 @@ public class DjikstraSearcher implements Searcher {
      *
      * @param node The PathNode to add to the closed list
      */
-    protected void addToClosed(PathNode node) {
+    protected void addToClosed(PathNode2d node) {
         closed.add(node);
     }
 
@@ -225,7 +257,7 @@ public class DjikstraSearcher implements Searcher {
      * @param node The PathNode to search for
      * @return True if the PathNode specified is in the closed list
      */
-    protected boolean inClosedList(PathNode node) {
+    protected boolean inClosedList(PathNode2d node) {
         return closed.contains(node);
     }
 
@@ -234,7 +266,7 @@ public class DjikstraSearcher implements Searcher {
      *
      * @param node The PathNode to remove from the closed list
      */
-    protected void removeFromClosed(PathNode node) {
+    protected void removeFromClosed(PathNode2d node) {
         closed.remove(node);
     }
 
@@ -248,11 +280,11 @@ public class DjikstraSearcher implements Searcher {
      * @param y     The y coordinate of the location to check
      * @return True if the location is valid for the given mover
      */
-    protected boolean isValidLocation(Mover mover, int sx, int sy, int sz, int x, int y, int z) {
-        boolean invalid = (x < 0) || (y < 0) || (z < 0) || (x >= map.getWidthInTiles()) || (y >= map.getHeightInTiles()) || (z >= map.getDepthInTiles());
+    protected boolean isValidLocation(Mover2d mover, int sx, int sy, int x, int y) {
+        boolean invalid = (x < 0) || (y < 0) || (x >= map.getWidthInTiles()) || (y >= map.getHeightInTiles());
 
         if ((!invalid) && ((sx != x) || (sy != y))) {
-            invalid = map.blocked(mover, nodes[x][y][z]);
+            invalid = map.blocked(mover, nodes[x][y]);
         }
 
         return !invalid;
@@ -268,8 +300,23 @@ public class DjikstraSearcher implements Searcher {
      * @param ty    The y coordinate of the target location
      * @return The cost of movement through the given tile
      */
-    public float getMovementCost(Mover mover, int sx, int sy, int sz, int tx, int ty, int tz) {
-        return map.getCost(mover, sx, sy, sz, tx, ty, tz);
+    public float getMovementCost(Mover2d mover, int sx, int sy, int tx, int ty) {
+        return map.getCost(mover, sx, sy, tx, ty);
+    }
+
+    /**
+     * Get the heuristic cost for the given location. This determines in which
+     * order the locations are processed.
+     *
+     * @param mover The entity that is being moved
+     * @param x     The x coordinate of the tile whose cost is being determined
+     * @param y     The y coordinate of the tile whose cost is being determined
+     * @param tx    The x coordinate of the target location
+     * @param ty    The y coordinate of the target location
+     * @return The heuristic cost assigned to the tile
+     */
+    public float getHeuristicCost(Mover2d mover, int x, int y, int tx, int ty) {
+        return heuristic.getCost(map, mover, x, y, tx, ty);
     }
 
 

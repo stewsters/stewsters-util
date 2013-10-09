@@ -1,4 +1,4 @@
-package com.stewsters.util.pathing.threeDimention.shared;
+package com.stewsters.util.pathing.twoDimention.shared;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *
  * @author Kevin Glass
  */
-public class FullPath {
+public class FullPath2d {
     /**
      * The list of steps building up this path
      */
@@ -18,7 +18,7 @@ public class FullPath {
     /**
      * Create an empty path
      */
-    public FullPath() {
+    public FullPath2d() {
 
     }
 
@@ -63,23 +63,13 @@ public class FullPath {
     }
 
     /**
-     * Get the y coordinate for the step at the given index
-     *
-     * @param index The index of the step whose y coordinate should be retrieved
-     * @return The y coordinate at the step
-     */
-    public int getZ(int index) {
-        return getStep(index).z;
-    }
-
-    /**
      * Append a step to the path.
      *
      * @param x The x coordinate of the new step
      * @param y The y coordinate of the new step
      */
-    public void appendStep(int x, int y, int z) {
-        steps.add(new Step(x, y, z));
+    public void appendStep(int x, int y) {
+        steps.add(new Step(x, y));
     }
 
     /**
@@ -88,8 +78,8 @@ public class FullPath {
      * @param x The x coordinate of the new step
      * @param y The y coordinate of the new step
      */
-    public void prependStep(int x, int y, int z) {
-        steps.add(0, new Step(x, y, z));
+    public void prependStep(int x, int y) {
+        steps.add(0, new Step(x, y));
     }
 
     /**
@@ -99,8 +89,8 @@ public class FullPath {
      * @param y The y coordinate of the step to check for
      * @return True if the path contains the given step
      */
-    public boolean contains(int x, int y, int z) {
-        return steps.contains(new Step(x, y, z));
+    public boolean contains(int x, int y) {
+        return steps.contains(new Step(x, y));
     }
 
 
@@ -118,23 +108,16 @@ public class FullPath {
          * The y coordinate at the given step
          */
         private int y;
-        /**
-         * The z coordinate at the given step
-         */
-        private int z;
-
 
         /**
          * Create a new step
          *
          * @param x The x coordinate of the new step
          * @param y The y coordinate of the new step
-         * @param z The z coordinate of the new step
          */
-        public Step(int x, int y, int z) {
+        public Step(int x, int y) {
             this.x = x;
             this.y = y;
-            this.z = z;
         }
 
         /**
@@ -155,20 +138,12 @@ public class FullPath {
             return y;
         }
 
-        /**
-         * Get the z coordinate of the new step
-         *
-         * @return The z coordinate of the new step
-         */
-        public int getZ() {
-            return z;
-        }
 
         /**
          * @see Object#hashCode()
          */
         public int hashCode() {
-            return x * y * z;
+            return x * y;
         }
 
         /**
@@ -178,7 +153,7 @@ public class FullPath {
             if (other instanceof Step) {
                 Step o = (Step) other;
 
-                return (o.x == x) && (o.y == y) && (o.z == z);
+                return (o.x == x) && (o.y == y);
             }
 
             return false;

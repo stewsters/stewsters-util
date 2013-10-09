@@ -1,9 +1,9 @@
-package com.stewsters.util.pathing.threeDimention.shared;
+package com.stewsters.util.pathing.twoDimention.shared;
 
 /**
  * A single PathNode in the search graph
  */
-public class PathNode implements Comparable {
+public class PathNode2d implements Comparable {
     /**
      * The x coordinate of the node
      */
@@ -12,10 +12,7 @@ public class PathNode implements Comparable {
      * The y coordinate of the node
      */
     public int y;
-    /**
-     * The z coordinate of the node
-     */
-    public int z;
+
     /**
      * The path cost for this node
      */
@@ -23,7 +20,7 @@ public class PathNode implements Comparable {
     /**
      * The parent of this node, how we reached it in the search
      */
-    public PathNode parent;
+    public PathNode2d parent;
     /**
      * The heuristic cost of this node
      */
@@ -39,10 +36,9 @@ public class PathNode implements Comparable {
      * @param x The x coordinate of the node
      * @param y The y coordinate of the node
      */
-    public PathNode(int x, int y, int z) {
+    public PathNode2d(int x, int y) {
         this.x = x;
         this.y = y;
-        this.z = z;
     }
 
     /**
@@ -51,7 +47,7 @@ public class PathNode implements Comparable {
      * @param parent The parent PathNode which lead us to this node
      * @return The depth we have no reached in searching
      */
-    public int setParent(PathNode parent) {
+    public int setParent(PathNode2d parent) {
         depth = parent.depth + 1;
         this.parent = parent;
 
@@ -62,7 +58,7 @@ public class PathNode implements Comparable {
      * @see Comparable#compareTo(Object)
      */
     public int compareTo(Object other) {
-        PathNode o = (PathNode) other;
+        PathNode2d o = (PathNode2d) other;
 
         float f = heuristic + cost;
         float of = o.heuristic + o.cost;

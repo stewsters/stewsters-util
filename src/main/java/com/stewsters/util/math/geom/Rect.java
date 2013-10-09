@@ -12,7 +12,7 @@ public class Rect {
     public int y2;
 
 
-    public Rect(int x,int  y,int  w,int  h) {
+    public Rect(int x, int y, int w, int h) {
         this.x1 = x;
         this.y1 = y;
         this.x2 = x + w - 1;

@@ -13,8 +13,8 @@ package com.stewsters.util.pathing.threeDimention.shared;
  *
  * @author Kevin Glass
  */
-public interface Mover {
+public interface Mover3d {
 
-    public boolean canTraverse(PathNode pathNode);
+    public boolean canTraverse(PathNode3d pathNode);
 
 }

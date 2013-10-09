@@ -1,8 +1,6 @@
 package com.stewsters.util.math;
 
 
-import javax.swing.*;
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
@@ -84,14 +82,14 @@ public class MathUtils {
         return random.nextGaussian() * stdDeviation;
     }
 
-    public static String getChoice(Map<String,Integer> choicesMap) {
+    public static String getChoice(Map<String, Integer> choicesMap) {
         int totalChances = 0;
-        for(Integer value: choicesMap.values()){
-         totalChances+=value;
+        for (Integer value : choicesMap.values()) {
+            totalChances += value;
         }
         int dice = MathUtils.getIntInRange(0, totalChances);
         int runningTotal = 0;
-        for (Map.Entry<String,Integer> keyValue : choicesMap.entrySet()) {
+        for (Map.Entry<String, Integer> keyValue : choicesMap.entrySet()) {
             runningTotal += keyValue.getValue();
             if (dice <= runningTotal)
                 return keyValue.getKey();

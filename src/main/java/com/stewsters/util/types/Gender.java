@@ -14,6 +14,6 @@ public enum Gender {
     }
 
     public static Gender random() {
-       return MathUtils.getBoolean() ? Gender.MALE : Gender.FEMALE;
+        return MathUtils.getBoolean() ? Gender.MALE : Gender.FEMALE;
     }
 }
