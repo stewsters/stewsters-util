@@ -79,9 +79,9 @@ public class AStarPathFinder2d implements PathFinder2d {
     }
 
     /**
-     * @see PathFinder2d#findPath(com.stewsters.util.pathing.twoDimention.shared.Mover2d, int, int, int, int, int, int)
+     * @see PathFinder2d#findPath(com.stewsters.util.pathing.twoDimention.shared.Mover2d, int, int, int, int)
      */
-    public FullPath2d findPath(Mover2d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
+    public FullPath2d findPath(Mover2d mover, int sx, int sy,  int tx, int ty) {
         // easy first check, if the destination is blocked, we can't get there
 
         if (map.blocked(mover, nodes[tx][ty])) {
