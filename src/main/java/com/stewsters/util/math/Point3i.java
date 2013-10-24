@@ -55,20 +55,17 @@ public class Point3i {
     }
 
     public List<Point3i> mooreNeighborhood3D() {
-        List<Point3i> points = new ArrayList<Point3i>();
+        ArrayList<Point3i> points = new ArrayList<Point3i>();
 
         for (int ox = -1; ox < 2; ox++) {
             for (int oy = -1; oy < 2; oy++) {
                 for (int oz = -1; oz < 2; oz++) {
                     if (ox == 0 && oy == 0 && oz == 0) continue;
 
-                    ((ArrayList<Point3i>) points).add(new Point3i(x + ox, y + oy, z + oz));
+                     points.add(new Point3i(x + ox, y + oy, z + oz));
                 }
-
             }
-
         }
-
 
         Collections.shuffle(points);
         return points;
