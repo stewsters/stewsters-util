@@ -1,6 +1,5 @@
 package com.stewsters.util.pathing.twoDimention.pathfinder
 
-import com.stewsters.util.pathing.twoDimention.pathfinder.AStarHeuristic2d
 import com.stewsters.util.pathing.twoDimention.shared.Mover2d
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d
 
