@@ -4,7 +4,7 @@ package com.stewsters.util.noise;
  * http://www.java-gaming.org/index.php?topic=23962.0
  */
 
-public class SimplexNoise3D {
+public class Simplex3d {
     /**
      * If <i>true</i> the valid input set to noise is restricted
      * to positive numbers.  This will produce serious defects
@@ -50,7 +50,7 @@ public class SimplexNoise3D {
      * Completes coordinate hashing and performs the dot product with the selected vector.
      */
     private static float dotRandVector(int h, float x, float y, float z) {
-        // complete hash generation (see eval)
+        // complete hash generation (see noise)
         h = posthash(h) >>> 24;
 
         if (perlinVectors) {
@@ -206,7 +206,7 @@ public class SimplexNoise3D {
     /**
      *
      */
-    public static float eval(float x, float y, float z) {
+    public static float noise(float x, float y, float z) {
         // project the input coordinate (via skew)
         float s = (x + y + z) * K0;
         int i, j, k;
