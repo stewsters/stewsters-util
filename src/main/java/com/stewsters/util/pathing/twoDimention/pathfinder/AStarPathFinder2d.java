@@ -1,8 +1,10 @@
 package com.stewsters.util.pathing.twoDimention.pathfinder;
 
+import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.shared.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * A path finder implementation that uses the AStar heuristic based algorithm
@@ -14,7 +16,7 @@ public class AStarPathFinder2d implements PathFinder2d {
     /**
      * The set of nodes that have been searched through
      */
-    private ArrayList closed = new ArrayList();
+    private ArrayList<PathNode2d> closed = new ArrayList();
     /**
      * The set of nodes that we do not yet consider fully searched
      */
@@ -81,7 +83,7 @@ public class AStarPathFinder2d implements PathFinder2d {
     /**
      * @see PathFinder2d#findPath(com.stewsters.util.pathing.twoDimention.shared.Mover2d, int, int, int, int)
      */
-    public FullPath2d findPath(Mover2d mover, int sx, int sy,  int tx, int ty) {
+    public FullPath2d findPath(Mover2d mover, int sx, int sy, int tx, int ty) {
         // easy first check, if the destination is blocked, we can't get there
 
         if (map.blocked(mover, nodes[tx][ty])) {
@@ -319,5 +321,51 @@ public class AStarPathFinder2d implements PathFinder2d {
         return heuristic.getCost(map, mover, x, y, tx, ty);
     }
 
+    public LinkedList<Point2i> getReachableCells(int x, int y, Mover2d mover, float max) {
+        LinkedList<Point2i> reachableCells = new LinkedList<Point2i>();
+        LinkedList<PathNode2d> open = new LinkedList<PathNode2d>();
+        closed.clear();
+        PathNode2d start = nodes[x][y];
+        start.depth = 0;
+        start.cost = 0;
+        open.push(start);
+        while (open.size() > 0) {
+            // poll() the open queue
+            PathNode2d current = open.poll();
+
+            for (int nx = current.x - 1; nx < current.x + 1; nx++) {
+                for (int ny = current.y - 1; ny < current.y + 1; ny++) {
+                    if (nx == current.x && nx == current.y)
+                        continue;
+
+                    PathNode2d neighbor = nodes[nx][ny];
+                    float nextStepCost = current.cost + getMovementCost(mover, current.x, current.y, nx, ny);
+
+                    // If the cell is beyond our reach, or otherwise blocked, ignore it
+                    if (nextStepCost > max || isValidLocation(mover, current.x, current.y, nx, ny)) continue;
+
+                    // Check to see if we have found a new shortest route to this neighbor, in
+                    // which case it must be totally reconsidered
+                    if (nextStepCost < neighbor.cost) {
+                        if (inClosedList(neighbor)) removeFromClosed(neighbor);
+                        if (open.contains(neighbor)) open.remove(neighbor);
+                    }
+
+                    if (!open.contains(neighbor) && !inClosedList(neighbor)) {
+                        neighbor.cost = nextStepCost;
+                        open.push(neighbor);
+                    }
+                }
+            }
+            addToClosed(current);
+        }
+
+        for (PathNode2d n : closed) {
+            if (n.x != x || n.y != y) reachableCells.add(new Point2i(n.x, n.y));
+        }
+
+        return reachableCells;
+
+    }
 
 }
