@@ -335,7 +335,7 @@ public class AStarPathFinder2d implements PathFinder2d {
 
             for (int nx = current.x - 1; nx < current.x + 1; nx++) {
                 for (int ny = current.y - 1; ny < current.y + 1; ny++) {
-                    if (nx == current.x && nx == current.y)
+                    if ((nx == current.x && nx == current.y)  || nx <0 || ny<0 || nx> nodes.length || ny>nodes[0].length)
                         continue;
 
                     PathNode2d neighbor = nodes[nx][ny];
