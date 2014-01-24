@@ -120,64 +120,63 @@ public class AStarPathFinder2d implements PathFinder2d {
 
             for (int x = -1; x < 2; x++) {
                 for (int y = -1; y < 2; y++) {
-                    for (int z = -1; z < 2; z++) {
-                        // not a neighbour, its the current tile
+                    // not a neighbour, its the current tile
 
-                        if ((x == 0) && (y == 0) && (z == 0)) {
+                    if ((x == 0) && (y == 0)) {
+                        continue;
+                    }
+
+                    // if we're not allowing diaganol movement then only
+                    // one of x or y can be set
+
+                    if (!allowDiagMovement) {
+                        if ((x != 0) && (y != 0)) {
                             continue;
                         }
+                    }
 
-                        // if we're not allowing diaganol movement then only
-                        // one of x or y can be set
+                    // determine the location of the neighbour and evaluate it
 
-                        if (!allowDiagMovement) {
-                            if ((x != 0) && (y != 0) && (z != 0)) {
-                                continue;
+                    int xp = x + current.x;
+                    int yp = y + current.y;
+
+                    if (isValidLocation(mover, sx, sy, xp, yp)) {
+                        // the cost to get to this PathNode is cost the current plus the movement
+                        // cost to reach this node. Note that the heuristic value is only used
+                        // in the sorted open list
+
+                        float nextStepCost = current.cost + getMovementCost(mover, current.x, current.y, xp, yp);
+                        PathNode2d neighbour = nodes[xp][yp];
+                        map.pathFinderVisited(xp, yp);
+
+                        // if the new cost we've determined for this PathNode is lower than
+                        // it has been previously,
+                        // there might have been a better path to get to
+                        // this PathNode so it needs to be re-evaluated
+
+                        if (nextStepCost < neighbour.cost) {
+                            if (inOpenList(neighbour)) {
+                                removeFromOpen(neighbour);
+                            }
+                            if (inClosedList(neighbour)) {
+                                removeFromClosed(neighbour);
                             }
                         }
 
-                        // determine the location of the neighbour and evaluate it
+                        // if the PathNode hasn't already been processed and discarded then
+                        // reset it's cost to our current cost and add it as a next possible
+                        // step (i.e. to the open list)
 
-                        int xp = x + current.x;
-                        int yp = y + current.y;
-
-                        if (isValidLocation(mover, sx, sy, xp, yp)) {
-                            // the cost to get to this PathNode is cost the current plus the movement
-                            // cost to reach this node. Note that the heuristic value is only used
-                            // in the sorted open list
-
-                            float nextStepCost = current.cost + getMovementCost(mover, current.x, current.y, xp, yp);
-                            PathNode2d neighbour = nodes[xp][yp];
-                            map.pathFinderVisited(xp, yp);
-
-                            // if the new cost we've determined for this PathNode is lower than
-                            // it has been previously,
-                            // there might have been a better path to get to
-                            // this PathNode so it needs to be re-evaluated
-
-                            if (nextStepCost < neighbour.cost) {
-                                if (inOpenList(neighbour)) {
-                                    removeFromOpen(neighbour);
-                                }
-                                if (inClosedList(neighbour)) {
-                                    removeFromClosed(neighbour);
-                                }
-                            }
-
-                            // if the PathNode hasn't already been processed and discarded then
-                            // reset it's cost to our current cost and add it as a next possible
-                            // step (i.e. to the open list)
-
-                            if (!inOpenList(neighbour) && !(inClosedList(neighbour))) {
-                                neighbour.cost = nextStepCost;
-                                neighbour.heuristic = getHeuristicCost(mover, xp, yp, tx, ty);
-                                maxDepth = Math.max(maxDepth, neighbour.setParent(current));
-                                addToOpen(neighbour);
-                            }
+                        if (!inOpenList(neighbour) && !(inClosedList(neighbour))) {
+                            neighbour.cost = nextStepCost;
+                            neighbour.heuristic = getHeuristicCost(mover, xp, yp, tx, ty);
+                            maxDepth = Math.max(maxDepth, neighbour.setParent(current));
+                            addToOpen(neighbour);
                         }
                     }
                 }
             }
+
         }
 
         // since we'e've run out of search
@@ -321,7 +320,15 @@ public class AStarPathFinder2d implements PathFinder2d {
         return heuristic.getCost(map, mover, x, y, tx, ty);
     }
 
-    public LinkedList<Point2i> getReachableCells(int x, int y, Mover2d mover, float max) {
+    /**
+     * Find all locations within a radius that are reachable by the mover
+     *
+     * @param mover The entity that is being moved
+     * @param x     The x coordinate of the tile whose cost is being determined
+     * @param y     The y coordinate of the tile whose cost is being determined
+     * @param max   The Max cost
+     */
+    public LinkedList<Point2i> getReachableCells(Mover2d mover, int x, int y, float max) {
         LinkedList<Point2i> reachableCells = new LinkedList<Point2i>();
         LinkedList<PathNode2d> open = new LinkedList<PathNode2d>();
         closed.clear();
@@ -335,7 +342,7 @@ public class AStarPathFinder2d implements PathFinder2d {
 
             for (int nx = current.x - 1; nx < current.x + 1; nx++) {
                 for (int ny = current.y - 1; ny < current.y + 1; ny++) {
-                    if ((nx == current.x && nx == current.y)  || nx <0 || ny<0 || nx> nodes.length || ny>nodes[0].length)
+                    if ((nx == current.x && nx == current.y) || nx < 0 || ny < 0 || nx > nodes.length || ny > nodes[0].length)
                         continue;
 
                     PathNode2d neighbor = nodes[nx][ny];

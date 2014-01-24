@@ -62,7 +62,7 @@ public class Point3i {
                 for (int oz = -1; oz < 2; oz++) {
                     if (ox == 0 && oy == 0 && oz == 0) continue;
 
-                     points.add(new Point3i(x + ox, y + oy, z + oz));
+                    points.add(new Point3i(x + ox, y + oy, z + oz));
                 }
             }
         }
