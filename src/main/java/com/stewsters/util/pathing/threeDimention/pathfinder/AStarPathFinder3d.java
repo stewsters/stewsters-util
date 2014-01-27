@@ -129,7 +129,7 @@ public class AStarPathFinder3d implements PathFinder3d {
                         // one of x or y can be set
 
                         if (!allowDiagMovement) {
-                            if ((x != 0) && (y != 0) && (z != 0)) {
+                            if ((x != 0) ^ (y != 0) ^ (z != 0)) {
                                 continue;
                             }
                         }

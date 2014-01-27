@@ -30,12 +30,12 @@ public class ExampleMap2d implements TileBasedMap2d {
 
     @Override
     public int getWidthInTiles() {
-        return width;  //To change body of implemented methods use File | Settings | File Templates.
+        return width;
     }
 
     @Override
     public int getHeightInTiles() {
-        return height;  //To change body of implemented methods use File | Settings | File Templates.
+        return height;
     }
 
     @Override
