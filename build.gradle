@@ -1,5 +1,7 @@
 apply plugin: 'java'
 
+version = '0.2'
+sourceCompatibility = 1.7
 
 repositories {
     mavenCentral()
