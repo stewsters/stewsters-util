@@ -1,5 +1,6 @@
 package com.stewsters.util.pathing.twoDimention.searcher;
 
+import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
 import com.stewsters.util.pathing.twoDimention.shared.*;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ public class DjikstraSearcher2d implements Searcher2d {
     /**
      * The set of nodes that have been searched through
      */
-    private ArrayList closed = new ArrayList();
+    private ArrayList<PathNode2d> closed = new ArrayList();
     /**
      * The set of nodes that we do not yet consider fully searched
      */

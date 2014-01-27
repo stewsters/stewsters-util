@@ -9,7 +9,7 @@ public class DjikstraSearcher3d implements Searcher3d {
     /**
      * The set of nodes that have been searched through
      */
-    private ArrayList closed = new ArrayList();
+    private ArrayList<PathNode3d> closed = new ArrayList();
     /**
      * The set of nodes that we do not yet consider fully searched
      */

@@ -129,7 +129,7 @@ public class AStarPathFinder3d implements PathFinder3d {
                         // one of x or y can be set
 
                         if (!allowDiagMovement) {
-                            if ((x != 0) ^ (y != 0) ^ (z != 0)) {
+                            if (!((x==0 && y==0) || (y==0 && z==0) || (z==0 && x==0))) {
                                 continue;
                             }
                         }
@@ -183,7 +183,8 @@ public class AStarPathFinder3d implements PathFinder3d {
         // there was no path. Just return null
 
         if (nodes[tx][ty][tz].parent == null) {
-            return null;
+            throw new RuntimeException("out of nodes");
+//            return null;
         }
 
         // At this point we've definitely found a path so we can uses the parent

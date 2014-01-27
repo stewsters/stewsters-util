@@ -19,12 +19,12 @@ public class AStarPathfinder3dTest {
 
         ExampleMover3d exampleMover3d = new ExampleMover3d(map);
 
-        FullPath3d fullPath3d = pathfinder.findPath(exampleMover3d, 1, 1, 1, 8, 8, 8);
+
+        FullPath3d fullPath3d = pathfinder.findPath(exampleMover3d, 1,1, 1, 8, 8, 8);
 
         for (int i = 0; i < fullPath3d.getLength(); i++) {
-            System.out.println("x:" + fullPath3d.getStep(i).getX() + " y:" + fullPath3d.getStep(i).getY()+ " z:" + fullPath3d.getStep(i).getZ());
+            System.out.println("x:" + fullPath3d.getStep(i).getX() + " y:" + fullPath3d.getStep(i).getY() + " z:" + fullPath3d.getStep(i).getZ());
         }
-
 
         assertEquals(fullPath3d.getLength(), 22);
 
@@ -35,11 +35,11 @@ public class AStarPathfinder3dTest {
 
         ExampleMap3d map = new ExampleMap3d(10, 10, 10);
 
-        AStarPathFinder3d pathfinder = new AStarPathFinder3d(map, 100, true);
+        AStarPathFinder3d pathfinder = new AStarPathFinder3d(map, 1000, true);
 
         ExampleMover3d exampleMover3d = new ExampleMover3d(map);
 
-        FullPath3d fullPath3d = pathfinder.findPath(exampleMover3d, 1, 1,1, 8, 8, 8);
+        FullPath3d fullPath3d = pathfinder.findPath(exampleMover3d, 1, 1, 1, 8, 8, 8);
 
 
         for (int i = 0; i < fullPath3d.getLength(); i++) {
