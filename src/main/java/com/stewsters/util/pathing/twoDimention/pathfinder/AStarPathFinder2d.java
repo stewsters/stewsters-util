@@ -342,14 +342,17 @@ public class AStarPathFinder2d implements PathFinder2d {
 
             for (int nx = current.x - 1; nx < current.x + 1; nx++) {
                 for (int ny = current.y - 1; ny < current.y + 1; ny++) {
-                    if ((nx == current.x && nx == current.y) || nx < 0 || ny < 0 || nx > nodes.length || ny > nodes[0].length)
+                    if (nx == current.x && nx == current.y)
+                        continue;
+
+                    if(nx < 0 || ny < 0 || nx >= nodes.length || ny >= nodes[0].length)
                         continue;
 
                     PathNode2d neighbor = nodes[nx][ny];
                     float nextStepCost = current.cost + getMovementCost(mover, current.x, current.y, nx, ny);
 
                     // If the cell is beyond our reach, or otherwise blocked, ignore it
-                    if (nextStepCost > max || isValidLocation(mover, current.x, current.y, nx, ny)) continue;
+                    if (nextStepCost > max || ! isValidLocation(mover, current.x, current.y, nx, ny)) continue;
 
                     // Check to see if we have found a new shortest route to this neighbor, in
                     // which case it must be totally reconsidered
