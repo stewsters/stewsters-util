@@ -1,7 +1,10 @@
 package com.stewsters.util.pathing.twoDimention.pathfinder;
 
 import com.stewsters.util.math.Point2i;
-import com.stewsters.util.pathing.twoDimention.shared.*;
+import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
+import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
+import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
+import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -366,6 +369,8 @@ public class AStarPathFinder2d implements PathFinder2d {
                     float nextStepCost = current.cost + getMovementCost(mover, current.x, current.y, nx, ny);
                     PathNode2d neighbor = nodes[nx][ny];
 
+                    if (nextStepCost > max)
+                        continue;
 
                     // Check to see if we have found a new shortest route to this neighbor, in
                     // which case it must be totally reconsidered

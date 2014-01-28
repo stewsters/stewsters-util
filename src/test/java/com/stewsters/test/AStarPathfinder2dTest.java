@@ -55,7 +55,7 @@ public class AStarPathfinder2dTest {
 
 
     @Test
-    public void testFindNearest4Way(){
+    public void testFindNearest4Way() {
 
         ExampleMap2d map = new ExampleMap2d(10, 10);
 
@@ -64,19 +64,19 @@ public class AStarPathfinder2dTest {
         ExampleMover2d exampleMover2d = new ExampleMover2d(map);
 
         System.out.println("find nearest 4 way to max length");
-        LinkedList<Point2i> results =  pathfinder.getReachableCells(exampleMover2d, 4, 4, 16);
+        LinkedList<Point2i> results = pathfinder.getReachableCells(exampleMover2d, 4, 4, 16);
 
         for (Point2i result : results) {
-            System.out.println(result.x + " "+ result.y );
+            System.out.println(result.x + " " + result.y);
         }
-        assertEquals((8*8)-1, results.size());
+        assertEquals((8 * 8) - 1, results.size());
 
 
         System.out.println("find nearest 4 way to 2 distance");
-        LinkedList<Point2i> results2 =  pathfinder.getReachableCells(exampleMover2d, 4, 4, 2);
+        LinkedList<Point2i> results2 = pathfinder.getReachableCells(exampleMover2d, 4, 4, 2);
 
         for (Point2i result : results2) {
-            System.out.println(result.x + " "+ result.y );
+            System.out.println(result.x + " " + result.y);
         }
 
         assertEquals(12, results2.size());
@@ -84,7 +84,7 @@ public class AStarPathfinder2dTest {
     }
 
     @Test
-    public void testFindNearest8Way(){
+    public void testFindNearest8Way() {
 
         ExampleMap2d map = new ExampleMap2d(10, 10);
 
@@ -93,21 +93,30 @@ public class AStarPathfinder2dTest {
         ExampleMover2d exampleMover2d = new ExampleMover2d(map);
 
         System.out.println("find nearest 8 way to max length");
-        LinkedList<Point2i> results =  pathfinder.getReachableCells(exampleMover2d, 4, 4, 16);
+        LinkedList<Point2i> results = pathfinder.getReachableCells(exampleMover2d, 4, 4, 16);
 
         for (Point2i result : results) {
-            System.out.println(result.x + " "+ result.y );
+            System.out.println(result.x + " " + result.y);
         }
-        assertEquals((8*8)-1, results.size());
+        assertEquals((8 * 8) - 1, results.size());
+
+
+        System.out.println("find nearest 8 way to 1 distance");
+        LinkedList<Point2i> results2 = pathfinder.getReachableCells(exampleMover2d, 4, 4, 1);
+
+        for (Point2i result : results2) {
+            System.out.println(result.x + " " + result.y);
+        }
+        assertEquals(8, results2.size());
 
 
         System.out.println("find nearest 8 way to 2 distance");
-        LinkedList<Point2i> results2 =  pathfinder.getReachableCells(exampleMover2d, 4, 4, 2);
+        LinkedList<Point2i> results3 = pathfinder.getReachableCells(exampleMover2d, 4, 4, 2);
 
-        for (Point2i result : results2) {
-            System.out.println(result.x + " "+ result.y );
+        for (Point2i result : results3) {
+            System.out.println(result.x + " " + result.y);
         }
-        assertEquals(12, results2.size());
+        assertEquals(24, results3.size());
 
     }
 

@@ -1,7 +1,9 @@
 package com.stewsters.util.pathing.twoDimention.searcher;
 
-import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
-import com.stewsters.util.pathing.twoDimention.shared.*;
+import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
+import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
+import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
+import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
@@ -85,62 +87,62 @@ public class DjikstraSearcher2d implements Searcher2d {
             // them as next steps
             for (int x = -1; x < 2; x++) {
                 for (int y = -1; y < 2; y++) {
-                        // not a neighbour, its the current tile
+                    // not a neighbour, its the current tile
 
-                        if ((x == 0) && (y == 0)) {
+                    if ((x == 0) && (y == 0)) {
+                        continue;
+                    }
+
+                    // if we're not allowing diaganol movement then only
+                    // one of x or y can be set
+
+                    if (!allowDiagMovement) {
+                        if ((x != 0) && (y != 0)) {
                             continue;
                         }
+                    }
 
-                        // if we're not allowing diaganol movement then only
-                        // one of x or y can be set
+                    // determine the location of the neighbour and evaluate it
 
-                        if (!allowDiagMovement) {
-                            if ((x != 0) && (y != 0)) {
-                                continue;
+                    int xp = x + current.x;
+                    int yp = y + current.y;
+
+                    if (isValidLocation(mover, sx, sy, xp, yp)) {
+                        // the cost to get to this PathNode is cost the current plus the movement
+                        // cost to reach this node. Note that the heuristic value is only used
+                        // in the sorted open list
+
+                        float nextStepCost = current.cost + getMovementCost(mover, current.x, current.y, xp, yp);
+                        PathNode2d neighbour = nodes[xp][yp];
+                        map.pathFinderVisited(xp, yp);
+
+                        // if the new cost we've determined for this PathNode is lower than
+                        // it has been previously,
+                        // there might have been a better path to get to
+                        // this PathNode so it needs to be re-evaluated
+
+                        if (nextStepCost < neighbour.cost) {
+                            if (inOpenList(neighbour)) {
+                                removeFromOpen(neighbour);
+                            }
+                            if (inClosedList(neighbour)) {
+                                removeFromClosed(neighbour);
                             }
                         }
 
-                        // determine the location of the neighbour and evaluate it
+                        // if the PathNode hasn't already been processed and discarded then
+                        // reset it's cost to our current cost and add it as a next possible
+                        // step (i.e. to the open list)
 
-                        int xp = x + current.x;
-                        int yp = y + current.y;
-
-                        if (isValidLocation(mover, sx, sy, xp, yp)) {
-                            // the cost to get to this PathNode is cost the current plus the movement
-                            // cost to reach this node. Note that the heuristic value is only used
-                            // in the sorted open list
-
-                            float nextStepCost = current.cost + getMovementCost(mover, current.x, current.y, xp, yp);
-                            PathNode2d neighbour = nodes[xp][yp];
-                            map.pathFinderVisited(xp, yp);
-
-                            // if the new cost we've determined for this PathNode is lower than
-                            // it has been previously,
-                            // there might have been a better path to get to
-                            // this PathNode so it needs to be re-evaluated
-
-                            if (nextStepCost < neighbour.cost) {
-                                if (inOpenList(neighbour)) {
-                                    removeFromOpen(neighbour);
-                                }
-                                if (inClosedList(neighbour)) {
-                                    removeFromClosed(neighbour);
-                                }
-                            }
-
-                            // if the PathNode hasn't already been processed and discarded then
-                            // reset it's cost to our current cost and add it as a next possible
-                            // step (i.e. to the open list)
-
-                            if (!inOpenList(neighbour) && !(inClosedList(neighbour))) {
-                                neighbour.cost = nextStepCost;
-                                neighbour.heuristic = 0; //getHeuristicCost(mover, xp, yp, zp, tx, ty, tz);
-                                maxDepth = Math.max(maxDepth, neighbour.setParent(current));
-                                addToOpen(neighbour);
-                            }
+                        if (!inOpenList(neighbour) && !(inClosedList(neighbour))) {
+                            neighbour.cost = nextStepCost;
+                            neighbour.heuristic = 0; //getHeuristicCost(mover, xp, yp, zp, tx, ty, tz);
+                            maxDepth = Math.max(maxDepth, neighbour.setParent(current));
+                            addToOpen(neighbour);
                         }
                     }
                 }
+            }
 
         }
 
