@@ -12,14 +12,14 @@ public class SortedList2d {
     /**
      * The list of elements
      */
-    private ArrayList list = new ArrayList();
+    private ArrayList<PathNode2d> list = new ArrayList<PathNode2d>();
 
     /**
      * Retrieve the first element from the list
      *
      * @return The first element from the list
      */
-    public Object first() {
+    public PathNode2d first() {
         return list.get(0);
     }
 
@@ -35,7 +35,7 @@ public class SortedList2d {
      *
      * @param o The element to add
      */
-    public void add(Object o) {
+    public void add(PathNode2d o) {
         list.add(o);
         Collections.sort(list);
     }
@@ -45,7 +45,7 @@ public class SortedList2d {
      *
      * @param o The element to remove
      */
-    public void remove(Object o) {
+    public void remove(PathNode2d o) {
         list.remove(o);
     }
 
@@ -64,7 +64,7 @@ public class SortedList2d {
      * @param o The element to search for
      * @return True if the element is in the list
      */
-    public boolean contains(Object o) {
+    public boolean contains(PathNode2d o) {
         return list.contains(o);
     }
 }

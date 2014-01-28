@@ -2,11 +2,11 @@ package com.stewsters.util.pathing.twoDimention.djikstraMap;
 
 import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
-import com.stewsters.util.pathing.twoDimention.shared.SortedList2d;
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 public class DjikstraMap2d implements PathingMap2d {
 
@@ -18,7 +18,7 @@ public class DjikstraMap2d implements PathingMap2d {
     /**
      * The set of nodes that we do not yet consider fully searched
      */
-    private SortedList2d open = new SortedList2d();
+    private PriorityQueue<PathNode2d> open = new PriorityQueue<>();
 
     /**
      * The map being searched
@@ -158,7 +158,7 @@ public class DjikstraMap2d implements PathingMap2d {
      * @return The first element in the open list
      */
     protected PathNode2d getFirstInOpen() {
-        return (PathNode2d) open.first();
+        return open.peek();
     }
 
     /**

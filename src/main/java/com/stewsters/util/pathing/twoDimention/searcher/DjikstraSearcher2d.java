@@ -4,6 +4,7 @@ import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
 import com.stewsters.util.pathing.twoDimention.shared.*;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class DjikstraSearcher2d implements Searcher2d {
 
@@ -14,7 +15,7 @@ public class DjikstraSearcher2d implements Searcher2d {
     /**
      * The set of nodes that we do not yet consider fully searched
      */
-    private SortedList2d open = new SortedList2d();
+    private PriorityQueue<PathNode2d> open = new PriorityQueue<>();
 
     /**
      * The map being searched
@@ -84,10 +85,9 @@ public class DjikstraSearcher2d implements Searcher2d {
             // them as next steps
             for (int x = -1; x < 2; x++) {
                 for (int y = -1; y < 2; y++) {
-                    for (int z = -1; z < 2; z++) {
                         // not a neighbour, its the current tile
 
-                        if ((x == 0) && (y == 0) && (z == 0)) {
+                        if ((x == 0) && (y == 0)) {
                             continue;
                         }
 
@@ -141,7 +141,7 @@ public class DjikstraSearcher2d implements Searcher2d {
                         }
                     }
                 }
-            }
+
         }
 
         // since we'e've run out of search
@@ -177,7 +177,7 @@ public class DjikstraSearcher2d implements Searcher2d {
      * @return The first element in the open list
      */
     protected PathNode2d getFirstInOpen() {
-        return (PathNode2d) open.first();
+        return open.peek();
     }
 
     /**
