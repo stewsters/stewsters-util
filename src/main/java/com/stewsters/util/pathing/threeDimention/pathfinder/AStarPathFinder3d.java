@@ -3,6 +3,7 @@ package com.stewsters.util.pathing.threeDimention.pathfinder;
 import com.stewsters.util.pathing.threeDimention.shared.*;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 /**
  * A path finder implementation that uses the AStar heuristic based algorithm
@@ -18,7 +19,7 @@ public class AStarPathFinder3d implements PathFinder3d {
     /**
      * The set of nodes that we do not yet consider fully searched
      */
-    private SortedList3d open = new SortedList3d();
+    private PriorityQueue<PathNode3d> open = new PriorityQueue<>();
 
     /**
      * The map being searched
@@ -213,7 +214,7 @@ public class AStarPathFinder3d implements PathFinder3d {
      * @return The first element in the open list
      */
     protected PathNode3d getFirstInOpen() {
-        return (PathNode3d) open.first();
+        return open.peek();
     }
 
     /**

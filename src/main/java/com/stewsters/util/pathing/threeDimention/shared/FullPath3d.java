@@ -13,7 +13,7 @@ public class FullPath3d {
     /**
      * The list of steps building up this path
      */
-    private ArrayList steps = new ArrayList();
+    private ArrayList<Step> steps = new ArrayList();
 
     /**
      * Create an empty path
@@ -39,7 +39,7 @@ public class FullPath3d {
      * @return The step information, the position on the map.
      */
     public Step getStep(int index) {
-        return (Step) steps.get(index);
+        return steps.get(index);
     }
 
     /**
