@@ -1,7 +1,7 @@
 package com.stewsters.util.math;
 
 
-public enum Facing {
+public enum Facing3d {
     NORTH(0, 1, 0),
     EAST(1, 0, 0),
     SOUTH(0, -1, 0),
@@ -13,13 +13,13 @@ public enum Facing {
     public int y;
     public int z;
 
-    Facing(int x, int y, int z) {
+    Facing3d(int x, int y, int z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    public static Facing random() {
+    public static Facing3d randomCardinal() {
         switch (MathUtils.getIntInRange(0, 5)) {
             case 0:
                 return NORTH;
