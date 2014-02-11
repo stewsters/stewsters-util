@@ -8,7 +8,7 @@ public class ShadowCaster2d {
      * This is a special case of SquidLib's shadow casting algorithm by Eben Howard
      * @param litMap2d
      */
-    ShadowCaster2d(LitMap2d litMap2d){
+    public ShadowCaster2d(LitMap2d litMap2d){
         this.litMap2d = litMap2d;
     }
 
@@ -60,7 +60,7 @@ public class ShadowCaster2d {
                 float leftSlope = (deltaX - 0.5f) / (deltaY + 0.5f);
                 float rightSlope = (deltaX + 0.5f) / (deltaY - 0.5f);
 
-                if (!(currentX >= 0 && currentY >= 0 && currentX < litMap2d.getWidth() && currentY < litMap2d.getHeight()) || start < rightSlope) {
+                if (!(currentX >= 0 && currentY >= 0 && currentX < litMap2d.getWidthInTiles() && currentY < litMap2d.getHeightInTiles()) || start < rightSlope) {
                     continue;
                 } else if (end > leftSlope) {
                     break;

@@ -1,4 +1,6 @@
-package com.stewsters.util.shadow;
+package com.stewsters.test.examples;
+
+import com.stewsters.util.shadow.LitMap2d;
 
 public class LitMap2dExample implements LitMap2d {
 
@@ -16,12 +18,12 @@ public class LitMap2dExample implements LitMap2d {
     }
 
     @Override
-    public int getWidth() {
+    public int getWidthInTiles() {
         return width;
     }
 
     @Override
-    public int getHeight() {
+    public int getHeightInTiles() {
         return height;
     }
 
