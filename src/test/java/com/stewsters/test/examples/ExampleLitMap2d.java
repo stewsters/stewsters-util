@@ -52,6 +52,16 @@ public class ExampleLitMap2d extends ExampleMap2d implements LitMap2d {
         return resistance[x][y];
     }
 
+    @Override
+    public void addLight(int x, int y, float bright) {
+        if(turnCounter == turnLastUpdated[x][y]){
+            lightLevel[x][y] += bright;
+        }else{
+            turnLastUpdated[x][y] = turnCounter;
+            lightLevel[x][y] = bright;
+        }
+    }
+
     public void incrementTurn() {
         turnCounter++;
         if (turnCounter == Integer.MAX_VALUE) {

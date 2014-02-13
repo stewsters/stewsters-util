@@ -12,4 +12,5 @@ public interface LitMap2d {
 
     public float getResistance(int currentX, int currentY);
 
+    public void addLight(int currentX, int currentY, float bright);
 }
