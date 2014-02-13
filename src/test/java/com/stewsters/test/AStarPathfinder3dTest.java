@@ -20,7 +20,7 @@ public class AStarPathfinder3dTest {
         ExampleMover3d exampleMover3d = new ExampleMover3d(map);
 
 
-        FullPath3d fullPath3d = pathfinder.findPath(exampleMover3d, 1,1, 1, 8, 8, 8);
+        FullPath3d fullPath3d = pathfinder.findPath(exampleMover3d, 1, 1, 1, 8, 8, 8);
 
         for (int i = 0; i < fullPath3d.getLength(); i++) {
             System.out.println("x:" + fullPath3d.getStep(i).getX() + " y:" + fullPath3d.getStep(i).getY() + " z:" + fullPath3d.getStep(i).getZ());

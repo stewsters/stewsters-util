@@ -43,8 +43,10 @@ public interface TileBasedMap2d {
      * @param pathNode The location of the tile to check
      * @return True if the location is blocked
      */
-//    public boolean blocked(Mover mover, int x, int y, int z);
-    public boolean blocked(Mover2d mover, PathNode2d pathNode);
+    public boolean isBlocked(Mover2d mover, PathNode2d pathNode);
+
+    public boolean isBlocked(Mover2d mover, int x1, int y1);
+
 
     /**
      * Get the cost of moving through the given tile. This can be used to

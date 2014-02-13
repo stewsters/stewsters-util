@@ -1,6 +1,9 @@
 package com.stewsters.util.pathing.threeDimention.searcher;
 
-import com.stewsters.util.pathing.threeDimention.shared.*;
+import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
+import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
+import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
+import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
@@ -253,7 +256,7 @@ public class DjikstraSearcher3d implements Searcher3d {
         boolean invalid = (x < 0) || (y < 0) || (z < 0) || (x >= map.getWidthInTiles()) || (y >= map.getHeightInTiles()) || (z >= map.getDepthInTiles());
 
         if ((!invalid) && ((sx != x) || (sy != y))) {
-            invalid = map.blocked(mover, nodes[x][y][z]);
+            invalid = map.isBlocked(mover, nodes[x][y][z]);
         }
 
         return !invalid;

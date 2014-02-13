@@ -13,6 +13,6 @@ public class ExampleMover3d implements Mover3d {
 
     @Override
     public boolean canTraverse(PathNode3d pathNode) {
-        return !exampleMap3d.blocked(this, pathNode);
+        return !exampleMap3d.isBlocked(this, pathNode);
     }
 }

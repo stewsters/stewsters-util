@@ -44,7 +44,10 @@ public class ExampleLitMap2d extends ExampleMap2d implements LitMap2d {
 
     @Override
     public float getLight(int x, int y) {
-        return lightLevel[x][y];
+        if (turnLastUpdated[x][y] == turnCounter)
+            return lightLevel[x][y];
+        else
+            return 0;
     }
 
     @Override
@@ -54,18 +57,20 @@ public class ExampleLitMap2d extends ExampleMap2d implements LitMap2d {
 
     @Override
     public void addLight(int x, int y, float bright) {
-        if(turnCounter == turnLastUpdated[x][y]){
+        if (turnCounter == turnLastUpdated[x][y]) {
             lightLevel[x][y] += bright;
-        }else{
+        } else {
             turnLastUpdated[x][y] = turnCounter;
             lightLevel[x][y] = bright;
         }
     }
 
     public void incrementTurn() {
-        turnCounter++;
+
         if (turnCounter == Integer.MAX_VALUE) {
             turnCounter = Integer.MIN_VALUE;
+        } else {
+            turnCounter++;
         }
     }
 }

@@ -90,7 +90,7 @@ public class AStarPathFinder2d implements PathFinder2d {
     public FullPath2d findPath(Mover2d mover, int sx, int sy, int tx, int ty) {
         // easy first check, if the destination is blocked, we can't get there
 
-        if (map.blocked(mover, nodes[tx][ty])) {
+        if (map.isBlocked(mover, nodes[tx][ty])) {
             return null;
         }
 
@@ -289,7 +289,7 @@ public class AStarPathFinder2d implements PathFinder2d {
         boolean invalid = (x < 0) || (y < 0) || (x >= map.getWidthInTiles()) || (y >= map.getHeightInTiles());
 
         if ((!invalid) && ((sx != x) || (sy != y))) {
-            invalid = map.blocked(mover, nodes[x][y]);
+            invalid = map.isBlocked(mover, nodes[x][y]);
         }
 
         return !invalid;

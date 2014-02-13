@@ -1,15 +1,18 @@
 package com.stewsters.util.shadow;
 
 
-public class BresenhamLOS2d {
-    Map2d map2d;
+import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
+import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
-    public BresenhamLOS2d(LitMap2d map2d) {
+public class BresenhamLOS2d {
+    TileBasedMap2d map2d;
+
+    public BresenhamLOS2d(TileBasedMap2d map2d) {
         this.map2d = map2d;
     }
 
 
-    private boolean los(int x1,int y1,int x2,int y2){
+    private boolean los(Mover2d mover, int x1, int y1, int x2, int y2) {
         int dx = Math.abs(x2 - x1);
         int dy = Math.abs(y2 - y1);
 
@@ -19,8 +22,8 @@ public class BresenhamLOS2d {
         int err = dx - dy;
 
         while (true) {
-            if(map2d.ge)
-            framebuffer.setPixel(x1, y1, Vec3.one);
+            if (map2d.isBlocked(mover, x1, y1))
+                return false;
 
             if (x1 == x2 && y1 == y2) {
                 break;
@@ -38,5 +41,6 @@ public class BresenhamLOS2d {
                 y1 = y1 + sy;
             }
         }
+        return true;
     }
 }

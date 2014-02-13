@@ -229,7 +229,7 @@ public class DjikstraMap2d implements PathingMap2d {
         boolean invalid = (x < 0) || (y < 0) || (x >= map.getWidthInTiles()) || (y >= map.getHeightInTiles());
 
         if ((!invalid)) {
-            invalid = map.blocked(mover, nodes[x][y]);
+            invalid = map.isBlocked(mover, nodes[x][y]);
         }
 
         return !invalid;

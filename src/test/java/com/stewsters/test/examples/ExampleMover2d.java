@@ -13,6 +13,6 @@ public class ExampleMover2d implements Mover2d {
 
     @Override
     public boolean canTraverse(PathNode2d pathNode) {
-        return !exampleMap2d.blocked(this, pathNode);
+        return !exampleMap2d.isBlocked(this, pathNode);
     }
 }

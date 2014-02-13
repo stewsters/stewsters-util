@@ -1,6 +1,9 @@
 package com.stewsters.util.pathing.threeDimention.pathfinder;
 
-import com.stewsters.util.pathing.threeDimention.shared.*;
+import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
+import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
+import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
+import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
@@ -85,7 +88,7 @@ public class AStarPathFinder3d implements PathFinder3d {
     public FullPath3d findPath(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
         // easy first check, if the destination is blocked, we can't get there
 
-        if (map.blocked(mover, nodes[tx][ty][tz])) {
+        if (map.isBlocked(mover, nodes[tx][ty][tz])) {
             return null;
         }
 
@@ -130,7 +133,7 @@ public class AStarPathFinder3d implements PathFinder3d {
                         // one of x or y can be set
 
                         if (!allowDiagMovement) {
-                            if (!((x==0 && y==0) || (y==0 && z==0) || (z==0 && x==0))) {
+                            if (!((x == 0 && y == 0) || (y == 0 && z == 0) || (z == 0 && x == 0))) {
                                 continue;
                             }
                         }
@@ -287,7 +290,7 @@ public class AStarPathFinder3d implements PathFinder3d {
         boolean invalid = (x < 0) || (y < 0) || (z < 0) || (x >= map.getWidthInTiles()) || (y >= map.getHeightInTiles()) || (z >= map.getDepthInTiles());
 
         if ((!invalid) && ((sx != x) || (sy != y))) {
-            invalid = map.blocked(mover, nodes[x][y][z]);
+            invalid = map.isBlocked(mover, nodes[x][y][z]);
         }
 
         return !invalid;

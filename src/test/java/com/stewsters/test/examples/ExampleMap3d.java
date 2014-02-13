@@ -34,17 +34,17 @@ public class ExampleMap3d implements TileBasedMap3d {
 
     @Override
     public int getWidthInTiles() {
-        return width;  //To change body of implemented methods use File | Settings | File Templates.
+        return width;
     }
 
     @Override
     public int getHeightInTiles() {
-        return height;  //To change body of implemented methods use File | Settings | File Templates.
+        return height;
     }
 
     @Override
     public int getDepthInTiles() {
-        return depth;  //To change body of implemented methods use File | Settings | File Templates.
+        return depth;
     }
 
     @Override
@@ -53,8 +53,13 @@ public class ExampleMap3d implements TileBasedMap3d {
     }
 
     @Override
-    public boolean blocked(Mover3d mover, PathNode3d pathNode) {
+    public boolean isBlocked(Mover3d mover, PathNode3d pathNode) {
         return ground[pathNode.x][pathNode.y][pathNode.z];
+    }
+
+    @Override
+    public boolean isBlocked(Mover3d mover, int x, int y, int z) {
+        return ground[x][y][z];
     }
 
     @Override

@@ -44,8 +44,13 @@ public class ExampleMap2d implements TileBasedMap2d {
     }
 
     @Override
-    public boolean blocked(Mover2d mover, PathNode2d pathNode) {
+    public boolean isBlocked(Mover2d mover, PathNode2d pathNode) {
         return ground[pathNode.x][pathNode.y];
+    }
+
+    @Override
+    public boolean isBlocked(Mover2d mover, int x, int y) {
+        return ground[x][y];
     }
 
     @Override

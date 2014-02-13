@@ -4,11 +4,15 @@ import com.stewsters.util.math.Facing2d;
 
 public class ShadowCaster2d {
 
+    //There are errors here.  Look here for improvements.
+    //  http://www.roguebasin.com/index.php?title=FOV_using_recursive_shadowcasting_-_improved
+
     /**
      * This is a special case of SquidLib's shadow casting algorithm by Eben Howard
+     *
      * @param litMap2d
      */
-    public ShadowCaster2d(LitMap2d litMap2d){
+    public ShadowCaster2d(LitMap2d litMap2d) {
         this.litMap2d = litMap2d;
     }
 
@@ -21,18 +25,18 @@ public class ShadowCaster2d {
      * Calculates the Field Of View for the provided map from the given x, y
      * coordinates. Returns a lightmap for a result where the values represent a
      * percentage of fully lit.
-     *
+     * <p/>
      * A value equal to or below 0 means that cell is not in the
      * field of view, whereas a value equal to or above 1 means that cell is
      * in the field of view.
      *
-     * @param startx the horizontal component of the starting location
-     * @param starty the vertical component of the starting location
+     * @param startx    the horizontal component of the starting location
+     * @param starty    the vertical component of the starting location
      * @param maxRadius the maximum distance to draw the FOV
-     * @param force the maximum distance to draw the FOV
+     * @param force     the maximum distance to draw the FOV
      * @return the computed light grid
      */
-    public void recalculateFOV( int startx, int starty, float maxRadius, float force) {
+    public void recalculateFOV(int startx, int starty, float maxRadius, float force) {
 
         this.startx = startx;
         this.starty = starty;
@@ -69,12 +73,12 @@ public class ShadowCaster2d {
                 //check if it's within the lightable area and light if needed
                 float radius = radius(deltaX, deltaY);
                 if (radius <= maxRadius) {
-                    float bright =  (1 - (radius / maxRadius));
+                    float bright = (1 - (radius / maxRadius));
                     litMap2d.setLight(currentX, currentY, bright);
                 }
 
                 if (blocked) { //previous cell was a blocking one
-                    if (litMap2d.getResistance(currentX,currentY) >= 1) {//hit a wall
+                    if (litMap2d.getResistance(currentX, currentY) >= 1) {//hit a wall
                         newStart = rightSlope;
                         continue;
                     } else {
@@ -82,7 +86,7 @@ public class ShadowCaster2d {
                         start = newStart;
                     }
                 } else {
-                    if (litMap2d.getResistance(currentX,currentY) >= 1 && distance < maxRadius) {//hit a wall within sight line
+                    if (litMap2d.getResistance(currentX, currentY) >= 1 && distance < maxRadius) {//hit a wall within sight line
                         blocked = true;
                         castLight(distance + 1, start, leftSlope, xx, xy, yx, yy);
                         newStart = rightSlope;
@@ -92,7 +96,7 @@ public class ShadowCaster2d {
         }
     }
 
-    private float radius(float dx, float dy){
-        return (float)Math.sqrt(dx * dx + dy * dy);
+    private float radius(float dx, float dy) {
+        return (float) Math.sqrt(dx * dx + dy * dy);
     }
 }
