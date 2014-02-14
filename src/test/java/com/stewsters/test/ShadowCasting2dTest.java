@@ -47,20 +47,49 @@ public class ShadowCasting2dTest {
 
     }
 
+    @Test
+    public void testWallBlocksLights() {
+
+        ExampleLitMap2d map = new ExampleLitMap2d(50, 50);
+
+        ShadowCaster2d shadowCaster2d = new ShadowCaster2d(map);
+
+        int x = 10;
+        for (int y = 12; y < 20; y++) {
+            map.resistance[x][y] = 1f;
+        }
+        for (int y = 1; y < 10; y++) {
+            map.resistance[x][y] = 1f;
+        }
+
+        map.incrementTurn();
+
+        shadowCaster2d.recalculateFOV(8, 12, 10, 0.3f);
+//        System.out.println(map.getLight(12,9));
+        assert map.getLight(9, 12) > 0.3;
+        assert map.getLight(11, 12) == 0f;
+
+        printMap(map);
+    }
+
+
     private void printMap(ExampleLitMap2d map) {
 
         float max = Float.MIN_VALUE;
+        for (int y = 0; y < map.getWidthInTiles(); y++) {
+            for (int x = 0; x < map.getWidthInTiles(); x++) {
 
-        for (int x = 0; x < map.getWidthInTiles(); x++) {
-            for (int y = 0; y < map.getWidthInTiles(); y++) {
                 if (map.getLight(x, y) > max)
                     max = map.getLight(x, y);
             }
         }
 
-        for (int x = 0; x < map.getWidthInTiles(); x++) {
-            for (int y = 0; y < map.getWidthInTiles(); y++) {
-                int val = (int) (map.getLight(x, y)/ max );
+        for (int y = 0; y < map.getWidthInTiles(); y++) {
+            for (int x = 0; x < map.getWidthInTiles(); x++) {
+
+//                int val = (int) (map.getLight(x, y)/ max );
+                int val = (map.getLight(x, y) > 0) ? 1 : 0;
+
                 System.out.print(val);
             }
             System.out.println();

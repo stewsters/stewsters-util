@@ -12,8 +12,8 @@ public class ExampleLitMap2d extends ExampleMap2d implements LitMap2d {
 
     private int turnCounter;
 
-    private float resistance[][];
-    private float lightLevel[][];
+    public float resistance[][];
+    public float lightLevel[][];
     private int turnLastUpdated[][];
 
     public ExampleLitMap2d(int width, int height) {
