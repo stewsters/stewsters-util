@@ -7,6 +7,11 @@ public class ShadowCaster2d {
     //There are errors here.  Look here for improvements.
     //  http://www.roguebasin.com/index.php?title=FOV_using_recursive_shadowcasting_-_improved
 
+    private int startx, starty;
+    private float force, decay, radius;
+    private LitMap2d litMap2d;
+
+
     /**
      * This is a special case of SquidLib's shadow casting algorithm by Eben Howard
      *
@@ -16,10 +21,6 @@ public class ShadowCaster2d {
         this.litMap2d = litMap2d;
     }
 
-    private int startx;
-    private int starty;
-    private float maxRadius;
-    private LitMap2d litMap2d;
 
     /**
      * Calculates the Field Of View for the provided map from the given x, y
@@ -32,17 +33,21 @@ public class ShadowCaster2d {
      *
      * @param startx    the horizontal component of the starting location
      * @param starty    the vertical component of the starting location
-     * @param maxRadius the maximum distance to draw the FOV
      * @param force     the maximum distance to draw the FOV
-     * @return the computed light grid
+     * @param decay     the speed of the decay
+     * @return          the computed light grid
      */
-    public void recalculateFOV(int startx, int starty, float maxRadius, float force) {
+    public void recalculateFOV(int startx, int starty, float force, float decay) {
 
         this.startx = startx;
         this.starty = starty;
-        this.maxRadius = maxRadius;
+        this.force = force;
+        this.decay = decay;
+
+        this.radius = (force / decay);
 
         litMap2d.setLight(startx, starty, force);
+
 
         for (Facing2d d : Facing2d.values()) {
             castLight(1, 1.0f, 0.0f, 0, d.x, d.y, 0);
@@ -56,7 +61,7 @@ public class ShadowCaster2d {
             return;
         }
         boolean blocked = false;
-        for (int distance = row; distance <= maxRadius && !blocked; distance++) {
+        for (int distance = row; distance <= radius && !blocked; distance++) {
             int deltaY = -distance;
             for (int deltaX = -distance; deltaX <= 0; deltaX++) {
                 int currentX = startx + deltaX * xx + deltaY * xy;
@@ -71,9 +76,8 @@ public class ShadowCaster2d {
                 }
 
                 //check if it's within the lightable area and light if needed
-                float radius = radius(deltaX, deltaY);
-                if (radius <= maxRadius) {
-                    float bright = (1 - (radius / maxRadius));
+                if (radius(deltaX, deltaY) <= force) {
+                    float bright = (1 - (decay * radius(deltaX, deltaY) / force));
                     litMap2d.setLight(currentX, currentY, bright);
                 }
 
@@ -86,7 +90,7 @@ public class ShadowCaster2d {
                         start = newStart;
                     }
                 } else {
-                    if (litMap2d.getResistance(currentX, currentY) >= 1 && distance < maxRadius) {//hit a wall within sight line
+                    if (litMap2d.getResistance(currentX, currentY) >= 1 && distance < force) {//hit a wall within sight line
                         blocked = true;
                         castLight(distance + 1, start, leftSlope, xx, xy, yx, yy);
                         newStart = rightSlope;

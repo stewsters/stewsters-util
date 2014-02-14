@@ -82,6 +82,17 @@ public class MathUtils {
         return random.nextGaussian() * stdDeviation;
     }
 
+    public static float lerp(float start, float end, float percentage) {
+        return start + percentage * (end - start);
+    }
+
+    public static float smootherStep(float edge0, float edge1, float x) {
+        // Scale, and clamp x to 0..1 range
+        x = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
+        // Evaluate polynomial
+        return x * x * x * (x * (x * 6 - 15) + 10);
+    }
+
     public static String getChoice(Map<String, Integer> choicesMap) {
         int totalChances = 0;
         for (Integer value : choicesMap.values()) {
