@@ -107,4 +107,25 @@ public class MathUtils {
         }
         return null;
     }
+
+    /**
+     * Faster version of Math.floor
+     *
+     * @param x
+     * @return
+     */
+    private static int fastfloor(double x) {
+        return x > 0 ? (int) x : (int) x - 1;
+    }
+
+    /**
+     * Faster version of Math.floor
+     *
+     * @param x
+     * @return
+     */
+    private static int fastfloor(float x) {
+        return x > 0 ? (int) x : (int) x - 1;
+    }
+
 }

@@ -1,12 +1,10 @@
 package com.stewsters.test;
 
-
 import com.stewsters.test.examples.ExampleLitMap2d;
 import com.stewsters.util.shadow.ShadowCaster2d;
 import org.junit.Test;
 
 public class ShadowCasting2dTest {
-
 
     @Test
     public void testShadowCast() {
