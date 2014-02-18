@@ -14,26 +14,18 @@ public class ExampleMap2d implements TileBasedMap2d {
     private final int height;
     protected CellType[][] ground;
 
-    public ExampleMap2d(int width, int height) {
+    public ExampleMap2d(int width, int height, CellType baseType) {
         this.width = width;
         this.height = height;
 
         ground = new ExampleCellType[width][height];
 
-        //TODO: move these out, they wont be defined here.
-        CellType wall = new ExampleCellType('X', true);
-        CellType floor = new ExampleCellType('.', false);
-
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                if ((x == 0 || x >= width - 1 || y == 0 || y >= width - 1))
-                    ground[x][y] = wall;
-                else
-                    ground[x][y] = floor;
+
+                ground[x][y] = baseType;
             }
         }
-
-        //set up some walls
 
     }
 

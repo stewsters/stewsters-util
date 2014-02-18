@@ -1,6 +1,8 @@
 package com.stewsters.test;
 
+import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleLitMap2d;
+import com.stewsters.util.mapgen.CellType;
 import com.stewsters.util.shadow.ShadowCaster2d;
 import org.junit.Test;
 
@@ -8,8 +10,8 @@ public class ShadowCasting2dTest {
 
     @Test
     public void testShadowCast() {
-
-        ExampleLitMap2d map = new ExampleLitMap2d(50, 50);
+        CellType floor = new ExampleCellType('.', false);
+        ExampleLitMap2d map = new ExampleLitMap2d(50, 50,floor);
         ShadowCaster2d shadowCaster2d = new ShadowCaster2d(map);
 
         map.incrementTurn();
@@ -27,8 +29,8 @@ public class ShadowCasting2dTest {
 
     @Test
     public void testTurnsLights() {
-
-        ExampleLitMap2d map = new ExampleLitMap2d(50, 50);
+        CellType floor = new ExampleCellType('.', false);
+        ExampleLitMap2d map = new ExampleLitMap2d(50, 50,floor);
 
         ShadowCaster2d shadowCaster2d = new ShadowCaster2d(map);
         map.incrementTurn();
@@ -47,8 +49,8 @@ public class ShadowCasting2dTest {
 
     @Test
     public void testWallBlocksLights() {
-
-        ExampleLitMap2d map = new ExampleLitMap2d(50, 50);
+        CellType floor = new ExampleCellType('.', false);
+        ExampleLitMap2d map = new ExampleLitMap2d(50, 50,floor);
 
         ShadowCaster2d shadowCaster2d = new ShadowCaster2d(map);
 

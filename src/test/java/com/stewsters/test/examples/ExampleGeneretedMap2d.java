@@ -5,8 +5,10 @@ import com.stewsters.util.mapgen.twoDimension.GeneratedMap2d;
 
 public class ExampleGeneretedMap2d extends ExampleMap2d implements GeneratedMap2d {
 
-    public ExampleGeneretedMap2d(int width, int height) {
-        super(width, height);
+    public ExampleGeneretedMap2d(int width, int height, CellType cellType) {
+        super(width, height, cellType);
+
+
     }
 
     @Override

@@ -1,8 +1,10 @@
 package com.stewsters.test;
 
 
+import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap2d;
 import com.stewsters.test.examples.ExampleMover2d;
+import com.stewsters.util.mapgen.CellType;
 import com.stewsters.util.pathing.twoDimention.searcher.DjikstraSearcher2d;
 import com.stewsters.util.pathing.twoDimention.searcher.Objective2d;
 import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
@@ -16,8 +18,8 @@ public class DjikstraSearcher2dTest {
 
     @Test
     public void testFindSomething4Way() {
-
-        ExampleMap2d map = new ExampleMap2d(10, 10);
+        CellType floor = new ExampleCellType('.', false);
+        ExampleMap2d map = new ExampleMap2d(10, 10,floor);
 
         DjikstraSearcher2d pathfinder = new DjikstraSearcher2d(map, 100, false);
 
@@ -41,8 +43,8 @@ public class DjikstraSearcher2dTest {
 
     @Test
     public void testFindSomething8Way() {
-
-        ExampleMap2d map = new ExampleMap2d(10, 10);
+        CellType floor = new ExampleCellType('.', false);
+        ExampleMap2d map = new ExampleMap2d(10, 10,floor);
 
         DjikstraSearcher2d pathfinder = new DjikstraSearcher2d(map, 100, true);
 

@@ -1,7 +1,9 @@
 package com.stewsters.test;
 
+import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap2d;
 import com.stewsters.test.examples.ExampleMover2d;
+import com.stewsters.util.mapgen.CellType;
 import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.pathfinder.AStarPathFinder2d;
 import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
@@ -16,7 +18,8 @@ public class AStarPathfinder2dTest {
     @Test
     public void test4WayPathingTest() {
         System.out.println("Test 4 way path");
-        ExampleMap2d map = new ExampleMap2d(10, 10);
+        CellType floor = new ExampleCellType('.', false);
+        ExampleMap2d map = new ExampleMap2d(10, 10,floor);
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, false);
 
@@ -36,7 +39,8 @@ public class AStarPathfinder2dTest {
     @Test
     public void test8WayPathingTest() {
         System.out.println("Test 8 way path");
-        ExampleMap2d map = new ExampleMap2d(10, 10);
+        CellType floor = new ExampleCellType('.', false);
+        ExampleMap2d map = new ExampleMap2d(10, 10,floor);
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, true);
 
@@ -56,8 +60,8 @@ public class AStarPathfinder2dTest {
 
     @Test
     public void testFindNearest4Way() {
-
-        ExampleMap2d map = new ExampleMap2d(10, 10);
+        CellType floor = new ExampleCellType('.', false);
+        ExampleMap2d map = new ExampleMap2d(10, 10,floor);
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, false);
 
@@ -69,7 +73,7 @@ public class AStarPathfinder2dTest {
         for (Point2i result : results) {
             System.out.println(result.x + " " + result.y);
         }
-        assertEquals((8 * 8) - 1, results.size());
+        assertEquals((10*10) - 1, results.size());
 
 
         System.out.println("find nearest 4 way to 2 distance");
@@ -85,8 +89,8 @@ public class AStarPathfinder2dTest {
 
     @Test
     public void testFindNearest8Way() {
-
-        ExampleMap2d map = new ExampleMap2d(10, 10);
+        CellType floor = new ExampleCellType('.', false);
+        ExampleMap2d map = new ExampleMap2d(10, 10,floor);
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, true);
 
@@ -98,7 +102,7 @@ public class AStarPathfinder2dTest {
         for (Point2i result : results) {
             System.out.println(result.x + " " + result.y);
         }
-        assertEquals((8 * 8) - 1, results.size());
+        assertEquals((10*10) - 1, results.size());
 
 
         System.out.println("find nearest 8 way to 1 distance");

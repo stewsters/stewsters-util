@@ -1,5 +1,6 @@
 package com.stewsters.test.examples;
 
+import com.stewsters.util.mapgen.CellType;
 import com.stewsters.util.shadow.LitMap2d;
 
 /**
@@ -16,8 +17,8 @@ public class ExampleLitMap2d extends ExampleMap2d implements LitMap2d {
     public float lightLevel[][];
     private int turnLastUpdated[][];
 
-    public ExampleLitMap2d(int width, int height) {
-        super(width, height);
+    public ExampleLitMap2d(int width, int height, CellType cellType) {
+        super(width, height, cellType);
         turnCounter = Integer.MIN_VALUE;
         this.width = width;
         this.height = height;

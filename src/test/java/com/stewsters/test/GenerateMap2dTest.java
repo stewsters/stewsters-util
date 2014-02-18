@@ -1,7 +1,9 @@
 package com.stewsters.test;
 
+import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleGeneretedMap2d;
 import com.stewsters.test.examples.ExampleLitMap2d;
+import com.stewsters.util.mapgen.CellType;
 import com.stewsters.util.mapgen.twoDimension.MapGen2d;
 import org.junit.Test;
 
@@ -9,14 +11,19 @@ public class GenerateMap2dTest {
 
     @Test
     public void testGeneration(){
+        CellType wall = new ExampleCellType('X', true);
+        CellType floor = new ExampleCellType('.', false);
+
+        ExampleGeneretedMap2d exampleGeneretedMap2d = new ExampleGeneretedMap2d(20,20,floor);
 
 
 
-        ExampleGeneretedMap2d exampleGeneretedMap2d = new ExampleGeneretedMap2d(20,20);
+
+
 
 //        exampleGeneretedMap2d
 
-        MapGen2d.fillWithBorder(exampleGeneretedMap2d, );
+        MapGen2d.fillWithBorder(exampleGeneretedMap2d, floor,wall );
 
     }
 
