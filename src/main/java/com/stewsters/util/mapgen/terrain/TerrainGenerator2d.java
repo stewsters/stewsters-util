@@ -25,19 +25,36 @@ public class TerrainGenerator2d {
 
 
     public char getTerrainAt(int x, int y) {
-        double altitude = elevation.gen(x, y);
 
-        double temp = temperature.gen(x, y);
+//        http://blog.kaelan.org/randomly-generated-world-map/
+
+        double altitude = elevation.gen(x, y);
+//        double altitudePer = altitude
+
+        double latitude = (y / height) - 0.5; // from -0.5 to 0.5
+
+
+        double temp =
+                temperature.gen(x, y)/3
+                + altitude/3
+                + Math.abs(1/latitude)/3;
+
+
         //TODO: temperature gradient by altitude
         //TODO: temperature gradient by latitude
 
 
+        // precipitation is boosted by being near warm water
+
+        // precipitation is boosted by temperature
+
+
         if (altitude < seaLevel) {
-            if(temp < freezing)
+            if (temp < freezing)
                 return 'i'; // ice
             else
                 return 'w'; // water
-        } else{
+        } else {
 
         }
 
