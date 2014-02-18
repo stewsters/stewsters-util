@@ -25,14 +25,14 @@ public class TerrainGenerator2d {
 
 
     public char getTerrainAt(int x, int y) {
-        double el = elevation.gen(x, y);
+        double altitude = elevation.gen(x, y);
 
         double temp = temperature.gen(x, y);
         //TODO: temperature gradient by altitude
         //TODO: temperature gradient by latitude
 
 
-        if (el < seaLevel) {
+        if (altitude < seaLevel) {
             if(temp < freezing)
                 return 'i'; // ice
             else
