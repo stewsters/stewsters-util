@@ -21,7 +21,7 @@ public class DjikstraSearcher2dTest {
 
     @Test
     public void testFindSomething4Way() {
-        CellType floor = new ExampleCellType('.', false);
+        ExampleCellType floor = new ExampleCellType('.', false);
         ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
         DjikstraSearcher2d pathfinder = new DjikstraSearcher2d(map, 100, false);
@@ -46,7 +46,7 @@ public class DjikstraSearcher2dTest {
 
     @Test
     public void testFindSomething8Way() {
-        CellType floor = new ExampleCellType('.', false);
+        ExampleCellType floor = new ExampleCellType('.', false);
         ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
         DjikstraSearcher2d pathfinder = new DjikstraSearcher2d(map, 100, true);

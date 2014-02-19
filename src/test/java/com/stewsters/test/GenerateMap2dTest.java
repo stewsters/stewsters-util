@@ -13,9 +13,9 @@ public class GenerateMap2dTest {
 
     @Test
     public void testGenerationOfBoxViaPredicates() {
-        CellType unknown = new ExampleCellType('?', true);
-        CellType wall = new ExampleCellType('X', true);
-        CellType floor = new ExampleCellType('.', false);
+        ExampleCellType unknown = new ExampleCellType('?', true);
+        ExampleCellType wall = new ExampleCellType('X', true);
+        ExampleCellType floor = new ExampleCellType('.', false);
 
         ExampleGeneretedMap2d em1 = new ExampleGeneretedMap2d(20, 20, unknown);
         MapGen2d.fillWithBorder(em1, floor, wall);
@@ -34,9 +34,9 @@ public class GenerateMap2dTest {
 
     @Test
     public void testGenerationOfTreesViaPredicates() {
-        CellType unknown = new ExampleCellType('?', true);
-        CellType wall = new ExampleCellType('X', true);
-        CellType floor = new ExampleCellType('.', false);
+        ExampleCellType unknown = new ExampleCellType('?', true);
+        ExampleCellType wall = new ExampleCellType('X', true);
+        ExampleCellType floor = new ExampleCellType('.', false);
 
 
         ExampleGeneretedMap2d em = new ExampleGeneretedMap2d(20, 20, unknown);
@@ -47,12 +47,12 @@ public class GenerateMap2dTest {
         printMap(em);
 
         NoiseFunction vegitation = new NoiseFunction(10, 30, 16, 13);
-        CellType tree = new ExampleCellType('T', true);
+        ExampleCellType tree = new ExampleCellType('T', true);
         MapGen2d.fill(em, new AndPredicate2d(new NoiseGreaterThan(vegitation, 0.5), new CellEquals2d(floor)), new DrawCell2d(tree));
 
 
         NoiseFunction snow = new NoiseFunction(-10, -500, 20, 22);
-        CellType pineTree = new ExampleCellType('p', true);
+        ExampleCellType pineTree = new ExampleCellType('p', true);
         MapGen2d.fill(em, new AndPredicate2d(new NoiseGreaterThan(snow, 0.6), new CellEquals2d(tree)), new DrawCell2d(pineTree));
 
 
@@ -75,7 +75,7 @@ public class GenerateMap2dTest {
         for (int y = 0; y < exampleGeneretedMap2d.getWidthInTiles(); y++) {
             for (int x = 0; x < exampleGeneretedMap2d.getWidthInTiles(); x++) {
 
-                System.out.print(exampleGeneretedMap2d.getCellTypeAt(x, y).getGlyph());
+                System.out.print(((ExampleCellType)exampleGeneretedMap2d.getCellTypeAt(x, y)).getGlyph());
             }
             System.out.println();
         }

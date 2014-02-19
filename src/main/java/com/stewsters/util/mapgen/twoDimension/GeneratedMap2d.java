@@ -11,5 +11,5 @@ public interface GeneratedMap2d {
 
     public CellType getCellTypeAt(int x, int y);
 
-    public CellType setCellTypeAt(int x, int y, CellType cellType);
+    public void setCellTypeAt(int x, int y, CellType cellType);
 }

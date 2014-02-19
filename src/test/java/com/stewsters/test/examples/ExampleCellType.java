@@ -12,12 +12,11 @@ public class ExampleCellType implements CellType {
         this.blocks = blocks;
     }
 
-    @Override
     public char getGlyph() {
         return glyph;
     }
 
-    @Override
+
     public boolean isBlocking() {
         return blocks;
     }

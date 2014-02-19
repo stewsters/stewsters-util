@@ -18,7 +18,7 @@ public class AStarPathfinder2dTest {
     @Test
     public void test4WayPathingTest() {
         System.out.println("Test 4 way path");
-        CellType floor = new ExampleCellType('.', false);
+        ExampleCellType floor = new ExampleCellType('.', false);
         ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, false);
@@ -39,7 +39,7 @@ public class AStarPathfinder2dTest {
     @Test
     public void test8WayPathingTest() {
         System.out.println("Test 8 way path");
-        CellType floor = new ExampleCellType('.', false);
+        ExampleCellType floor = new ExampleCellType('.', false);
         ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, true);
@@ -60,7 +60,7 @@ public class AStarPathfinder2dTest {
 
     @Test
     public void testFindNearest4Way() {
-        CellType floor = new ExampleCellType('.', false);
+        ExampleCellType floor = new ExampleCellType('.', false);
         ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, false);
@@ -89,7 +89,7 @@ public class AStarPathfinder2dTest {
 
     @Test
     public void testFindNearest8Way() {
-        CellType floor = new ExampleCellType('.', false);
+        ExampleCellType floor = new ExampleCellType('.', false);
         ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, true);

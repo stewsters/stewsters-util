@@ -12,9 +12,9 @@ public class ExampleMap2d implements TileBasedMap2d {
 
     private final int width;
     private final int height;
-    protected CellType[][] ground;
+    protected ExampleCellType[][] ground;
 
-    public ExampleMap2d(int width, int height, CellType baseType) {
+    public ExampleMap2d(int width, int height, ExampleCellType baseType) {
         this.width = width;
         this.height = height;
 

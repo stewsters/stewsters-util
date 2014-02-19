@@ -5,7 +5,7 @@ import com.stewsters.util.mapgen.twoDimension.GeneratedMap2d;
 
 public class ExampleGeneretedMap2d extends ExampleMap2d implements GeneratedMap2d {
 
-    public ExampleGeneretedMap2d(int width, int height, CellType cellType) {
+    public ExampleGeneretedMap2d(int width, int height, ExampleCellType cellType) {
         super(width, height, cellType);
 
 
@@ -17,7 +17,7 @@ public class ExampleGeneretedMap2d extends ExampleMap2d implements GeneratedMap2
     }
 
     @Override
-    public CellType setCellTypeAt(int x, int y, CellType cellType) {
+    public CellType setCellTypeAt(int x, int y, ExampleCellType cellType) {
         return ground[x][y] = cellType;
     }
 }

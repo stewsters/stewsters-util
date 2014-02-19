@@ -17,7 +17,7 @@ public class ExampleLitMap2d extends ExampleMap2d implements LitMap2d {
     public float lightLevel[][];
     private int turnLastUpdated[][];
 
-    public ExampleLitMap2d(int width, int height, CellType cellType) {
+    public ExampleLitMap2d(int width, int height, ExampleCellType cellType) {
         super(width, height, cellType);
         turnCounter = Integer.MIN_VALUE;
         this.width = width;
