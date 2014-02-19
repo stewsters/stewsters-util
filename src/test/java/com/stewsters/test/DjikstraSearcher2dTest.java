@@ -16,10 +16,13 @@ import static org.junit.Assert.assertEquals;
 public class DjikstraSearcher2dTest {
 
 
+//  TODO: investigate speed improvements:
+//  https://code.google.com/p/caliper/wiki/JavaMicrobenchmarks
+
     @Test
     public void testFindSomething4Way() {
         CellType floor = new ExampleCellType('.', false);
-        ExampleMap2d map = new ExampleMap2d(10, 10,floor);
+        ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
         DjikstraSearcher2d pathfinder = new DjikstraSearcher2d(map, 100, false);
 
@@ -44,7 +47,7 @@ public class DjikstraSearcher2dTest {
     @Test
     public void testFindSomething8Way() {
         CellType floor = new ExampleCellType('.', false);
-        ExampleMap2d map = new ExampleMap2d(10, 10,floor);
+        ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
         DjikstraSearcher2d pathfinder = new DjikstraSearcher2d(map, 100, true);
 

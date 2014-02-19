@@ -31,11 +31,11 @@ public class ShadowCaster2d {
      * field of view, whereas a value equal to or above 1 means that cell is
      * in the field of view.
      *
-     * @param startx    the horizontal component of the starting location
-     * @param starty    the vertical component of the starting location
-     * @param force     the maximum distance to draw the FOV
-     * @param decay     the speed of the decay
-     * @return          the computed light grid
+     * @param startx the horizontal component of the starting location
+     * @param starty the vertical component of the starting location
+     * @param force  the maximum distance to draw the FOV
+     * @param decay  the speed of the decay
+     * @return the computed light grid
      */
     public void recalculateFOV(int startx, int starty, float force, float decay) {
 

@@ -2,15 +2,11 @@ package com.stewsters.util.mapgen.twoDimension.predicate;
 
 import com.stewsters.util.mapgen.twoDimension.GeneratedMap2d;
 
-import java.util.LinkedList;
-
-
 public class OrPredicate2d implements CellPredicate2d {
 
-    private LinkedList<CellPredicate2d> predicates;
+    private CellPredicate2d[] predicates;
 
-
-    public OrPredicate2d(LinkedList<CellPredicate2d> predicates) {
+    public OrPredicate2d(CellPredicate2d... predicates) {
         this.predicates = predicates;
     }
 

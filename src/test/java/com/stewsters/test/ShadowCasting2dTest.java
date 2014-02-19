@@ -11,7 +11,7 @@ public class ShadowCasting2dTest {
     @Test
     public void testShadowCast() {
         CellType floor = new ExampleCellType('.', false);
-        ExampleLitMap2d map = new ExampleLitMap2d(50, 50,floor);
+        ExampleLitMap2d map = new ExampleLitMap2d(50, 50, floor);
         ShadowCaster2d shadowCaster2d = new ShadowCaster2d(map);
 
         map.incrementTurn();
@@ -30,7 +30,7 @@ public class ShadowCasting2dTest {
     @Test
     public void testTurnsLights() {
         CellType floor = new ExampleCellType('.', false);
-        ExampleLitMap2d map = new ExampleLitMap2d(50, 50,floor);
+        ExampleLitMap2d map = new ExampleLitMap2d(50, 50, floor);
 
         ShadowCaster2d shadowCaster2d = new ShadowCaster2d(map);
         map.incrementTurn();
@@ -50,7 +50,7 @@ public class ShadowCasting2dTest {
     @Test
     public void testWallBlocksLights() {
         CellType floor = new ExampleCellType('.', false);
-        ExampleLitMap2d map = new ExampleLitMap2d(50, 50,floor);
+        ExampleLitMap2d map = new ExampleLitMap2d(50, 50, floor);
 
         ShadowCaster2d shadowCaster2d = new ShadowCaster2d(map);
 

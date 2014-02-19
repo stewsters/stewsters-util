@@ -19,7 +19,7 @@ public class AStarPathfinder2dTest {
     public void test4WayPathingTest() {
         System.out.println("Test 4 way path");
         CellType floor = new ExampleCellType('.', false);
-        ExampleMap2d map = new ExampleMap2d(10, 10,floor);
+        ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, false);
 
@@ -40,7 +40,7 @@ public class AStarPathfinder2dTest {
     public void test8WayPathingTest() {
         System.out.println("Test 8 way path");
         CellType floor = new ExampleCellType('.', false);
-        ExampleMap2d map = new ExampleMap2d(10, 10,floor);
+        ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, true);
 
@@ -61,7 +61,7 @@ public class AStarPathfinder2dTest {
     @Test
     public void testFindNearest4Way() {
         CellType floor = new ExampleCellType('.', false);
-        ExampleMap2d map = new ExampleMap2d(10, 10,floor);
+        ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, false);
 
@@ -73,7 +73,7 @@ public class AStarPathfinder2dTest {
         for (Point2i result : results) {
             System.out.println(result.x + " " + result.y);
         }
-        assertEquals((10*10) - 1, results.size());
+        assertEquals((10 * 10) - 1, results.size());
 
 
         System.out.println("find nearest 4 way to 2 distance");
@@ -90,7 +90,7 @@ public class AStarPathfinder2dTest {
     @Test
     public void testFindNearest8Way() {
         CellType floor = new ExampleCellType('.', false);
-        ExampleMap2d map = new ExampleMap2d(10, 10,floor);
+        ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, true);
 
@@ -102,7 +102,7 @@ public class AStarPathfinder2dTest {
         for (Point2i result : results) {
             System.out.println(result.x + " " + result.y);
         }
-        assertEquals((10*10) - 1, results.size());
+        assertEquals((10 * 10) - 1, results.size());
 
 
         System.out.println("find nearest 8 way to 1 distance");

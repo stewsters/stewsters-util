@@ -12,7 +12,7 @@ public class TerrainTest {
 
         for (int x = 0; x < 100; x++) {
             for (int y = 0; y < 100; y++) {
-                System.out.print(terrainGenerator2d.getTerrainAt(x* 10, y* 10));
+                System.out.print(terrainGenerator2d.getTerrainAt(x * 10, y * 10));
             }
             System.out.println();
         }

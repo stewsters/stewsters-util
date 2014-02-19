@@ -35,9 +35,9 @@ public class TerrainGenerator2d {
 
 
         double temp =
-                temperature.gen(x, y)/3
-                + altitude/3
-                + Math.abs(1/latitude)/3;
+                temperature.gen(x, y) / 3
+                        + altitude / 3
+                        + Math.abs(1 / latitude) / 3;
 
 
         //TODO: temperature gradient by altitude

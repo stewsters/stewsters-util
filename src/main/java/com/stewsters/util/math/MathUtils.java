@@ -82,9 +82,22 @@ public class MathUtils {
         return random.nextGaussian() * stdDeviation;
     }
 
-    public static float lerp(float start, float end, float percentage) {
-        return start + percentage * (end - start);
+    public static float lerp(float min, float max, float percentage) {
+        return min + percentage * (max - min);
     }
+
+    public static double lerp(double min, double max, double percentage) {
+        return min + percentage * (max - min);
+    }
+
+    public static float unlerp(float min, float max, float val) {
+        return (val - min) / (max - min);
+    }
+
+    public static double unlerp(double min, double max, double val) {
+        return (val - min) / (max - min);
+    }
+
 
     public static float smootherStep(float edge0, float edge1, float x) {
         // Scale, and clamp x to 0..1 range
@@ -92,6 +105,7 @@ public class MathUtils {
         // Evaluate polynomial
         return x * x * x * (x * (x * 6 - 15) + 10);
     }
+
 
     public static String getChoice(Map<String, Integer> choicesMap) {
         int totalChances = 0;
@@ -126,6 +140,32 @@ public class MathUtils {
      */
     private static int fastfloor(float x) {
         return x > 0 ? (int) x : (int) x - 1;
+    }
+
+
+    /**
+     * Calculate light from flashlight
+     *
+     * @param charge         current charge level
+     * @param kChargeMin     0.0f;
+     * @param kChargeMax     100.0f;
+     * @param kLuminosityMin 0.0f;
+     * @param kLuminosityMax 0.9f;
+     * @return
+     */
+    public double computeLuminosityFromCharge(double charge, double kChargeMin, double kChargeMax, double kLuminosityMin, double kLuminosityMax) {
+        double chargeT = unlerp(kChargeMin, kChargeMax, charge);
+        return lerp(kLuminosityMax, kLuminosityMin, Math.pow(chargeT, 4));
+    }
+
+    /**
+     * Calculate light drop off from flashlight running out of charge
+     *
+     * @param charge
+     * @return
+     */
+    public double flashlight(double charge) {
+        return 1 - Math.pow(1 - charge, 4);
     }
 
 }
