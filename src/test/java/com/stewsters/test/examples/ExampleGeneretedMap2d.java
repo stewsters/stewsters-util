@@ -17,7 +17,7 @@ public class ExampleGeneretedMap2d extends ExampleMap2d implements GeneratedMap2
     }
 
     @Override
-    public CellType setCellTypeAt(int x, int y, ExampleCellType cellType) {
-        return ground[x][y] = cellType;
+    public void setCellTypeAt(int x, int y, CellType cellType) {
+        ground[x][y] = (ExampleCellType) cellType;
     }
 }
