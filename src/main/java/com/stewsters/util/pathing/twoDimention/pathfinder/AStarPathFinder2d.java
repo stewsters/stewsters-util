@@ -84,13 +84,17 @@ public class AStarPathFinder2d implements PathFinder2d {
         }
     }
 
+    protected boolean isBlocked(Mover2d mover, int x, int y) {
+        return map.isBlocked(mover, nodes[x][y]);
+    }
+
     /**
      * @see PathFinder2d#findPath(com.stewsters.util.pathing.twoDimention.shared.Mover2d, int, int, int, int)
      */
     public FullPath2d findPath(Mover2d mover, int sx, int sy, int tx, int ty) {
         // easy first check, if the destination is blocked, we can't get there
 
-        if (map.isBlocked(mover, nodes[tx][ty])) {
+        if (isBlocked(mover, tx, ty)) {
             return null;
         }
 
@@ -289,7 +293,7 @@ public class AStarPathFinder2d implements PathFinder2d {
         boolean invalid = (x < 0) || (y < 0) || (x >= map.getWidthInTiles()) || (y >= map.getHeightInTiles());
 
         if ((!invalid) && ((sx != x) || (sy != y))) {
-            invalid = map.isBlocked(mover, nodes[x][y]);
+            invalid = isBlocked(mover, x,y);
         }
 
         return !invalid;
