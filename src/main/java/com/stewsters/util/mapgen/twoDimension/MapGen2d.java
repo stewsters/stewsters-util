@@ -66,7 +66,7 @@ public class MapGen2d {
         while (todo.size() > 0) {
             p = todo.pop();
 
-            if (done.contains(p) && predicate.belongs(map, p.x, p.y)) {
+            if (!done.contains(p) && predicate.belongs(map, p.x, p.y)) {
 
                 match.add(p);
 
