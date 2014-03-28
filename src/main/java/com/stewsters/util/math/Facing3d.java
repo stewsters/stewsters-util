@@ -20,7 +20,7 @@ public enum Facing3d {
     }
 
     public static Facing3d randomCardinal() {
-        switch (MathUtils.getIntInRange(0, 5)) {
+        switch (MatUtils.getIntInRange(0, 5)) {
             case 0:
                 return NORTH;
             case 1:

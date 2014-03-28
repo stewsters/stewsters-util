@@ -1,7 +1,6 @@
 package com.stewsters.test.examples;
 
-import com.stewsters.util.mapgen.CellType;
-import com.stewsters.util.shadow.LitMap2d;
+import com.stewsters.util.shadow.twoDimention.LitMap2d;
 
 /**
  *
@@ -10,11 +9,9 @@ public class ExampleLitMap2d extends ExampleMap2d implements LitMap2d {
 
     private final int width;
     private final int height;
-
-    private int turnCounter;
-
     public float resistance[][];
     public float lightLevel[][];
+    private int turnCounter;
     private int turnLastUpdated[][];
 
     public ExampleLitMap2d(int width, int height, ExampleCellType cellType) {

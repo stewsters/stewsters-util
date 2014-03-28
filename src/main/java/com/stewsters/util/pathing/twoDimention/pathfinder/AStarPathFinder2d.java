@@ -293,7 +293,7 @@ public class AStarPathFinder2d implements PathFinder2d {
         boolean invalid = (x < 0) || (y < 0) || (x >= map.getWidthInTiles()) || (y >= map.getHeightInTiles());
 
         if ((!invalid) && ((sx != x) || (sy != y))) {
-            invalid = isBlocked(mover, x,y);
+            invalid = isBlocked(mover, x, y);
         }
 
         return !invalid;

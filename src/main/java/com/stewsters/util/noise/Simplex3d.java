@@ -37,6 +37,16 @@ public class Simplex3d {
         else
             finalScale = 32;
     }
+    /**
+     * Properly rounded: 1/3
+     */
+    private static final float K0 = 0x1.555556p-2f;
+    /**
+     * Properly rounded: 1/6
+     */
+    private static final float K1 = 0x1.555556p-3f;
+    private static final boolean simpleHash = true;
+    private static final int M = 0x5bd1e995;
 
     /**
      *
@@ -44,7 +54,6 @@ public class Simplex3d {
     private static int pseudoFloor(float x) {
         return x >= 0 ? (int) x : (int) x - 1;
     }
-
 
     /**
      * Completes coordinate hashing and performs the dot product with the selected vector.
@@ -151,19 +160,6 @@ public class Simplex3d {
             }
         }
     }
-
-    /**
-     * Properly rounded: 1/3
-     */
-    private static final float K0 = 0x1.555556p-2f;
-
-    /**
-     * Properly rounded: 1/6
-     */
-    private static final float K1 = 0x1.555556p-3f;
-
-    private static final boolean simpleHash = true;
-    private static final int M = 0x5bd1e995;
 
     private static final int prehash(int i, int j, int k) {
         if (simpleHash)

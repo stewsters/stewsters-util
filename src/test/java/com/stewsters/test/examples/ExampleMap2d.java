@@ -1,6 +1,5 @@
 package com.stewsters.test.examples;
 
-import com.stewsters.util.mapgen.CellType;
 import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;

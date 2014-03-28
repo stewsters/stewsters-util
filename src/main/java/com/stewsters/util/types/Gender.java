@@ -1,6 +1,6 @@
 package com.stewsters.util.types;
 
-import com.stewsters.util.math.MathUtils;
+import com.stewsters.util.math.MatUtils;
 
 public enum Gender {
     MALE('♂'),
@@ -14,6 +14,6 @@ public enum Gender {
     }
 
     public static Gender random() {
-        return MathUtils.getBoolean() ? Gender.MALE : Gender.FEMALE;
+        return MatUtils.getBoolean() ? Gender.MALE : Gender.FEMALE;
     }
 }

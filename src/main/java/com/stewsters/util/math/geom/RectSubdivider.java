@@ -1,6 +1,6 @@
 package com.stewsters.util.math.geom;
 
-import com.stewsters.util.math.MathUtils;
+import com.stewsters.util.math.MatUtils;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ public class RectSubdivider {
         if (usableWidth > usableHeight) {
             //vertical wall added
 
-            int x = MathUtils.getIntInRange(rect.x1 + minSize, rect.x2 - minSize);
+            int x = MatUtils.getIntInRange(rect.x1 + minSize, rect.x2 - minSize);
 
             int y1 = rect.y1;
             int h = rect.y2 - rect.y1;
@@ -40,7 +40,7 @@ public class RectSubdivider {
         } else {
             //horizontal wall added
 
-            int y = MathUtils.getIntInRange(rect.y1 + minSize, rect.y2 - minSize);
+            int y = MatUtils.getIntInRange(rect.y1 + minSize, rect.y2 - minSize);
             int x1 = rect.x1;
             int w = rect.x2 - rect.x1;
 

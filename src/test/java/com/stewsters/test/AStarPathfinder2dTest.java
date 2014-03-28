@@ -3,7 +3,6 @@ package com.stewsters.test;
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap2d;
 import com.stewsters.test.examples.ExampleMover2d;
-import com.stewsters.util.mapgen.CellType;
 import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.pathfinder.AStarPathFinder2d;
 import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;

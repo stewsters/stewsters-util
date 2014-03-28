@@ -9,6 +9,7 @@ public class Point2i {
 
     public int x;
     public int y;
+    int[] zeroOrOne = {-1, 1};
 
     public Point2i(int x, int y) {
         this.x = x;
@@ -55,8 +56,6 @@ public class Point2i {
         Collections.shuffle(points);
         return points;
     }
-
-    int[] zeroOrOne = {-1, 1};
 
     public List<Point2i> vonNeumannNeighborhood() {
         List<Point2i> points = new ArrayList<Point2i>();

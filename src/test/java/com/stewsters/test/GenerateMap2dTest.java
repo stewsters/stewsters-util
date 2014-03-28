@@ -2,8 +2,7 @@ package com.stewsters.test;
 
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleGeneretedMap2d;
-import com.stewsters.util.mapgen.CellType;
-import com.stewsters.util.mapgen.terrain.NoiseFunction;
+import com.stewsters.util.mapgen.terrain.NoiseFunction2d;
 import com.stewsters.util.mapgen.twoDimension.MapGen2d;
 import com.stewsters.util.mapgen.twoDimension.brush.DrawCell2d;
 import com.stewsters.util.mapgen.twoDimension.predicate.*;
@@ -46,12 +45,12 @@ public class GenerateMap2dTest {
         System.out.println("Gen trees 1");
         printMap(em);
 
-        NoiseFunction vegitation = new NoiseFunction(10, 30, 16, 13);
+        NoiseFunction2d vegitation = new NoiseFunction2d(10, 30, 16, 13);
         ExampleCellType tree = new ExampleCellType('T', true);
         MapGen2d.fill(em, new AndPredicate2d(new NoiseGreaterThan(vegitation, 0.5), new CellEquals2d(floor)), new DrawCell2d(tree));
 
 
-        NoiseFunction snow = new NoiseFunction(-10, -500, 20, 22);
+        NoiseFunction2d snow = new NoiseFunction2d(-10, -500, 20, 22);
         ExampleCellType pineTree = new ExampleCellType('p', true);
         MapGen2d.fill(em, new AndPredicate2d(new NoiseGreaterThan(snow, 0.6), new CellEquals2d(tree)), new DrawCell2d(pineTree));
 
@@ -75,7 +74,7 @@ public class GenerateMap2dTest {
         for (int y = 0; y < exampleGeneretedMap2d.getWidthInTiles(); y++) {
             for (int x = 0; x < exampleGeneretedMap2d.getWidthInTiles(); x++) {
 
-                System.out.print(((ExampleCellType)exampleGeneretedMap2d.getCellTypeAt(x, y)).getGlyph());
+                System.out.print(((ExampleCellType) exampleGeneretedMap2d.getCellTypeAt(x, y)).getGlyph());
             }
             System.out.println();
         }

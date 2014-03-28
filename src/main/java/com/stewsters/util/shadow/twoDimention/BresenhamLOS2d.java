@@ -1,4 +1,4 @@
-package com.stewsters.util.shadow;
+package com.stewsters.util.shadow.twoDimention;
 
 
 import com.stewsters.util.pathing.twoDimention.shared.Mover2d;

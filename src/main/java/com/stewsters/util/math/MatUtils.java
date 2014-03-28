@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
-public class MathUtils {
+public class MatUtils {
 
     private static Random random;
 
@@ -133,7 +133,7 @@ public class MathUtils {
         for (Integer value : choicesMap.values()) {
             totalChances += value;
         }
-        int dice = MathUtils.getIntInRange(0, totalChances);
+        int dice = MatUtils.getIntInRange(0, totalChances);
         int runningTotal = 0;
         for (Map.Entry<String, Integer> keyValue : choicesMap.entrySet()) {
             runningTotal += keyValue.getValue();

@@ -20,7 +20,7 @@ public enum Facing2d {
     }
 
     public static Facing2d randomCardinal() {
-        switch (MathUtils.getIntInRange(0, 3)) {
+        switch (MatUtils.getIntInRange(0, 3)) {
             case 0:
                 return NORTH;
             case 1:
@@ -33,7 +33,7 @@ public enum Facing2d {
     }
 
     public static Facing2d randomDiagonal() {
-        switch (MathUtils.getIntInRange(0, 8)) {
+        switch (MatUtils.getIntInRange(0, 8)) {
             case 0:
                 return NORTH;
             case 1:

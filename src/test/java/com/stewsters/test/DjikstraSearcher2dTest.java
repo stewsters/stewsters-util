@@ -4,7 +4,6 @@ package com.stewsters.test;
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap2d;
 import com.stewsters.test.examples.ExampleMover2d;
-import com.stewsters.util.mapgen.CellType;
 import com.stewsters.util.pathing.twoDimention.searcher.DjikstraSearcher2d;
 import com.stewsters.util.pathing.twoDimention.searcher.Objective2d;
 import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;

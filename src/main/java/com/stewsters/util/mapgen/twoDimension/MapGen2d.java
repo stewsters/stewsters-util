@@ -9,12 +9,13 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 /**
- *  http://www.roguebasin.com/index.php?title=Designing_Flexible,_Reusable_Algorithms
+ * http://www.roguebasin.com/index.php?title=Designing_Flexible,_Reusable_Algorithms
  */
 public class MapGen2d {
 
     /**
      * Fills an area with a border
+     *
      * @param map
      * @param fill
      * @param wall
@@ -49,6 +50,7 @@ public class MapGen2d {
 
     /**
      * Flood fills on things that fit the predicate
+     *
      * @param map
      * @param start
      * @param predicate

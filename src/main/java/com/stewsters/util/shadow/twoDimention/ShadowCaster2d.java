@@ -1,4 +1,4 @@
-package com.stewsters.util.shadow;
+package com.stewsters.util.shadow.twoDimention;
 
 import com.stewsters.util.math.Facing2d;
 

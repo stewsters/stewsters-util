@@ -2,11 +2,11 @@ package com.stewsters.util.mapgen.terrain;
 
 import com.stewsters.util.noise.Simplex2d;
 
-public class NoiseFunction {
+public class NoiseFunction2d {
     private double xOffset, yOffset;
     private double xScale, yScale;
 
-    public NoiseFunction(double xOffset, double yOffset, double xScale, double yScale) {
+    public NoiseFunction2d(double xOffset, double yOffset, double xScale, double yScale) {
         this.xOffset = xOffset;
         this.yOffset = yOffset;
         this.xScale = xScale;
