@@ -20,7 +20,7 @@ public class AStarPathFinder2d implements PathFinder2d {
     /**
      * The set of nodes that have been searched through
      */
-    private ArrayList<PathNode2d> closed = new ArrayList();
+    private ArrayList<PathNode2d> closed = new ArrayList<>();
     /**
      * The set of nodes that we do not yet consider fully searched
      */
@@ -77,9 +77,7 @@ public class AStarPathFinder2d implements PathFinder2d {
         nodes = new PathNode2d[map.getWidthInTiles()][map.getHeightInTiles()];
         for (int x = 0; x < map.getWidthInTiles(); x++) {
             for (int y = 0; y < map.getHeightInTiles(); y++) {
-
                 nodes[x][y] = new PathNode2d(x, y);
-
             }
         }
     }

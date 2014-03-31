@@ -1,11 +1,13 @@
 package com.stewsters.util.pathing.threeDimention.pathfinder;
 
+import com.stewsters.util.math.Point3i;
 import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
 import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
 import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
 import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 /**
@@ -18,7 +20,7 @@ public class AStarPathFinder3d implements PathFinder3d {
     /**
      * The set of nodes that have been searched through
      */
-    private ArrayList closed = new ArrayList();
+    private ArrayList<PathNode3d> closed = new ArrayList<>();
     /**
      * The set of nodes that we do not yet consider fully searched
      */
@@ -82,13 +84,17 @@ public class AStarPathFinder3d implements PathFinder3d {
         }
     }
 
+    protected boolean isBlocked(Mover3d mover, int x, int y, int z) {
+        return map.isBlocked(mover, nodes[x][y][z]);
+    }
+
     /**
      * @see PathFinder3d#findPath(com.stewsters.util.pathing.threeDimention.shared.Mover3d, int, int, int, int, int, int)
      */
     public FullPath3d findPath(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
         // easy first check, if the destination is blocked, we can't get there
 
-        if (map.isBlocked(mover, nodes[tx][ty][tz])) {
+        if (map.isBlocked(mover, tx, ty, tz)) {
             return null;
         }
 
@@ -187,8 +193,8 @@ public class AStarPathFinder3d implements PathFinder3d {
         // there was no path. Just return null
 
         if (nodes[tx][ty][tz].parent == null) {
-            throw new RuntimeException("out of nodes");
-//            return null;
+//            throw new RuntimeException("out of nodes");
+            return null;
         }
 
         // At this point we've definitely found a path so we can uses the parent
@@ -289,7 +295,7 @@ public class AStarPathFinder3d implements PathFinder3d {
     protected boolean isValidLocation(Mover3d mover, int sx, int sy, int sz, int x, int y, int z) {
         boolean invalid = (x < 0) || (y < 0) || (z < 0) || (x >= map.getWidthInTiles()) || (y >= map.getHeightInTiles()) || (z >= map.getDepthInTiles());
 
-        if ((!invalid) && ((sx != x) || (sy != y))) {
+        if ((!invalid) && ((sx != x) || (sy != y) || (sz != z))) {
             invalid = map.isBlocked(mover, nodes[x][y][z]);
         }
 
@@ -327,5 +333,80 @@ public class AStarPathFinder3d implements PathFinder3d {
         return heuristic.getCost(map, mover, x, y, z, tx, ty, tz);
     }
 
+    /**
+     * Find all locations within a radius that are reachable by the mover
+     *
+     * @param mover The entity that is being moved
+     * @param sx    The x coordinate of the tile whose cost is being determined
+     * @param sy    The y coordinate of the tile whose cost is being determined
+     * @param sz    The z coordinate
+     * @param max   The Max cost
+     */
+    public LinkedList<Point3i> getReachableCells(Mover3d mover, int sx, int sy, int sz, float max) {
 
+        LinkedList<Point3i> reachableCells = new LinkedList<Point3i>();
+        nodes[sx][sy][sz].cost = 0;
+        nodes[sx][sy][sz].depth = 0;
+        closed.clear();
+        open.clear();
+        open.add(nodes[sx][sy][sz]);
+
+        while (open.size() > 0) {
+            // poll() the open queue
+            PathNode3d current = open.poll();
+
+            for (int x = -1; x < 2; x++) {
+                for (int y = -1; y < 2; y++) {
+                    for (int z = -1; z < 2; z++) {
+
+
+                        int nx = current.x + x;
+                        int ny = current.y + y;
+                        int nz = current.z + z;
+
+                        if ((x == 0) && (y == 0) && (z == 0))
+                            continue;
+
+                        if (nx < 0 || ny < 0 || nz < 0 || nx >= nodes.length || ny >= nodes[0].length || ny >= nodes[0][0].length)
+                            continue;
+
+                        if (!allowDiagMovement) {
+                            if (!((x == 0 && y == 0) || (y == 0 && z == 0) || (z == 0 && x == 0))) {
+                                continue;
+                            }
+                        }
+
+                        if (!isValidLocation(mover, current.x, current.y, current.z, nx, ny, nz))
+                            continue;
+
+                        float nextStepCost = current.cost + getMovementCost(mover, current.x, current.y, current.z, nx, ny, nz);
+                        PathNode3d neighbor = nodes[nx][ny][nz];
+
+                        if (nextStepCost > max)
+                            continue;
+
+                        // Check to see if we have found a new shortest route to this neighbor, in
+                        // which case it must be totally reconsidered
+                        if (nextStepCost < neighbor.cost) {
+                            if (inClosedList(neighbor)) removeFromClosed(neighbor);
+                            if (open.contains(neighbor)) open.remove(neighbor);
+                        }
+
+                        if (!open.contains(neighbor) && !inClosedList(neighbor)) {
+                            neighbor.cost = nextStepCost;
+                            open.add(neighbor);
+
+                            Point3i point = new Point3i(neighbor.x, neighbor.y, neighbor.z);
+                            if (!reachableCells.contains(point))
+                                reachableCells.push(point);
+                        }
+                    }
+                }
+            }
+            addToClosed(current);
+        }
+
+        return reachableCells;
+
+    }
 }

@@ -37,6 +37,7 @@ public class Simplex3d {
         else
             finalScale = 32;
     }
+
     /**
      * Properly rounded: 1/3
      */
