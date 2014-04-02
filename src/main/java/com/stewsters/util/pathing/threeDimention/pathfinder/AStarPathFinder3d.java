@@ -367,7 +367,7 @@ public class AStarPathFinder3d implements PathFinder3d {
                         if ((x == 0) && (y == 0) && (z == 0))
                             continue;
 
-                        if (nx < 0 || ny < 0 || nz < 0 || nx >= nodes.length || ny >= nodes[0].length || ny >= nodes[0][0].length)
+                        if (nx < 0 || ny < 0 || nz < 0 || nx >= nodes.length || ny >= nodes[0].length || nz >= nodes[0][0].length)
                             continue;
 
                         if (!allowDiagMovement) {
