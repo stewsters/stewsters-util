@@ -5,12 +5,12 @@ import com.stewsters.util.math.Point3i;
 
 public class RectPrism {
 
-    int x1;
-    int x2;
-    int y1;
-    int y2;
-    int z1;
-    int z2;
+    public int x1;
+    public int x2;
+    public int y1;
+    public int y2;
+    public int z1;
+    public int z2;
 
     public RectPrism(int x, int y, int z, int w, int h, int d) {
         this.x1 = x;
