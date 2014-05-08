@@ -3,7 +3,7 @@ package com.stewsters.util.spatial;
 import java.util.*;
 
 /**
- * This is 2d java  reimplementation of the C# 3d interval kd tree from:
+ * This is 2d java reimplementation of the C# 3d interval kd tree from:
  *
  * 3D Interval KD Tree implementation.
  * Author: Tommi S. E. Laukkanen
