@@ -17,8 +17,8 @@ public class IntervalKDTree3d<T> {
     private Node rootNode;
     private int divisionThreshold;
 
-    private Map<Box, Node> boxNodeDictionary = new HashMap<Box, Node>();
-    private Map<T, Box> valueBoxDictionary = new HashMap<T, Box>();
+    private Map<Box<T>, Node> boxNodeDictionary = new HashMap<Box<T>, Node>();
+    private Map<T, Box<T>> valueBoxDictionary = new HashMap<T, Box<T>>();
 
     public IntervalKDTree3d(double range, int divisionThreshold) {
         this.divisionThreshold = divisionThreshold;
@@ -28,9 +28,9 @@ public class IntervalKDTree3d<T> {
 
     public void put(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, T value) {
         if (!valueBoxDictionary.containsKey(value)) {
-            addBox(new Box(value, minX, minY, minZ, maxX, maxY, maxZ));
+            addBox(new Box<T>(value, minX, minY, minZ, maxX, maxY, maxZ));
         } else {
-            Box box = valueBoxDictionary.get(value);
+            Box<T> box = valueBoxDictionary.get(value);
             box.minX = minX;
             box.minY = minY;
             box.minZ = minZ;
@@ -53,19 +53,19 @@ public class IntervalKDTree3d<T> {
 
     public void remove(T value) {
         if (valueBoxDictionary.containsKey(value)) {
-            Box box = valueBoxDictionary.get(value);
+            Box<T> box = valueBoxDictionary.get(value);
             removeBox(box);
             boxNodeDictionary.remove(box);
             valueBoxDictionary.remove(value);
         }
     }
 
-    private void addBox(Box box) {
+    private void addBox(Box<T> box) {
         rootNode.addBox(box);
-        valueBoxDictionary.put((T) box.value, box);
+        valueBoxDictionary.put(box.value, box);
     }
 
-    private void updateBox(Box box) {
+    private void updateBox(Box<T> box) {
         Node currentNode = boxNodeDictionary.get(box);
 
         if (
@@ -81,7 +81,7 @@ public class IntervalKDTree3d<T> {
         }
     }
 
-    private void removeBox(Box box) {
+    private void removeBox(Box<T> box) {
         boxNodeDictionary.get(box).removeBox(box);
         valueBoxDictionary.remove(box.value);
     }
@@ -101,7 +101,7 @@ public class IntervalKDTree3d<T> {
         public Node highChild;
 
         private IntervalKDTree3d<T> tree;
-        private List<Box> boxes;
+        private List<Box<T>> boxes;
 
         public Node(IntervalKDTree3d<T> tree, Node parent, int depth, double minX, double minY, double minZ,
                     double maxX, double maxY, double maxZ) {
@@ -109,10 +109,10 @@ public class IntervalKDTree3d<T> {
             this.tree = tree;
             this.parent = parent;
             this.depth = depth;
-            boxes = new LinkedList<Box>();
+            boxes = new LinkedList<Box<T>>();
         }
 
-        public void addBox(Box box) {
+        public void addBox(Box<T> box) {
             if (hasChildren) {
                 if (box.isBelow(depth, divisionBoundary)) {
                     lowChild.addBox(box);
@@ -133,10 +133,9 @@ public class IntervalKDTree3d<T> {
                 divide();
             }
 
-            return;
         }
 
-        public void removeBox(Box box) {
+        public void removeBox(Box<T> box) {
             boxes.remove(box);
 
             // Collapse parent node if total amount of values in parent and childen is less than maximum values per node.
@@ -147,9 +146,9 @@ public class IntervalKDTree3d<T> {
         }
 
         public void getValues(Cube cube, HashSet<T> values) {
-            for (Box box : boxes) {
+            for (Box<T> box : boxes) {
                 if (cube.intersects(box)) {
-                    values.add((T) box.value);
+                    values.add(box.value);
                 }
             }
 
@@ -166,9 +165,9 @@ public class IntervalKDTree3d<T> {
         }
 
         public void getValues(Cube cube, List<T> values) {
-            for (Box box : boxes) {
+            for (Box<T> box : boxes) {
                 if (cube.intersects(box)) {
-                    values.add((T) box.value);
+                    values.add(box.value);
                 }
             }
 
@@ -185,7 +184,7 @@ public class IntervalKDTree3d<T> {
         }
 
         private void divide() {
-            if (hasChildren == true) {
+            if (hasChildren) {
                 throw new RuntimeException("Already has children.");
             }
 
@@ -206,20 +205,20 @@ public class IntervalKDTree3d<T> {
                 highChild = new Node(tree, this, depth + 1, minX, minY, divisionBoundary, maxX, maxY, maxZ);
             }
 
-            List<Box> oldBoxList = boxes;
-            boxes = new LinkedList<Box>();
-            for (Box cube : oldBoxList) {
+            List<Box<T>> oldBoxList = boxes;
+            boxes = new LinkedList<Box<T>>();
+            for (Box<T> cube : oldBoxList) {
                 addBox(cube);
             }
 
         }
 
         private void collapse() {
-            for (Box box : lowChild.boxes) {
+            for (Box<T> box : lowChild.boxes) {
                 boxes.add(box);
                 tree.boxNodeDictionary.put(box, this);
             }
-            for (Box box : highChild.boxes) {
+            for (Box<T> box : highChild.boxes) {
                 boxes.add(box);
                 tree.boxNodeDictionary.put(box, this);
             }
@@ -238,12 +237,12 @@ public class IntervalKDTree3d<T> {
     /**
      * Box is axis aligned 3d cube which can hold value. Acts as capsule in IntervalKDTree data structure.
      *
-     * @param <T> The thing being stored
+     * @param <K> The thing being stored
      */
-    class Box<T> extends Cube {
-        public T value;
+    class Box<K> extends Cube {
+        public K value;
 
-        public Box(T value, double minX, double minY, double minZ, double maxX, double maxY, double maxZ)
+        public Box(K value, double minX, double minY, double minZ, double maxX, double maxY, double maxZ)
 
         {
             super(minX, minY, minZ, maxX, maxY, maxZ);

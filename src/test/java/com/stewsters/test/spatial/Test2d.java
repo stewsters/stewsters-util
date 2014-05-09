@@ -3,6 +3,8 @@ package com.stewsters.test.spatial;
 import com.stewsters.util.spatial.IntervalKDTree2d;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class Test2d {
@@ -26,6 +28,11 @@ public class Test2d {
         fillThis = spacecrafts.getValues(-50, -50, 50, 50, fillThis);
         long finishTime = System.nanoTime();
 
+        List<Spacecraft2d> fillThisToo = new LinkedList<Spacecraft2d>();
+        spacecrafts.getValues(-50, -50, 50, 50, fillThisToo);
+
+        assert fillThis.size() == fillThisToo.size();
+
 
         for (Spacecraft2d spacecraft : fillThis) {
             System.out.println(spacecraft.toString());
@@ -43,6 +50,7 @@ public class Test2d {
 
             spacecraft.addToTree(spacecrafts);
         }
+
         finishTime = System.nanoTime();
         System.out.println(((double) finishTime - nanoTime) / 1000000000);
 
