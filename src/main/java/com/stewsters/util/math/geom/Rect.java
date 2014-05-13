@@ -36,7 +36,7 @@ public class Rect {
         return "$x1 $y1 $x2 $y2";
     }
 
-    boolean contains(int x, int y) {
+    public boolean contains(int x, int y) {
         return (x >= x1 && x <= x2 &&
                 y >= y1 && y <= y2
         );

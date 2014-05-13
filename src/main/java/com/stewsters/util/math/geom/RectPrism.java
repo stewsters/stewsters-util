@@ -42,7 +42,7 @@ public class RectPrism {
         return "$x1 $y1 $z1 $x2 $y2 $z2";
     }
 
-    boolean contains(int x, int y, int z) {
+    public boolean contains(int x, int y, int z) {
         return (x >= x1 && x <= x2 &&
                 y >= y1 && y <= y2 &&
                 z >= z1 && z <= z2

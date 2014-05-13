@@ -9,7 +9,8 @@ public class Point2i {
 
     public int x;
     public int y;
-    int[] zeroOrOne = {-1, 1};
+
+    public static final int[] zeroOrOne = {-1, 1};
 
     public Point2i(int x, int y) {
         this.x = x;
