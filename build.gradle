@@ -18,12 +18,12 @@ dependencies {
     testCompile 'junit:junit:4.11'
 }
 
-//TODO: we might not need this now
-jar.doFirst {
-    sourceSets.main.java.srcDirs.each {
-        from it
-    }
-}
+////TODO: we might not need this now
+//jar.doFirst {
+//    sourceSets.main.java.srcDirs.each {
+//        from it
+//    }
+//}
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'

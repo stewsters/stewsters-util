@@ -2,6 +2,7 @@ Stewsters-Util
 ==============
 
 This is a collection of some code that I have pulled out of projects.  It is mostly useful for roguelikes.
+![TravisCI](https://travis-ci.org/stewsters/stewsters-util.svg?branch=master)
 
 
 How to compile a JAR
@@ -13,7 +14,6 @@ If you want to jar it up for a use in a project, try this:
 ```bash
 gradle jar
 ```
-
 
 How to use a git submodule
 ==========================

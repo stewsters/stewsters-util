@@ -147,7 +147,7 @@ public class MatUtils {
      * Faster version of Math.floor
      *
      * @param x
-     * @return
+     * @return The int value of the floored double
      */
     public static int fastfloor(double x) {
         return x > 0 ? (int) x : (int) x - 1;
@@ -157,7 +157,7 @@ public class MatUtils {
      * Faster version of Math.floor
      *
      * @param x
-     * @return
+     * @return The int value of the floored float
      */
     public static int fastfloor(float x) {
         return x > 0 ? (int) x : (int) x - 1;
@@ -172,7 +172,7 @@ public class MatUtils {
      * @param kChargeMax     100.0f;
      * @param kLuminosityMin 0.0f;
      * @param kLuminosityMax 0.9f;
-     * @return
+     * @return A double representing the light produced
      */
     public double computeLuminosityFromCharge(double charge, double kChargeMin, double kChargeMax, double kLuminosityMin, double kLuminosityMax) {
         double chargeT = unlerp(kChargeMin, kChargeMax, charge);
@@ -183,7 +183,7 @@ public class MatUtils {
      * Calculate light drop off from flashlight running out of charge
      *
      * @param charge
-     * @return
+     * @return A double in the range from 0-1 that represents the percentage of light for that charge
      */
     public double flashlight(double charge) {
         return 1 - Math.pow(1 - charge, 4);
