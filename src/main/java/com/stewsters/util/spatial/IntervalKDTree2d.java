@@ -40,12 +40,12 @@ public class IntervalKDTree2d<T> {
     }
 
     public HashSet<T> getValues(double minX, double minY, double maxX, double maxY, HashSet<T> values) {
-        rootNode.getValues(new Cube(minX, minY, maxX, maxY), values);
+        rootNode.getValues(new Square(minX, minY, maxX, maxY), values);
         return values;
     }
 
     public List<T> getValues(double minX, double minY, double maxX, double maxY, List<T> values) {
-        rootNode.getValues(new Cube(minX, minY, maxX, maxY), values);
+        rootNode.getValues(new Square(minX, minY, maxX, maxY), values);
         return values;
     }
 
@@ -86,9 +86,9 @@ public class IntervalKDTree2d<T> {
 
 
     /**
-     * Node is extend axis aligned 3d cube which is the node implementation of IntervalKDTree.
+     * Node is extend axis aligned 2d cube which is the node implementation of IntervalKDTree.
      */
-    private class Node extends Cube {
+    private class Node extends Square {
         public int depth;
         public double divisionBoundary;
 
@@ -143,40 +143,40 @@ public class IntervalKDTree2d<T> {
             }
         }
 
-        public void getValues(Cube cube, HashSet<T> values) {
+        public void getValues(Square square, HashSet<T> values) {
             for (Box<T> box : boxes) {
-                if (cube.intersects(box)) {
+                if (square.intersects(box)) {
                     values.add(box.value);
                 }
             }
 
             if (hasChildren) {
-                if (cube.isBelow(depth, divisionBoundary)) {
-                    lowChild.getValues(cube, values);
-                } else if (cube.isAbove(depth, divisionBoundary)) {
-                    highChild.getValues(cube, values);
+                if (square.isBelow(depth, divisionBoundary)) {
+                    lowChild.getValues(square, values);
+                } else if (square.isAbove(depth, divisionBoundary)) {
+                    highChild.getValues(square, values);
                 } else {
-                    lowChild.getValues(cube, values);
-                    highChild.getValues(cube, values);
+                    lowChild.getValues(square, values);
+                    highChild.getValues(square, values);
                 }
             }
         }
 
-        public void getValues(Cube cube, List<T> values) {
+        public void getValues(Square square, List<T> values) {
             for (Box<T> box : boxes) {
-                if (cube.intersects(box)) {
+                if (square.intersects(box)) {
                     values.add(box.value);
                 }
             }
 
             if (hasChildren) {
-                if (cube.isBelow(depth, divisionBoundary)) {
-                    lowChild.getValues(cube, values);
-                } else if (cube.isAbove(depth, divisionBoundary)) {
-                    highChild.getValues(cube, values);
+                if (square.isBelow(depth, divisionBoundary)) {
+                    lowChild.getValues(square, values);
+                } else if (square.isAbove(depth, divisionBoundary)) {
+                    highChild.getValues(square, values);
                 } else {
-                    lowChild.getValues(cube, values);
-                    highChild.getValues(cube, values);
+                    lowChild.getValues(square, values);
+                    highChild.getValues(square, values);
                 }
             }
         }
@@ -229,11 +229,11 @@ public class IntervalKDTree2d<T> {
     }
 
     /**
-     * Box is axis aligned 3d cube which can hold value. Acts as capsule in IntervalKDTree data structure.
+     * Box is axis aligned 2d square which can hold value. Acts as capsule in IntervalKDTree data structure.
      *
      * @param <K> The thing being stored
      */
-    class Box<K> extends Cube {
+    class Box<K> extends Square {
         public K value;
 
         public Box(K value, double minX, double minY, double maxX, double maxY)
@@ -246,9 +246,9 @@ public class IntervalKDTree2d<T> {
 
 
     /**
-     * Axis aligned 3d cube implementation with math functions.
+     * Axis aligned 2d square implementation with math functions.
      */
-    class Cube {
+    class Square {
 
         public double minX;
         public double minY;
@@ -256,7 +256,7 @@ public class IntervalKDTree2d<T> {
         public double maxY;
 
 
-        public Cube(double minX, double minY, double maxX, double maxY) {
+        public Square(double minX, double minY, double maxX, double maxY) {
             this.minX = minX;
             this.minY = minY;
 
@@ -283,14 +283,14 @@ public class IntervalKDTree2d<T> {
             }
         }
 
-        public boolean contains(Cube cube) {
-            return minX <= cube.minX && cube.maxX < maxX &&
-                    minY <= cube.minY && cube.maxY < maxY;
+        public boolean contains(Square square) {
+            return minX <= square.minX && square.maxX < maxX &&
+                    minY <= square.minY && square.maxY < maxY;
         }
 
-        public boolean intersects(Cube cube) {
-            return (contains(cube.minX, cube.minY) || contains(cube.maxX, cube.maxY)) ||
-                    (cube.contains(minX, minY) || cube.contains(maxX, maxY));
+        public boolean intersects(Square square) {
+            return (contains(square.minX, square.minY) || contains(square.maxX, square.maxY)) ||
+                    (square.contains(minX, minY) || square.contains(maxX, maxY));
         }
 
         private boolean contains(double cx, double cy) {
