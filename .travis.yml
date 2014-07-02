@@ -3,4 +3,5 @@ language: java
 jdk:
   - oraclejdk7
   - openjdk7
-  +script: ./gradlew build -x signArchives
+
+script: "./gradlew build -x signArchives"
