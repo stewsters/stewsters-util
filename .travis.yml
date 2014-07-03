@@ -4,4 +4,4 @@ jdk:
   - oraclejdk7
   - openjdk7
 
-script: "./gradlew test"
+script: gradle test
