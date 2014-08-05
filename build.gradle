@@ -1,7 +1,18 @@
 // http://yennicktrevels.com/blog/2013/10/11/automated-gradle-project-deployment-to-sonatype-oss-repository/
+
 apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'signing'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.5'
+    }
+}
+apply plugin: 'com.jfrog.bintray'
+
+
 
 group = 'com.stewsters.util'
 version = '0.7'
@@ -18,13 +29,6 @@ dependencies {
     testCompile 'junit:junit:4.11'
 }
 
-////TODO: we might not need this now
-//jar.doFirst {
-//    sourceSets.main.java.srcDirs.each {
-//        from it
-//    }
-//}
-
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from 'build/docs/javadoc'
@@ -35,54 +39,31 @@ task sourcesJar(type: Jar) {
     classifier = 'sources'
 }
 
-artifacts {
-    archives jar
 
-    archives javadocJar
-    archives sourcesJar
-}
+bintray {
+    user = 'stewsters'
+    key = 'bintray_api_key'
 
-signing {
-    sign configurations.archives
-}
+    configurations = ['deployables'] //When uploading configuration files
 
+    dryRun = false //Whether to run this as dry-run, without deploying
+    publish = true //If version should be auto published after an upload
+    pkg {
+        repo = 'stewsters-util'
+        name = 'stewsters-util'
+        desc = 'A package of Java roguelike utilities.'
+        websiteUrl = 'https://github.com/stewsters/stewsters-util'
+        issueTrackerUrl = 'https://github.com/stewsters/stewsters-util/issues'
+        vcsUrl = 'https://github.com/stewsters/stewsters-util.git'
+        licenses = ['Apache-2.0']
+        labels = ['roguelike', 'utilities']
+        publicDownloadNumbers = true
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: sonatypeUsername, password: sonatypePassword)
-            }
-
-            pom.project {
-                name 'Stewsters Util'
-                packaging 'jar'
-                description 'Some utilities for roguelike games.'
-                url 'https://github.com/stewsters/stewsters-util'
-
-                scm {
-                    url 'scm:git@github.com:stewsters/stewsters-util.git'
-                    connection 'scm:git@github.com:stewsters/stewsters-util.git'
-                    developerConnection 'scm:git@github.com:stewsters/stewsters-util.git'
-                }
-
-                licenses {
-                    license {
-                        name 'The MIT License (MIT)'
-                        url 'http://opensource.org/licenses/MIT'
-                        distribution 'repo'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'stewsters'
-                        name 'Adrian Moore'
-                    }
-                }
-            }
+        //Optional version descriptor
+        version {
+            name = '0.7' //Bintray logical version name
+            vcsTag = '0.7'
         }
     }
+
 }
