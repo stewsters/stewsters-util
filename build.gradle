@@ -22,10 +22,10 @@ version = '0.8'
 
 
 if (!project.hasProperty('bintray_net_user')) {
-    bintray_net_user = 'default'
+    project.ext.bintray_net_user = 'default'
 }
 if (!project.hasProperty('bintray_net_key')) {
-    bintray_net_user = 'fake'
+    project.ext.bintray_net_key = 'fake'
 }
 
 repositories {
