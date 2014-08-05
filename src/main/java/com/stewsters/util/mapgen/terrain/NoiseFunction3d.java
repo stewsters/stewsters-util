@@ -2,9 +2,7 @@ package com.stewsters.util.mapgen.terrain;
 
 import com.stewsters.util.noise.Simplex3d;
 
-/**
- * This basically encapsulates the scaling of noise into an object
- */
+
 public class NoiseFunction3d {
     private float xOffset, yOffset, zOffset;
     private float xScale, yScale, zScale;
