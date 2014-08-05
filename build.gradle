@@ -20,6 +20,14 @@ group = 'com.stewsters.util'
 version = '0.8'
 
 
+
+if (!project.hasProperty('bintray_net_user')) {
+    bintray_net_user = 'default'
+}
+if (!project.hasProperty('bintray_net_key')) {
+    bintray_net_user = 'fake'
+}
+
 repositories {
     mavenCentral()
     jcenter()
@@ -70,12 +78,6 @@ bintray {
     apiUrl = "https://api.bintray.com"
 
 
-    if (!project.hasProperty('bintray_net_user')) {
-        project.ext.bintray_net_user = 'default'
-    }
-    if (!project.hasProperty('bintray_net_key')) {
-        project.ext.bintray_net_user = 'fake'
-    }
     user = bintray_net_user
     key = bintray_net_key
 
