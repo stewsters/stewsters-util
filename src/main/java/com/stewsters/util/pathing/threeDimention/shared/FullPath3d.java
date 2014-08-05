@@ -35,7 +35,7 @@ public class FullPath3d {
      * Get the step at a given index in the path
      *
      * @param index The index of the step to retrieve. Note this should
-     *              be >= 0 and < getLength();
+     *              be between 0 and  getLength();
      * @return The step information, the position on the map.
      */
     public Step getStep(int index) {
@@ -77,6 +77,7 @@ public class FullPath3d {
      *
      * @param x The x coordinate of the new step
      * @param y The y coordinate of the new step
+     * @param z The z coordinate of the new step
      */
     public void appendStep(int x, int y, int z) {
         steps.add(new Step(x, y, z));
@@ -87,6 +88,7 @@ public class FullPath3d {
      *
      * @param x The x coordinate of the new step
      * @param y The y coordinate of the new step
+     * @param z The z coordinate of the new step
      */
     public void prependStep(int x, int y, int z) {
         steps.add(0, new Step(x, y, z));
@@ -97,6 +99,7 @@ public class FullPath3d {
      *
      * @param x The x coordinate of the step to check for
      * @param y The y coordinate of the step to check for
+     * @param z The z coordinate of the step to check for
      * @return True if the path contains the given step
      */
     public boolean contains(int x, int y, int z) {

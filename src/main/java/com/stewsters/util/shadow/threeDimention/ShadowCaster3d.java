@@ -15,7 +15,7 @@ public class ShadowCaster3d {
     /**
      * This is a special case of SquidLib's shadow casting algorithm by Eben Howard
      *
-     * @param litMap3d
+     * @param litMap3d The map we are working on
      */
     public ShadowCaster3d(LitMap3d litMap3d) {
         this.litMap3d = litMap3d;
@@ -26,16 +26,16 @@ public class ShadowCaster3d {
      * Calculates the Field Of View for the provided map from the given x, y
      * coordinates. Returns a lightmap for a result where the values represent a
      * percentage of fully lit.
-     * <p/>
+     *
      * A value equal to or below 0 means that cell is not in the
      * field of view, whereas a value equal to or above 1 means that cell is
      * in the field of view.
      *
-     * @param startx the horizontal component of the starting location
-     * @param starty the vertical component of the starting location
+     * @param startx the z component of the starting location
+     * @param starty the y component of the starting location
+     * @param startz the z component of the starting location
      * @param force  the maximum distance to draw the FOV
      * @param decay  the speed of the decay
-     * @return the computed light grid
      */
     public void recalculateFOV(int startx, int starty, int startz, float force, float decay) {
 
@@ -104,6 +104,12 @@ public class ShadowCaster3d {
         }
     }
 
+    /**
+     * @param dx The distance in the x direction
+     * @param dy The distance in the y direction
+     * @param dz The distance in the z direction
+     * @return The length of the vector
+     */
     private float radius(float dx, float dy, float dz) {
         return (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
     }

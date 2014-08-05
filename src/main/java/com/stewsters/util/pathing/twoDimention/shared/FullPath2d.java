@@ -35,7 +35,7 @@ public class FullPath2d {
      * Get the step at a given index in the path
      *
      * @param index The index of the step to retrieve. Note this should
-     *              be >= 0 and < getLength();
+     *              be gte 0 and lt getLength();
      * @return The step information, the position on the map.
      */
     public Step getStep(int index) {

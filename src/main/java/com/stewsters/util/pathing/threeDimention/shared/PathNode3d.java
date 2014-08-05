@@ -38,6 +38,7 @@ public class PathNode3d implements Comparable {
      *
      * @param x The x coordinate of the node
      * @param y The y coordinate of the node
+     * @param z The z coordinate of the node
      */
     public PathNode3d(int x, int y, int z) {
         this.x = x;

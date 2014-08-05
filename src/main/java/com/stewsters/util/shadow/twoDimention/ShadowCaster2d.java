@@ -15,7 +15,7 @@ public class ShadowCaster2d {
     /**
      * This is a special case of SquidLib's shadow casting algorithm by Eben Howard
      *
-     * @param litMap2d
+     * @param litMap2d The map we are working on
      */
     public ShadowCaster2d(LitMap2d litMap2d) {
         this.litMap2d = litMap2d;
@@ -26,7 +26,7 @@ public class ShadowCaster2d {
      * Calculates the Field Of View for the provided map from the given x, y
      * coordinates. Returns a lightmap for a result where the values represent a
      * percentage of fully lit.
-     * <p/>
+     *
      * A value equal to or below 0 means that cell is not in the
      * field of view, whereas a value equal to or above 1 means that cell is
      * in the field of view.
@@ -35,7 +35,6 @@ public class ShadowCaster2d {
      * @param starty the vertical component of the starting location
      * @param force  the maximum distance to draw the FOV
      * @param decay  the speed of the decay
-     * @return the computed light grid
      */
     public void recalculateFOV(int startx, int starty, float force, float decay) {
 

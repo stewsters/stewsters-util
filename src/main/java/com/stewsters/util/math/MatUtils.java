@@ -17,7 +17,7 @@ public class MatUtils {
     /**
      * @param low  inclusive
      * @param high inclusive
-     * @return
+     * @return The integer
      */
     public static int getIntInRange(int low, int high) {
         if (low == high) return low;
@@ -146,7 +146,7 @@ public class MatUtils {
     /**
      * Faster version of Math.floor
      *
-     * @param x
+     * @param x A double
      * @return The int value of the floored double
      */
     public static int fastfloor(double x) {
@@ -156,7 +156,7 @@ public class MatUtils {
     /**
      * Faster version of Math.floor
      *
-     * @param x
+     * @param x A float
      * @return The int value of the floored float
      */
     public static int fastfloor(float x) {
@@ -182,7 +182,7 @@ public class MatUtils {
     /**
      * Calculate light drop off from flashlight running out of charge
      *
-     * @param charge
+     * @param charge The charge percentage
      * @return A double in the range from 0-1 that represents the percentage of light for that charge
      */
     public double flashlight(double charge) {

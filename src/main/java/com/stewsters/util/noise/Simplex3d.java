@@ -199,9 +199,12 @@ public class Simplex3d {
         return h;
     }
 
-
     /**
      *
+     * @param x coordinate
+     * @param y coordinate
+     * @param z coordinate
+     * @return A float valued between 0 and 1
      */
     public static float noise(float x, float y, float z) {
         // project the input coordinate (via skew)

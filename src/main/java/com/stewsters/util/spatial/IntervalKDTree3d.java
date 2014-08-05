@@ -4,7 +4,7 @@ import java.util.*;
 
 /**
  * This is a reimplementation of the C# 3d interval kd tree from:
- * <p/>
+ *
  * 3D Interval KD Tree implementation.
  * Author: Tommi S. E. Laukkanen
  * Project: http://www.bubblecloud.org

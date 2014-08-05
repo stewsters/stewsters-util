@@ -24,8 +24,10 @@ public interface PathFinder3d {
      *              can it fly? can it swim etc.
      * @param sx    The x coordinate of the start location
      * @param sy    The y coordinate of the start location
+     * @param sz    The z coordinate of the start location
      * @param tx    The x coordinate of the target location
-     * @param ty    Teh y coordinate of the target location
+     * @param ty    The y coordinate of the target location
+     * @param tz    The z coordinate of the target location
      * @return The path found from start to end, or null if no path can be found.
      */
     public FullPath3d findPath(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz);

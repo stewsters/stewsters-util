@@ -333,6 +333,7 @@ public class AStarPathFinder2d implements PathFinder2d {
      * @param sx    The x coordinate of the tile whose cost is being determined
      * @param sy    The y coordinate of the tile whose cost is being determined
      * @param max   The Max cost
+     * @return Get a list of reachable cells within max cost
      */
     public LinkedList<Point2i> getReachableCells(Mover2d mover, int sx, int sy, float max) {
 

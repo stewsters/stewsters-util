@@ -16,9 +16,9 @@ public class MapGen3d {
     /**
      * Fills an area with a border
      *
-     * @param map
-     * @param fill
-     * @param wall
+     * @param map The map we are working on
+     * @param fill The center will be filled with this CellType
+     * @param wall The edges will be filled with this CellType
      */
     public static void fillWithBorder(GeneratedMap3d map, CellType fill, CellType wall) {
 
@@ -59,10 +59,10 @@ public class MapGen3d {
     /**
      * Flood fills on things that fit the predicate
      *
-     * @param map
-     * @param start
-     * @param predicate
-     * @param brush3d
+     * @param map The map we are working on
+     * @param start The point we start the flood fill at
+     * @param predicate The predicate to see if the area should be floodfilled
+     * @param brush3d The brush we floodfill with
      */
     public static void floodFill(GeneratedMap3d map, Point3i start, CellPredicate3d predicate, Brush3d brush3d) {
 

@@ -17,9 +17,9 @@ public class NoiseFunction2d {
     /**
      * Returns a value between 0 and 1
      *
-     * @param x
-     * @param y
-     * @return
+     * @param x The x coordinate
+     * @param y The y coordinate
+     * @return The generated value
      */
     public double gen(double x, double y) {
         return Simplex2d.noise((x / xScale) + xOffset, (y / yScale) + yOffset) + 0.5;

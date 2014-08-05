@@ -288,8 +288,10 @@ public class AStarPathFinder3d implements PathFinder3d {
      * @param mover The mover that would hold a given location
      * @param sx    The starting x coordinate
      * @param sy    The starting y coordinate
+     * @param sz    The starting z coordinate
      * @param x     The x coordinate of the location to check
      * @param y     The y coordinate of the location to check
+     * @param z     The z coordinate of the location to check
      * @return True if the location is valid for the given mover
      */
     protected boolean isValidLocation(Mover3d mover, int sx, int sy, int sz, int x, int y, int z) {
@@ -308,8 +310,10 @@ public class AStarPathFinder3d implements PathFinder3d {
      * @param mover The entity that is being moved
      * @param sx    The x coordinate of the tile whose cost is being determined
      * @param sy    The y coordiante of the tile whose cost is being determined
+     * @param sz    The z coordiante of the tile whose cost is being determined
      * @param tx    The x coordinate of the target location
      * @param ty    The y coordinate of the target location
+     * @param tz    The z coordinate of the target location
      * @return The cost of movement through the given tile
      */
     public float getMovementCost(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
@@ -339,8 +343,9 @@ public class AStarPathFinder3d implements PathFinder3d {
      * @param mover The entity that is being moved
      * @param sx    The x coordinate of the tile whose cost is being determined
      * @param sy    The y coordinate of the tile whose cost is being determined
-     * @param sz    The z coordinate
+     * @param sz    The z coordinate of the tile whose cost is being determined
      * @param max   The Max cost
+     * @return A list of reachable cells
      */
     public LinkedList<Point3i> getReachableCells(Mover3d mover, int sx, int sy, int sz, float max) {
 
