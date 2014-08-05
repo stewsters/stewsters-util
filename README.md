@@ -4,6 +4,42 @@ Stewsters-Util
 This is a collection of some code that I have pulled out of projects.  It is mostly useful for roguelikes.
 ![TravisCI](https://travis-ci.org/stewsters/stewsters-util.svg?branch=master)
 
+I have tried to port any 2d algorithms I have found into 3d as well.
+
+* Reusable predicate/brush components for map generation algorithms. (http://www.roguebasin.com/index.php?title=Designing_Flexible,_Reusable_Algorithms)
+* A* pathfinding.
+* A KdTree for spatial hashing
+* A schedular for turns.
+* Noise Functions
+* Djikstra searching for objectives.
+* A few Math functions that I have found useful.
+* A variant of SquidLib's shadowcasting that reuses the same array.
+
+
+
+My apologies for the lack of documentation. For examples on how to use these, look at the tests.
+
+
+How to use with Gradle
+=======================
+
+Add jcenter to your repositories:
+
+```gradle
+repositories {
+    jcenter()
+}
+```
+
+Then add it to your dependencies:
+```gradle
+dependencies{
+    compile 'com.stewsters.util:stewsters-util:0.8'
+}
+```
+
+
+
 
 How to compile a JAR
 ====================
@@ -15,10 +51,8 @@ If you want to jar it up for a use in a project, try this:
 gradle jar
 ```
 
-How to use a git submodule
-==========================
-
-I am doing this because I am tired of copying, yet do not yet want to mess with deploying to maven.  Someday.
+How to use as a git submodule
+=============================
 
 You need to add a submodule to your project
 
