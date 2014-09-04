@@ -8,9 +8,9 @@ I have tried to port any 2d algorithms I have found into 3d as well.
 
 * Reusable predicate/brush components for map generation algorithms. (http://www.roguebasin.com/index.php?title=Designing_Flexible,_Reusable_Algorithms)
 * A* pathfinding.
-* A KdTree for spatial hashing
+* A KdTree for spatial hashing.
 * A schedular for turns.
-* Noise Functions
+* Noise Functions.
 * Djikstra searching for objectives.
 * A few Math functions that I have found useful.
 * A variant of SquidLib's shadowcasting that reuses the same array.
