@@ -1,13 +1,16 @@
 package com.stewsters.util.mapgen.terrain;
 
-import com.stewsters.util.noise.Simplex3d;
+import com.stewsters.util.noise.OpenSimplexNoise;
 
 
 public class NoiseFunction3d {
-    private float xOffset, yOffset, zOffset;
-    private float xScale, yScale, zScale;
 
-    public NoiseFunction3d(float xOffset, float yOffset, float zOffset, float xScale, float yScale, float zScale) {
+    private OpenSimplexNoise openSimplexNoise;
+    private double xOffset, yOffset, zOffset;
+    private double xScale, yScale, zScale;
+
+    public NoiseFunction3d(double xOffset, double yOffset, double zOffset, double xScale, double yScale, double zScale) {
+        openSimplexNoise = new OpenSimplexNoise();
         this.xOffset = xOffset;
         this.yOffset = yOffset;
         this.zOffset = zOffset;
@@ -25,8 +28,8 @@ public class NoiseFunction3d {
      * @param z The z coordinate
      * @return The generated value scaled
      */
-    public float gen(float x, float y, float z) {
-        return Simplex3d.noise((x / xScale) + xOffset, (y / yScale) + yOffset, (z / zScale) + zOffset) + 0.5f;
+    public double gen(double x, double y, double z) {
+        return openSimplexNoise.eval((x / xScale) + xOffset, (y / yScale) + yOffset, (z / zScale) + zOffset) + 0.5f;
     }
 
 }
