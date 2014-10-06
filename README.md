@@ -32,9 +32,10 @@ repositories {
 ```
 
 Then add it to your dependencies:
+
 ```gradle
 dependencies{
-    compile 'com.stewsters.util:stewsters-util:0.8'
+    compile 'com.stewsters.util:stewsters-util:0.9'
 }
 ```
 
