@@ -12,13 +12,13 @@ public class RectPrism {
     public int z1;
     public int z2;
 
-    public RectPrism(int x, int y, int z, int w, int h, int d) {
-        this.x1 = x;
-        this.y1 = y;
-        this.z1 = z;
-        this.x2 = x + w - 1;
-        this.y2 = y + h - 1;
-        this.z2 = z + d - 1;
+    public RectPrism(int x1, int y1, int z1, int x2, int y2, int z2) {
+        this.x1 = x1;
+        this.y1 = y1;
+        this.z1 = z1;
+        this.x2 = x2;
+        this.y2 = y2;
+        this.z2 = z2;
     }
 
     public Point3i center() {
