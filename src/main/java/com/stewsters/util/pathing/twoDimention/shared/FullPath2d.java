@@ -13,7 +13,7 @@ public class FullPath2d {
     /**
      * The list of steps building up this path
      */
-    private ArrayList<Step> steps = new ArrayList();
+    private ArrayList<Step> steps = new ArrayList<>();
 
     /**
      * Create an empty path

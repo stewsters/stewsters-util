@@ -22,10 +22,10 @@ public class Spacecraft2d {
         return "x:" + x + " y:" + y;
     }
 
-    public void addToTree(IntervalKDTree2d spacecrafts) {
+    public void addToTree(IntervalKDTree2d<Spacecraft2d> spacecrafts) {
         spacecrafts.put(x - r, y - r,
-                x + r, y + r,
-                this
+            x + r, y + r,
+            this
         );
     }
 

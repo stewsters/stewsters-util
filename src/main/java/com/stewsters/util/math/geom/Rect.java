@@ -27,9 +27,9 @@ public class Rect {
 
     public boolean intersect(Rect other) {
         return (x1 <= other.x2 &&
-                x2 >= other.x1 &&
-                y1 <= other.y2 &&
-                y2 >= other.y1);
+            x2 >= other.x1 &&
+            y1 <= other.y2 &&
+            y2 >= other.y1);
     }
 
     public String toString() {
@@ -38,7 +38,7 @@ public class Rect {
 
     public boolean contains(int x, int y) {
         return (x >= x1 && x <= x2 &&
-                y >= y1 && y <= y2
+            y >= y1 && y <= y2
         );
     }
 }

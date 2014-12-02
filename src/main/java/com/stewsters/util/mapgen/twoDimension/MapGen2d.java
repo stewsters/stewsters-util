@@ -16,7 +16,7 @@ public class MapGen2d {
     /**
      * Fills an area with a border
      *
-     * @param map The map we are working on
+     * @param map  The map we are working on
      * @param fill The CellType we are filling the center with
      * @param wall The CellType we are filling the edge with
      */
@@ -51,10 +51,10 @@ public class MapGen2d {
     /**
      * Flood fills on things that fit the predicate
      *
-     * @param map The map we are working on
-     * @param start The beginning of the flood fille
+     * @param map       The map we are working on
+     * @param start     The beginning of the flood fille
      * @param predicate The predicate to check
-     * @param brush2d The brush to fill
+     * @param brush2d   The brush to fill
      */
     public static void floodFill(GeneratedMap2d map, Point2i start, CellPredicate2d predicate, Brush2d brush2d) {
 

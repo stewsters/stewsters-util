@@ -16,7 +16,7 @@ public class MapGen3d {
     /**
      * Fills an area with a border
      *
-     * @param map The map we are working on
+     * @param map  The map we are working on
      * @param fill The center will be filled with this CellType
      * @param wall The edges will be filled with this CellType
      */
@@ -26,10 +26,10 @@ public class MapGen3d {
             for (int y = 0; y < map.getHeightInTiles(); y++) {
                 for (int z = 0; z < map.getDepthInTiles(); z++) {
                     if (x == 0 || y == 0 || z == 0
-                            || x >= map.getWidthInTiles() - 1
-                            || y >= map.getHeightInTiles() - 1
-                            || z >= map.getDepthInTiles() - 1
-                            ) {
+                        || x >= map.getWidthInTiles() - 1
+                        || y >= map.getHeightInTiles() - 1
+                        || z >= map.getDepthInTiles() - 1
+                        ) {
                         map.setCellTypeAt(x, y, z, wall);
                     } else {
                         map.setCellTypeAt(x, y, z, fill);
@@ -59,10 +59,10 @@ public class MapGen3d {
     /**
      * Flood fills on things that fit the predicate
      *
-     * @param map The map we are working on
-     * @param start The point we start the flood fill at
+     * @param map       The map we are working on
+     * @param start     The point we start the flood fill at
      * @param predicate The predicate to see if the area should be floodfilled
-     * @param brush3d The brush we floodfill with
+     * @param brush3d   The brush we floodfill with
      */
     public static void floodFill(GeneratedMap3d map, Point3i start, CellPredicate3d predicate, Brush3d brush3d) {
 

@@ -13,7 +13,7 @@ public class DjikstraSearcher3d implements Searcher3d {
     /**
      * The set of nodes that have been searched through
      */
-    private ArrayList<PathNode3d> closed = new ArrayList();
+    private ArrayList<PathNode3d> closed = new ArrayList<PathNode3d>();
     /**
      * The set of nodes that we do not yet consider fully searched
      */
@@ -99,8 +99,8 @@ public class DjikstraSearcher3d implements Searcher3d {
 
                         if (!allowDiagMovement) {
                             if (((x != 0) && (y != 0)) ||
-                                    ((y != 0) && (z != 0)) ||
-                                    ((z != 0) && (x != 0))) {
+                                ((y != 0) && (z != 0)) ||
+                                ((z != 0) && (x != 0))) {
                                 continue;
                             }
                         }

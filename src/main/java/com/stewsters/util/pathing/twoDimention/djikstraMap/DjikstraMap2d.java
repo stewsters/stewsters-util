@@ -14,7 +14,7 @@ public class DjikstraMap2d implements PathingMap2d {
     /**
      * The set of nodes that have been searched through
      */
-    private ArrayList closed = new ArrayList();
+    private ArrayList<PathNode2d> closed = new ArrayList<PathNode2d>();
     /**
      * The set of nodes that we do not yet consider fully searched
      */
@@ -36,7 +36,7 @@ public class DjikstraMap2d implements PathingMap2d {
 
 
     /**
-     * True if we allow diaganol movement
+     * True if we allow diagonal movement
      */
     private boolean allowDiagMovement;
 

@@ -56,10 +56,11 @@ public interface TileBasedMap3d {
 
     /**
      * Check to see if the mover is blocked on that tile
+     *
      * @param mover The mover we are checking
-     * @param x The x coordinate
-     * @param y The y coordinate
-     * @param z The z coordinate
+     * @param x     The x coordinate
+     * @param y     The y coordinate
+     * @param z     The z coordinate
      * @return A boolean whethor or not the mover is blocked
      */
     public boolean isBlocked(Mover3d mover, int x, int y, int z);

@@ -13,7 +13,7 @@ public class OpenSimplexNoiseTest {
     private static final double FEATURE_SIZE = 24;
 
     public static void main(String[] args)
-            throws IOException {
+        throws IOException {
 
         OpenSimplexNoise noise = new OpenSimplexNoise();
         BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);

@@ -13,7 +13,7 @@ public class FullPath3d {
     /**
      * The list of steps building up this path
      */
-    private ArrayList<Step> steps = new ArrayList();
+    private ArrayList<Step> steps = new ArrayList<Step>();
 
     /**
      * Create an empty path
