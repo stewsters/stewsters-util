@@ -4,7 +4,7 @@ import java.util.*;
 
 /**
  * This is 2d java reimplementation of the C# 3d interval kd tree from
- *
+ * <p/>
  * 3D Interval KD Tree implementation.
  * Author: Tommi S. E. Laukkanen
  * Project: http://www.bubblecloud.org
@@ -17,7 +17,7 @@ public class IntervalKDTree2d<T> {
     private Node rootNode;
     private int divisionThreshold;
 
-    private Map<Box, Node> boxNodeDictionary = new HashMap<Box, Node>();
+    private Map<Box<T>, Node> boxNodeDictionary = new HashMap<>();
     private Map<T, Box<T>> valueBoxDictionary = new HashMap<T, Box<T>>();
 
     public IntervalKDTree2d(double range, int divisionThreshold) {

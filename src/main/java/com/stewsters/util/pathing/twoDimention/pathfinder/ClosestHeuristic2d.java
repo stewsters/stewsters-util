@@ -4,8 +4,7 @@ import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
 /**
- * A heuristic that uses the tile that is closest to the target
- * as the next best tile.
+ * A heuristic that uses the Pythagorean Theorem to find distance.
  *
  * @author Kevin Glass
  * @author Adrian Moore

@@ -40,7 +40,7 @@ public class AStarPathFinder2d implements PathFinder2d {
      */
     private PathNode2d[][] nodes;
     /**
-     * True if we allow diaganol movement
+     * True if we allow diagonal movement
      */
     private boolean allowDiagMovement;
     /**
@@ -56,7 +56,9 @@ public class AStarPathFinder2d implements PathFinder2d {
      * @param allowDiagMovement True if the search should try diagonal movement
      */
     public AStarPathFinder2d(TileBasedMap2d map, int maxSearchDistance, boolean allowDiagMovement) {
-        this(map, maxSearchDistance, allowDiagMovement, (AStarHeuristic2d) new ClosestHeuristic2d());
+
+        this(map, maxSearchDistance, allowDiagMovement,
+            allowDiagMovement ? new RoundedChebyshevHeuristic2d() : new ManhattanHeuristic2d());
     }
 
     /**
@@ -65,7 +67,7 @@ public class AStarPathFinder2d implements PathFinder2d {
      * @param heuristic         The heuristic used to determine the search order of the map
      * @param map               The map to be searched
      * @param maxSearchDistance The maximum depth we'll search before giving up
-     * @param allowDiagMovement True if the search should try diaganol movement
+     * @param allowDiagMovement True if the search should try diagonal movement
      */
     public AStarPathFinder2d(TileBasedMap2d map, int maxSearchDistance,
                              boolean allowDiagMovement, AStarHeuristic2d heuristic) {
@@ -132,7 +134,7 @@ public class AStarPathFinder2d implements PathFinder2d {
                         continue;
                     }
 
-                    // if we're not allowing diaganol movement then only
+                    // if we're not allowing diagonal movement then only
                     // one of x or y can be set
 
                     if (!allowDiagMovement) {
@@ -185,19 +187,16 @@ public class AStarPathFinder2d implements PathFinder2d {
 
         }
 
-        // since we'e've run out of search
-        // there was no path. Just return null
-
+        // since we've run out of search there was no path. Just return null
         if (nodes[tx][ty].parent == null) {
             return null;
         }
 
-        // At this point we've definitely found a path so we can uses the parent
-
-        // references of the nodes to find out way from the target location back
-
-        // to the start recording the nodes on the way.
-
+        /*
+         At this point we've definitely found a path so we can uses the parent
+         references of the nodes to find out way from the target location back
+         to the start recording the nodes on the way.
+        */
         FullPath2d path = new FullPath2d();
         PathNode2d target = nodes[tx][ty];
         while (target != nodes[sx][sy]) {
@@ -206,8 +205,7 @@ public class AStarPathFinder2d implements PathFinder2d {
         }
         path.prependStep(sx, sy);
 
-        // thats it, we have our path
-
+        // That's it, we have our path
         return path;
     }
 

@@ -5,7 +5,7 @@ import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
 /**
- * A heuristic that uses manhattan distance
+ * A heuristic that uses Chebyshev Distance
  *
  * @author Adrian Moore
  */

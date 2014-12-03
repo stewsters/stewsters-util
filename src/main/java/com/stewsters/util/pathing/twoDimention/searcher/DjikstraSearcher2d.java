@@ -33,7 +33,7 @@ public class DjikstraSearcher2d implements Searcher2d {
      */
     private PathNode2d[][] nodes;
     /**
-     * True if we allow diaganol movement
+     * True if we allow diagonal movement
      */
     private boolean allowDiagMovement;
 
@@ -93,7 +93,7 @@ public class DjikstraSearcher2d implements Searcher2d {
                         continue;
                     }
 
-                    // if we're not allowing diaganol movement then only
+                    // if we're not allowing diagonal movement then only
                     // one of x or y can be set
 
                     if (!allowDiagMovement) {

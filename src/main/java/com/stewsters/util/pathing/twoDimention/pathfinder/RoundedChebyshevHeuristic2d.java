@@ -1,10 +1,10 @@
-package com.stewsters.util.pathing.twoDimention.pathfinder
+package com.stewsters.util.pathing.twoDimention.pathfinder;
 
-import com.stewsters.util.pathing.twoDimention.shared.Mover2d
-import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d
+import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
+import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
 /**
- * A heuristic that uses manhattan distance
+ * A heuristic that uses Chebyshev Distance, but with a sqrt of 2 as the diagonal cost
  *
  * @author Adrian Moore
  */

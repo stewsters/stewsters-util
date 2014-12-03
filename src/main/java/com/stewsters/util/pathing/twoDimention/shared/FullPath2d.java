@@ -39,7 +39,7 @@ public class FullPath2d {
      * @return The step information, the position on the map.
      */
     public Step getStep(int index) {
-        return (Step) steps.get(index);
+        return steps.get(index);
     }
 
     /**
@@ -149,14 +149,10 @@ public class FullPath2d {
         /**
          * @see Object#equals(Object)
          */
-        public boolean equals(Object other) {
-            if (other instanceof Step) {
-                Step o = (Step) other;
+        public boolean equals(Step other) {
 
-                return (o.x == x) && (o.y == y);
-            }
+            return (other.x == x) && (other.y == y);
 
-            return false;
         }
     }
 }

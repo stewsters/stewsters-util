@@ -14,6 +14,7 @@ import java.util.PriorityQueue;
  * A path finder implementation that uses the AStar heuristic based algorithm
  * to determine a path.
  *
+ * @author Adrian Moore
  * @author Kevin Glass
  */
 public class AStarPathFinder3d implements PathFinder3d {
@@ -40,7 +41,7 @@ public class AStarPathFinder3d implements PathFinder3d {
      */
     private PathNode3d[][][] nodes;
     /**
-     * True if we allow diaganol movement
+     * True if we allow diagonal movement
      */
     private boolean allowDiagMovement;
     /**
@@ -56,7 +57,8 @@ public class AStarPathFinder3d implements PathFinder3d {
      * @param allowDiagMovement True if the search should try diagonal movement
      */
     public AStarPathFinder3d(TileBasedMap3d map, int maxSearchDistance, boolean allowDiagMovement) {
-        this(map, maxSearchDistance, allowDiagMovement, (AStarHeuristic3d) new ClosestHeuristic3d());
+        this(map, maxSearchDistance, allowDiagMovement,
+            allowDiagMovement ? new RoundedChebyshevHeuristic3d() : new ChebyshevHeuristic3d());
     }
 
     /**
@@ -65,7 +67,7 @@ public class AStarPathFinder3d implements PathFinder3d {
      * @param heuristic         The heuristic used to determine the search order of the map
      * @param map               The map to be searched
      * @param maxSearchDistance The maximum depth we'll search before giving up
-     * @param allowDiagMovement True if the search should try diaganol movement
+     * @param allowDiagMovement True if the search should try diagonal movement
      */
     public AStarPathFinder3d(TileBasedMap3d map, int maxSearchDistance,
                              boolean allowDiagMovement, AStarHeuristic3d heuristic) {
@@ -135,7 +137,7 @@ public class AStarPathFinder3d implements PathFinder3d {
                             continue;
                         }
 
-                        // if we're not allowing diaganol movement then only
+                        // if we're not allowing diagonal movement then only
                         // one of x or y can be set
 
                         if (!allowDiagMovement) {

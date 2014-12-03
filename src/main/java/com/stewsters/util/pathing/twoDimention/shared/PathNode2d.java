@@ -3,7 +3,7 @@ package com.stewsters.util.pathing.twoDimention.shared;
 /**
  * A single PathNode in the search graph
  */
-public class PathNode2d implements Comparable {
+public class PathNode2d implements Comparable<PathNode2d> {
     /**
      * The x coordinate of the node
      */
@@ -57,11 +57,10 @@ public class PathNode2d implements Comparable {
     /**
      * @see Comparable#compareTo(Object)
      */
-    public int compareTo(Object other) {
-        PathNode2d o = (PathNode2d) other;
+    public int compareTo(PathNode2d other) {
 
         float f = heuristic + cost;
-        float of = o.heuristic + o.cost;
+        float of = other.heuristic + other.cost;
 
         if (f < of) {
             return -1;

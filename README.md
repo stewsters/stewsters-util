@@ -7,7 +7,7 @@ This is a collection of some code that I have pulled out of projects.  It is mos
 I have tried to port any 2d algorithms I have found into 3d as well.
 
 * Reusable predicate/brush components for map generation algorithms. (http://www.roguebasin.com/index.php?title=Designing_Flexible,_Reusable_Algorithms)
-* A* pathfinding.
+* Kevin Glass's A* pathfinding for 2d which I have extended to 3d.
 * A KdTree for spatial hashing.
 * A schedular for turns.
 * Noise Functions.
@@ -17,7 +17,7 @@ I have tried to port any 2d algorithms I have found into 3d as well.
 
 
 
-My apologies for the lack of documentation. For examples on how to use these, look at the tests.
+My apologies for the lack of documentation. For examples on how to use these, look at the tests folder.
 
 
 How to use with Gradle
@@ -55,7 +55,7 @@ gradle jar
 How to use as a git submodule
 =============================
 
-You need to add a submodule to your project
+This is really only a good idea if you intend on editing this library within another program.
 
 ```bash
 git submodule add git@github.com:stewsters/stewsters-util.git stewsters-util
