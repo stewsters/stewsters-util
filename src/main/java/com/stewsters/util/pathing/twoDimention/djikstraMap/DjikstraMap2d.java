@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.PriorityQueue;
 
+@Deprecated
 public class DjikstraMap2d implements PathingMap2d {
 
 
@@ -48,7 +49,6 @@ public class DjikstraMap2d implements PathingMap2d {
         nodes = new PathNode2d[map.getWidthInTiles()][map.getHeightInTiles()];
         for (int x = 0; x < map.getWidthInTiles(); x++) {
             for (int y = 0; y < map.getHeightInTiles(); y++) {
-
                 nodes[x][y] = new PathNode2d(x, y);
             }
         }
