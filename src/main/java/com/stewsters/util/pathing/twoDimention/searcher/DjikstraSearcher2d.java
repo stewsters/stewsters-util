@@ -5,7 +5,7 @@ import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.PriorityQueue;
 
 public class DjikstraSearcher2d implements Searcher2d {
@@ -13,7 +13,7 @@ public class DjikstraSearcher2d implements Searcher2d {
     /**
      * The set of nodes that have been searched through
      */
-    private ArrayList<PathNode2d> closed = new ArrayList<>();
+    private HashSet<PathNode2d> closed = new HashSet<>();
     /**
      * The set of nodes that we do not yet consider fully searched
      */

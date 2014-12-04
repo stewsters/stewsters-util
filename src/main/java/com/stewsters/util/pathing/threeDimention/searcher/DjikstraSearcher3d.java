@@ -5,7 +5,7 @@ import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
 import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
 import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.PriorityQueue;
 
 public class DjikstraSearcher3d implements Searcher3d {
@@ -13,7 +13,7 @@ public class DjikstraSearcher3d implements Searcher3d {
     /**
      * The set of nodes that have been searched through
      */
-    private ArrayList<PathNode3d> closed = new ArrayList<PathNode3d>();
+    private HashSet<PathNode3d> closed = new HashSet<PathNode3d>();
     /**
      * The set of nodes that we do not yet consider fully searched
      */
