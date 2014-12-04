@@ -143,11 +143,15 @@ public class FullPath2d {
          * @see Object#hashCode()
          */
         public int hashCode() {
-            return x * y;
+            int hash = 17;
+            hash = ((hash + x) << 5) - (hash + x);
+            hash = ((hash + y) << 5) - (hash + y);
+            return hash;
         }
 
         /**
-         * @see Object#equals(Object)
+         * @param other the object to compare to
+         * @return if it is equal
          */
         public boolean equals(Step other) {
 

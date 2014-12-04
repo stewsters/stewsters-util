@@ -3,12 +3,15 @@ package com.stewsters.util.spatial;
 import java.util.*;
 
 /**
+ * <p>
  * This is 2d java reimplementation of the C# 3d interval kd tree from
- * <p/>
+ * </p>
+ * <p>
  * 3D Interval KD Tree implementation.
  * Author: Tommi S. E. Laukkanen
  * Project: http://www.bubblecloud.org
  * License: Apache 2.0 License
+ * </p>
  *
  * @param <T> The type of object to be stored here
  */

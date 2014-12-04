@@ -23,13 +23,16 @@ public class ShadowCaster2d {
 
 
     /**
+     * <p>
      * Calculates the Field Of View for the provided map from the given x, y
      * coordinates. Returns a lightmap for a result where the values represent a
      * percentage of fully lit.
-     * <p/>
+     * </p>
+     * <p>
      * A value equal to or below 0 means that cell is not in the
      * field of view, whereas a value equal to or above 1 means that cell is
      * in the field of view.
+     * </p>
      *
      * @param startx the horizontal component of the starting location
      * @param starty the vertical component of the starting location

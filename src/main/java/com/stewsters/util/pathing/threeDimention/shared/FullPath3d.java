@@ -171,7 +171,11 @@ public class FullPath3d {
          * @see Object#hashCode()
          */
         public int hashCode() {
-            return x * y * z;
+            int hash = 17;
+            hash = ((hash + x) << 5) - (hash + x);
+            hash = ((hash + y) << 5) - (hash + y);
+            hash = ((hash + z) << 5) - (hash + z);
+            return hash;
         }
 
         /**
