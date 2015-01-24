@@ -58,7 +58,7 @@ public class AStarPathFinder3d implements PathFinder3d {
      */
     public AStarPathFinder3d(TileBasedMap3d map, int maxSearchDistance, boolean allowDiagMovement) {
         this(map, maxSearchDistance, allowDiagMovement,
-            allowDiagMovement ? new RoundedChebyshevHeuristic3d() : new ChebyshevHeuristic3d());
+                allowDiagMovement ? new RoundedChebyshevHeuristic3d() : new ChebyshevHeuristic3d());
     }
 
     /**
@@ -124,7 +124,7 @@ public class AStarPathFinder3d implements PathFinder3d {
             removeFromOpen(current);
             addToClosed(current);
 
-            // search through all the neighbours of the current PathNode evaluating
+            // search through all the neighbors of the current PathNode evaluating
 
             // them as next steps
 

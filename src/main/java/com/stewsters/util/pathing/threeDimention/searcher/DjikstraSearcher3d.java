@@ -82,7 +82,7 @@ public class DjikstraSearcher3d implements Searcher3d {
             removeFromOpen(current);
             addToClosed(current);
 
-            // search through all the neighbours of the current PathNode evaluating
+            // search through all the neighbors of the current PathNode evaluating
 
             // them as next steps
             for (int x = -1; x < 2; x++) {
@@ -99,8 +99,8 @@ public class DjikstraSearcher3d implements Searcher3d {
 
                         if (!allowDiagMovement) {
                             if (((x != 0) && (y != 0)) ||
-                                ((y != 0) && (z != 0)) ||
-                                ((z != 0) && (x != 0))) {
+                                    ((y != 0) && (z != 0)) ||
+                                    ((z != 0) && (x != 0))) {
                                 continue;
                             }
                         }

@@ -58,7 +58,7 @@ public class AStarPathFinder2d implements PathFinder2d {
     public AStarPathFinder2d(TileBasedMap2d map, int maxSearchDistance, boolean allowDiagMovement) {
 
         this(map, maxSearchDistance, allowDiagMovement,
-            allowDiagMovement ? new RoundedChebyshevHeuristic2d() : new ManhattanHeuristic2d());
+                allowDiagMovement ? new RoundedChebyshevHeuristic2d() : new ManhattanHeuristic2d());
     }
 
     /**
@@ -122,7 +122,7 @@ public class AStarPathFinder2d implements PathFinder2d {
             removeFromOpen(current);
             addToClosed(current);
 
-            // search through all the neighbours of the current PathNode evaluating
+            // search through all the neighbors of the current PathNode evaluating
 
             // them as next steps
 
