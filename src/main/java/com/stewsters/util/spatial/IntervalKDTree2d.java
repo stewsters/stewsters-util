@@ -70,12 +70,12 @@ public class IntervalKDTree2d<T> {
         Node currentNode = boxNodeDictionary.get(box);
 
         if (
-            (currentNode.hasChildren &&
-                (box.isBelow(currentNode.depth, currentNode.divisionBoundary) ||
-                    box.isAbove(currentNode.depth, currentNode.divisionBoundary))
-            )
-                || !currentNode.contains(box)
-            ) {
+                (currentNode.hasChildren &&
+                        (box.isBelow(currentNode.depth, currentNode.divisionBoundary) ||
+                                box.isAbove(currentNode.depth, currentNode.divisionBoundary))
+                )
+                        || !currentNode.contains(box)
+                ) {
             // If box location has changed so that it needs to placed to different node then remove / add.
             currentNode.removeBox(box);
             rootNode.addBox(box);
@@ -141,7 +141,7 @@ public class IntervalKDTree2d<T> {
 
             // Collapse parent node if total amount of values in parent and childen is less than maximum values per node.
             if (parent != null && !parent.lowChild.hasChildren && !parent.highChild.hasChildren &&
-                parent.boxes.size() + parent.lowChild.boxes.size() + parent.highChild.boxes.size() < tree.divisionThreshold) {
+                    parent.boxes.size() + parent.lowChild.boxes.size() + parent.highChild.boxes.size() < tree.divisionThreshold) {
                 parent.collapse();
             }
         }
@@ -224,7 +224,7 @@ public class IntervalKDTree2d<T> {
             hasChildren = false;
 
             if (parent != null && !parent.lowChild.hasChildren && !parent.highChild.hasChildren &&
-                parent.boxes.size() + parent.lowChild.boxes.size() + parent.highChild.boxes.size() < tree.divisionThreshold) {
+                    parent.boxes.size() + parent.lowChild.boxes.size() + parent.highChild.boxes.size() < tree.divisionThreshold) {
                 parent.collapse();
             }
         }
@@ -288,17 +288,17 @@ public class IntervalKDTree2d<T> {
 
         public boolean contains(Square square) {
             return minX <= square.minX && square.maxX < maxX &&
-                minY <= square.minY && square.maxY < maxY;
+                    minY <= square.minY && square.maxY < maxY;
         }
 
         public boolean intersects(Square square) {
             return (contains(square.minX, square.minY) || contains(square.maxX, square.maxY)) ||
-                (square.contains(minX, minY) || square.contains(maxX, maxY));
+                    (square.contains(minX, minY) || square.contains(maxX, maxY));
         }
 
         private boolean contains(double cx, double cy) {
             return minX <= cx && cx < maxX &&
-                minY <= cy && cy < maxY;
+                    minY <= cy && cy < maxY;
         }
 
     }

@@ -24,8 +24,8 @@ public class Spacecraft2d {
 
     public void addToTree(IntervalKDTree2d<Spacecraft2d> spacecrafts) {
         spacecrafts.put(x - r, y - r,
-            x + r, y + r,
-            this
+                x + r, y + r,
+                this
         );
     }
 

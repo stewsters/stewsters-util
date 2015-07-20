@@ -26,10 +26,10 @@ public class MapGen3d {
             for (int y = 0; y < map.getHeightInTiles(); y++) {
                 for (int z = 0; z < map.getDepthInTiles(); z++) {
                     if (x == 0 || y == 0 || z == 0
-                        || x >= map.getWidthInTiles() - 1
-                        || y >= map.getHeightInTiles() - 1
-                        || z >= map.getDepthInTiles() - 1
-                        ) {
+                            || x >= map.getWidthInTiles() - 1
+                            || y >= map.getHeightInTiles() - 1
+                            || z >= map.getDepthInTiles() - 1
+                            ) {
                         map.setCellTypeAt(x, y, z, wall);
                     } else {
                         map.setCellTypeAt(x, y, z, fill);

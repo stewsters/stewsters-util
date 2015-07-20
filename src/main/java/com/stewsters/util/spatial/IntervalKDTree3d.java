@@ -11,7 +11,8 @@ import java.util.*;
  * Author: Tommi S. E. Laukkanen
  * Project: http://www.bubblecloud.org
  * License: Apache 2.0 License
- *</p>
+ * </p>
+ *
  * @param <T> The type of object to be stored here
  */
 public class IntervalKDTree3d<T> {
@@ -71,12 +72,12 @@ public class IntervalKDTree3d<T> {
         Node currentNode = boxNodeDictionary.get(box);
 
         if (
-            (currentNode.hasChildren &&
-                (box.isBelow(currentNode.depth, currentNode.divisionBoundary)
-                    || box.isAbove(currentNode.depth, currentNode.divisionBoundary))
-            )
-                || !currentNode.contains(box)
-            ) {
+                (currentNode.hasChildren &&
+                        (box.isBelow(currentNode.depth, currentNode.divisionBoundary)
+                                || box.isAbove(currentNode.depth, currentNode.divisionBoundary))
+                )
+                        || !currentNode.contains(box)
+                ) {
             // If box location has changed so that it needs to placed to different node then remove / add.
             currentNode.removeBox(box);
             rootNode.addBox(box);
@@ -142,7 +143,7 @@ public class IntervalKDTree3d<T> {
 
             // Collapse parent node if total amount of values in parent and childen is less than maximum values per node.
             if (parent != null && !parent.lowChild.hasChildren && !parent.highChild.hasChildren &&
-                parent.boxes.size() + parent.lowChild.boxes.size() + parent.highChild.boxes.size() < tree.divisionThreshold) {
+                    parent.boxes.size() + parent.lowChild.boxes.size() + parent.highChild.boxes.size() < tree.divisionThreshold) {
                 parent.collapse();
             }
         }
@@ -229,7 +230,7 @@ public class IntervalKDTree3d<T> {
             hasChildren = false;
 
             if (parent != null && !parent.lowChild.hasChildren && !parent.highChild.hasChildren &&
-                parent.boxes.size() + parent.lowChild.boxes.size() + parent.highChild.boxes.size() < tree.divisionThreshold) {
+                    parent.boxes.size() + parent.lowChild.boxes.size() + parent.highChild.boxes.size() < tree.divisionThreshold) {
                 parent.collapse();
             }
         }
@@ -298,19 +299,19 @@ public class IntervalKDTree3d<T> {
 
         public boolean contains(Cube cube) {
             return minX <= cube.minX && cube.maxX < maxX &&
-                minY <= cube.minY && cube.maxY < maxY &&
-                minZ <= cube.minZ && cube.maxZ < maxZ;
+                    minY <= cube.minY && cube.maxY < maxY &&
+                    minZ <= cube.minZ && cube.maxZ < maxZ;
         }
 
         public boolean intersects(Cube cube) {
             return (contains(cube.minX, cube.minY, cube.minZ) || contains(cube.maxX, cube.maxY, cube.maxZ)) ||
-                (cube.contains(minX, minY, minZ) || cube.contains(maxX, maxY, maxZ));
+                    (cube.contains(minX, minY, minZ) || cube.contains(maxX, maxY, maxZ));
         }
 
         private boolean contains(double cx, double cy, double cz) {
             return minX <= cx && cx < maxX &&
-                minY <= cy && cy < maxY &&
-                minZ <= cz && cz < maxZ;
+                    minY <= cy && cy < maxY &&
+                    minZ <= cz && cz < maxZ;
         }
 
     }

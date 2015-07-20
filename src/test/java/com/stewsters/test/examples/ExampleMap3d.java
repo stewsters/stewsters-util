@@ -32,6 +32,10 @@ public class ExampleMap3d implements TileBasedMap3d {
 
     }
 
+    public void setTile(int x, int y, int z, boolean blocks) {
+        ground[x][y][z] = blocks;
+    }
+
     @Override
     public int getWidthInTiles() {
         return width;

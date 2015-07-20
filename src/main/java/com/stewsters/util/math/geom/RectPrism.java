@@ -30,11 +30,11 @@ public class RectPrism {
 
     public boolean intersect(RectPrism other) {
         return (x1 <= other.x2 &&
-            x2 >= other.x1 &&
-            y1 <= other.y2 &&
-            y2 >= other.y1 &&
-            z1 <= other.z2 &&
-            z2 >= other.z1
+                x2 >= other.x1 &&
+                y1 <= other.y2 &&
+                y2 >= other.y1 &&
+                z1 <= other.z2 &&
+                z2 >= other.z1
         );
     }
 
@@ -44,8 +44,8 @@ public class RectPrism {
 
     public boolean contains(int x, int y, int z) {
         return (x >= x1 && x <= x2 &&
-            y >= y1 && y <= y2 &&
-            z >= z1 && z <= z2
+                y >= y1 && y <= y2 &&
+                z >= z1 && z <= z2
         );
     }
 
