@@ -109,8 +109,8 @@ bintray {
 
         //Optional version descriptor
         version {
-            name = '0.10' //Bintray logical version name
-            vcsTag = '0.10'
+            name = "$version" //Bintray logical version name
+            vcsTag = "$version"
         }
     }
 
