@@ -27,7 +27,7 @@ targetCompatibility = 1.7
 
 
 group = 'com.stewsters.util'
-version = '0.10'
+version = '0.11'
 
 
 
