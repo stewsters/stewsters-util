@@ -68,7 +68,7 @@ public class ExampleMap3d implements TileBasedMap3d {
 
     @Override
     public float getCost(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
-        return 1;
+        return mover.getCost(mover, sx, sy, sz, tx, ty, tz);
     }
 
 }

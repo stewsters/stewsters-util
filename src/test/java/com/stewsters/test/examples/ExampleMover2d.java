@@ -15,4 +15,9 @@ public class ExampleMover2d implements Mover2d {
     public boolean canTraverse(PathNode2d pathNode) {
         return !exampleMap2d.isBlocked(this, pathNode);
     }
+
+    @Override
+    public float getCost(Mover2d mover, int sx, int sy, int tx, int ty) {
+        return 1;
+    }
 }

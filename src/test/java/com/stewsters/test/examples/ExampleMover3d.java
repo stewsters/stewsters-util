@@ -15,4 +15,9 @@ public class ExampleMover3d implements Mover3d {
     public boolean canTraverse(PathNode3d pathNode) {
         return !exampleMap3d.isBlocked(this, pathNode);
     }
+
+    @Override
+    public float getCost(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
+        return 1;
+    }
 }

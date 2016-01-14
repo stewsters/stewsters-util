@@ -86,10 +86,13 @@ public class ShadowCasting2dTest {
         for (int y = 0; y < map.getWidthInTiles(); y++) {
             for (int x = 0; x < map.getWidthInTiles(); x++) {
 
-//                int val = (int) (map.getLight(x, y)/ max );
-                int val = (map.getLight(x, y) > 0) ? 1 : 0;
-
-                System.out.print(val);
+                if (map.getResistance(x, y) == 1.f) {
+                    System.out.print('X');
+                } else if (map.getLight(x, y) > 0) {
+                    System.out.print('1');
+                } else {
+                    System.out.print('0');
+                }
             }
             System.out.println();
         }

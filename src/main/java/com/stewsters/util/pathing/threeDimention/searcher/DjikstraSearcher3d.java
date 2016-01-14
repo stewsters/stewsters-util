@@ -13,7 +13,7 @@ public class DjikstraSearcher3d implements Searcher3d {
     /**
      * The set of nodes that have been searched through
      */
-    private HashSet<PathNode3d> closed = new HashSet<PathNode3d>();
+    private HashSet<PathNode3d> closed = new HashSet<>();
     /**
      * The set of nodes that we do not yet consider fully searched
      */
@@ -224,7 +224,8 @@ public class DjikstraSearcher3d implements Searcher3d {
      * @return The cost of movement through the given tile
      */
     public float getMovementCost(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
-        return map.getCost(mover, sx, sy, sz, tx, ty, tz);
+        return mover.getCost(mover, sx, sy, sz, tx, ty, tz);
+
     }
 
 
