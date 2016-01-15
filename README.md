@@ -2,6 +2,8 @@ Stewsters-Util
 ==============
 
 This is a collection of some code that I have pulled out of projects.  It is mostly useful for roguelikes.
+
+[ ![Download](https://api.bintray.com/packages/stewsters/maven/stewsters-util/images/download.svg) ](https://bintray.com/stewsters/maven/stewsters-util/_latestVersion)
 ![TravisCI](https://travis-ci.org/stewsters/stewsters-util.svg?branch=master)
 
 I have tried to port any 2d algorithms I have found into 3d as well.
