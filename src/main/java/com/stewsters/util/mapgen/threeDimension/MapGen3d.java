@@ -22,13 +22,13 @@ public class MapGen3d {
      */
     public static void fillWithBorder(GeneratedMap3d map, CellType fill, CellType wall) {
 
-        for (int x = 0; x < map.getWidthInTiles(); x++) {
-            for (int y = 0; y < map.getHeightInTiles(); y++) {
-                for (int z = 0; z < map.getDepthInTiles(); z++) {
+        for (int x = 0; x < map.getXSize(); x++) {
+            for (int y = 0; y < map.getYSize(); y++) {
+                for (int z = 0; z < map.getZSize(); z++) {
                     if (x == 0 || y == 0 || z == 0
-                            || x >= map.getWidthInTiles() - 1
-                            || y >= map.getHeightInTiles() - 1
-                            || z >= map.getDepthInTiles() - 1
+                            || x >= map.getXSize() - 1
+                            || y >= map.getYSize() - 1
+                            || z >= map.getZSize() - 1
                             ) {
                         map.setCellTypeAt(x, y, z, wall);
                     } else {
@@ -42,9 +42,9 @@ public class MapGen3d {
 
 
     public static void fill(GeneratedMap3d map3d, CellPredicate3d predicate, Brush3d brush3d) {
-        for (int ix = 0; ix < map3d.getWidthInTiles(); ix++) {
-            for (int iy = 0; iy < map3d.getHeightInTiles(); iy++) {
-                for (int iz = 0; iz < map3d.getDepthInTiles(); iz++) {
+        for (int ix = 0; ix < map3d.getXSize(); ix++) {
+            for (int iy = 0; iy < map3d.getYSize(); iy++) {
+                for (int iz = 0; iz < map3d.getZSize(); iz++) {
 
                     if (predicate.belongs(map3d, ix, iy, iz)) {
                         brush3d.draw(map3d, ix, iy, iz);
@@ -83,15 +83,15 @@ public class MapGen3d {
                 //todo: done list?
                 if (p.x > 0)
                     todo.push(new Point3i(p.x - 1, p.y, p.z));
-                if (p.x < map.getWidthInTiles() - 1)
+                if (p.x < map.getXSize() - 1)
                     todo.push(new Point3i(p.x + 1, p.y, p.z));
                 if (p.y > 0)
                     todo.push(new Point3i(p.x, p.y - 1, p.z));
-                if (p.y < map.getHeightInTiles() - 1)
+                if (p.y < map.getYSize() - 1)
                     todo.push(new Point3i(p.x, p.y + 1, p.z));
                 if (p.z > 0)
                     todo.push(new Point3i(p.x, p.y, p.z - 1));
-                if (p.z < map.getDepthInTiles() - 1)
+                if (p.z < map.getZSize() - 1)
                     todo.push(new Point3i(p.x, p.y, p.z + 1));
 
             }

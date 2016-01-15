@@ -7,8 +7,6 @@ public class ExampleGeneretedMap2d extends ExampleMap2d implements GeneratedMap2
 
     public ExampleGeneretedMap2d(int width, int height, ExampleCellType cellType) {
         super(width, height, cellType);
-
-
     }
 
     @Override

@@ -42,9 +42,9 @@ public class DjikstraSearcher2d implements Searcher2d {
         this.maxSearchDistance = maxSearchDistance;
         this.allowDiagMovement = allowDiagMovement;
 
-        nodes = new PathNode2d[map.getWidthInTiles()][map.getHeightInTiles()];
-        for (int x = 0; x < map.getWidthInTiles(); x++) {
-            for (int y = 0; y < map.getHeightInTiles(); y++) {
+        nodes = new PathNode2d[map.getXSize()][map.getYSize()];
+        for (int x = 0; x < map.getXSize(); x++) {
+            for (int y = 0; y < map.getYSize(); y++) {
 
                 nodes[x][y] = new PathNode2d(x, y);
             }
@@ -71,7 +71,7 @@ public class DjikstraSearcher2d implements Searcher2d {
             // pull out the first PathNode in our open list, this is determined to
             // be the most likely to be the next step based on our heuristic
 
-            PathNode2d current = getFirstInOpen();
+            PathNode2d current = open.peek();
 
 
             if (objective.satisfiedBy(current)) {
@@ -79,8 +79,8 @@ public class DjikstraSearcher2d implements Searcher2d {
                 target = current;
                 break;
             }
-            removeFromOpen(current);
-            addToClosed(current);
+            open.remove(current);
+            closed.add(current);
 
             // search through all the neighbors of the current PathNode evaluating
 
@@ -122,11 +122,11 @@ public class DjikstraSearcher2d implements Searcher2d {
                         // this PathNode so it needs to be re-evaluated
 
                         if (nextStepCost < neighbour.cost) {
-                            if (inOpenList(neighbour)) {
-                                removeFromOpen(neighbour);
+                            if (open.contains(neighbour)) {
+                                open.remove(neighbour);
                             }
-                            if (inClosedList(neighbour)) {
-                                removeFromClosed(neighbour);
+                            if (closed.contains(neighbour)) {
+                                closed.remove(neighbour);
                             }
                         }
 
@@ -134,11 +134,11 @@ public class DjikstraSearcher2d implements Searcher2d {
                         // reset it's cost to our current cost and add it as a next possible
                         // step (i.e. to the open list)
 
-                        if (!inOpenList(neighbour) && !(inClosedList(neighbour))) {
+                        if (!open.contains(neighbour) && !(closed.contains(neighbour))) {
                             neighbour.cost = nextStepCost;
                             neighbour.heuristic = 0; //getHeuristicCost(mover, xp, yp, zp, tx, ty, tz);
                             maxDepth = Math.max(maxDepth, neighbour.setParent(current));
-                            addToOpen(neighbour);
+                            open.add(neighbour);
                         }
                     }
                 }
@@ -173,72 +173,6 @@ public class DjikstraSearcher2d implements Searcher2d {
     }
 
     /**
-     * Get the first element from the open list. This is the next
-     * one to be searched.
-     *
-     * @return The first element in the open list
-     */
-    protected PathNode2d getFirstInOpen() {
-        return open.peek();
-    }
-
-    /**
-     * Add a PathNode to the open list
-     *
-     * @param node The PathNode to be added to the open list
-     */
-    protected void addToOpen(PathNode2d node) {
-        open.add(node);
-    }
-
-    /**
-     * Check if a PathNode is in the open list
-     *
-     * @param node The PathNode to check for
-     * @return True if the PathNode given is in the open list
-     */
-    protected boolean inOpenList(PathNode2d node) {
-        return open.contains(node);
-    }
-
-    /**
-     * Remove a PathNode from the open list
-     *
-     * @param node The PathNode to remove from the open list
-     */
-    protected void removeFromOpen(PathNode2d node) {
-        open.remove(node);
-    }
-
-    /**
-     * Add a PathNode to the closed list
-     *
-     * @param node The PathNode to add to the closed list
-     */
-    protected void addToClosed(PathNode2d node) {
-        closed.add(node);
-    }
-
-    /**
-     * Check if the PathNode supplied is in the closed list
-     *
-     * @param node The PathNode to search for
-     * @return True if the PathNode specified is in the closed list
-     */
-    protected boolean inClosedList(PathNode2d node) {
-        return closed.contains(node);
-    }
-
-    /**
-     * Remove a PathNode from the closed list
-     *
-     * @param node The PathNode to remove from the closed list
-     */
-    protected void removeFromClosed(PathNode2d node) {
-        closed.remove(node);
-    }
-
-    /**
      * Check if a given location is valid for the supplied mover
      *
      * @param mover The mover that would hold a given location
@@ -249,7 +183,7 @@ public class DjikstraSearcher2d implements Searcher2d {
      * @return True if the location is valid for the given mover
      */
     protected boolean isValidLocation(Mover2d mover, int sx, int sy, int x, int y) {
-        boolean invalid = (x < 0) || (y < 0) || (x >= map.getWidthInTiles()) || (y >= map.getHeightInTiles());
+        boolean invalid = (x < 0) || (y < 0) || (x >= map.getXSize()) || (y >= map.getYSize());
 
         if ((!invalid) && ((sx != x) || (sy != y))) {
             invalid = map.isBlocked(mover, nodes[x][y]);

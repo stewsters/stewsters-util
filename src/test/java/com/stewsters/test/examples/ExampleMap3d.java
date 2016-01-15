@@ -37,17 +37,17 @@ public class ExampleMap3d implements TileBasedMap3d {
     }
 
     @Override
-    public int getWidthInTiles() {
+    public int getXSize() {
         return width;
     }
 
     @Override
-    public int getHeightInTiles() {
+    public int getYSize() {
         return height;
     }
 
     @Override
-    public int getDepthInTiles() {
+    public int getZSize() {
         return depth;
     }
 

@@ -29,12 +29,12 @@ public class ExampleMap2d implements TileBasedMap2d {
     }
 
     @Override
-    public int getWidthInTiles() {
+    public int getXSize() {
         return width;
     }
 
     @Override
-    public int getHeightInTiles() {
+    public int getYSize() {
         return height;
     }
 

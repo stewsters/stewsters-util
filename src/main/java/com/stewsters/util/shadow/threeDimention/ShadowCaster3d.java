@@ -76,7 +76,7 @@ public class ShadowCaster3d {
                 float leftSlope = (deltaX - 0.5f) / (deltaY + 0.5f);
                 float rightSlope = (deltaX + 0.5f) / (deltaY - 0.5f);
 
-                if (!(currentX >= 0 && currentY >= 0 && currentX < litMap3d.getWidthInTiles() && currentY < litMap3d.getHeightInTiles()) || start < rightSlope) {
+                if (!(currentX >= 0 && currentY >= 0 && currentX < litMap3d.getXSize() && currentY < litMap3d.getYSize()) || start < rightSlope) {
                     continue;
                 } else if (end > leftSlope) {
                     break;

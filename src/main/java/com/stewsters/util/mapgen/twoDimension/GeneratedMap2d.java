@@ -5,9 +5,9 @@ import com.stewsters.util.mapgen.CellType;
 
 public interface GeneratedMap2d {
 
-    public int getWidthInTiles();
+    public int getXSize();
 
-    public int getHeightInTiles();
+    public int getYSize();
 
     public CellType getCellTypeAt(int x, int y);
 

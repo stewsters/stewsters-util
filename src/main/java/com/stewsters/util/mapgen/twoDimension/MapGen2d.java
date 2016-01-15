@@ -22,10 +22,10 @@ public class MapGen2d {
      */
     public static void fillWithBorder(GeneratedMap2d map, CellType fill, CellType wall) {
 
-        for (int x = 0; x < map.getWidthInTiles(); x++) {
-            for (int y = 0; y < map.getHeightInTiles(); y++) {
+        for (int x = 0; x < map.getXSize(); x++) {
+            for (int y = 0; y < map.getYSize(); y++) {
 
-                if (x == 0 || y == 0 || x >= map.getWidthInTiles() - 1 || y >= map.getHeightInTiles() - 1) {
+                if (x == 0 || y == 0 || x >= map.getXSize() - 1 || y >= map.getYSize() - 1) {
                     map.setCellTypeAt(x, y, wall);
                 } else {
                     map.setCellTypeAt(x, y, fill);
@@ -37,8 +37,8 @@ public class MapGen2d {
 
 
     public static void fill(GeneratedMap2d map2d, CellPredicate2d predicate, Brush2d brush2d) {
-        for (int ix = 0; ix < map2d.getWidthInTiles(); ix++) {
-            for (int iy = 0; iy < map2d.getHeightInTiles(); iy++) {
+        for (int ix = 0; ix < map2d.getXSize(); ix++) {
+            for (int iy = 0; iy < map2d.getYSize(); iy++) {
                 if (predicate.belongs(map2d, ix, iy)) {
                     brush2d.draw(map2d, ix, iy);
                 }
@@ -75,11 +75,11 @@ public class MapGen2d {
                 //todo: done list?
                 if (p.x > 0)
                     todo.push(new Point2i(p.x - 1, p.y));
-                if (p.x < map.getWidthInTiles() - 1)
+                if (p.x < map.getXSize() - 1)
                     todo.push(new Point2i(p.x + 1, p.y));
                 if (p.y > 0)
                     todo.push(new Point2i(p.x, p.y - 1));
-                if (p.y < map.getHeightInTiles() - 1)
+                if (p.y < map.getYSize() - 1)
                     todo.push(new Point2i(p.x, p.y + 1));
             }
             done.add(p);

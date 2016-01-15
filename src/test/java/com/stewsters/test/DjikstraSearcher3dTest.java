@@ -44,9 +44,9 @@ public class DjikstraSearcher3dTest {
 
         ExampleMap3d map = new ExampleMap3d(100, 100, 100);
 
-        for (int x = 0; x < map.getWidthInTiles(); x++) {
-            for (int y = 0; y < map.getHeightInTiles(); y++) {
-                for (int z = 0; z < map.getDepthInTiles(); z++) {
+        for (int x = 0; x < map.getXSize(); x++) {
+            for (int y = 0; y < map.getYSize(); y++) {
+                for (int z = 0; z < map.getZSize(); z++) {
                     map.setTile(x, y, z, true);
                 }
             }

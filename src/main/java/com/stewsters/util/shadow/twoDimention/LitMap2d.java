@@ -4,9 +4,9 @@ public interface LitMap2d {
 
     public void setLight(int startx, int starty, float force);
 
-    public int getWidthInTiles();
+    public int getXSize();
 
-    public int getHeightInTiles();
+    public int getYSize();
 
     public float getLight(int currentX, int currentY);
 

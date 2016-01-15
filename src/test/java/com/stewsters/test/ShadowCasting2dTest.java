@@ -75,16 +75,16 @@ public class ShadowCasting2dTest {
     private void printMap(ExampleLitMap2d map) {
 
         float max = Float.MIN_VALUE;
-        for (int y = 0; y < map.getWidthInTiles(); y++) {
-            for (int x = 0; x < map.getWidthInTiles(); x++) {
+        for (int y = 0; y < map.getXSize(); y++) {
+            for (int x = 0; x < map.getXSize(); x++) {
 
                 if (map.getLight(x, y) > max)
                     max = map.getLight(x, y);
             }
         }
 
-        for (int y = 0; y < map.getWidthInTiles(); y++) {
-            for (int x = 0; x < map.getWidthInTiles(); x++) {
+        for (int y = 0; y < map.getXSize(); y++) {
+            for (int x = 0; x < map.getXSize(); x++) {
 
                 if (map.getResistance(x, y) == 1.f) {
                     System.out.print('X');

@@ -4,11 +4,11 @@ public interface LitMap3d {
 
     public void setLight(int startx, int starty, int startz, float force);
 
-    public int getWidthInTiles();
+    public int getXSize();
 
-    public int getHeightInTiles();
+    public int getYSize();
 
-    public int getDepthInTiles();
+    public int getZSize();
 
     public float getLight(int currentX, int currentY, int currentZ);
 

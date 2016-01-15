@@ -14,7 +14,7 @@ public interface TileBasedMap3d {
      *
      * @return The number of tiles across the map
      */
-    public int getWidthInTiles();
+    public int getXSize();
 
     /**
      * Get the height of the tile map. The slightly odd name is used
@@ -22,7 +22,7 @@ public interface TileBasedMap3d {
      *
      * @return The number of tiles down the map
      */
-    public int getHeightInTiles();
+    public int getYSize();
 
     /**
      * Get the depth of the tile map. The slightly odd name is used
@@ -30,7 +30,7 @@ public interface TileBasedMap3d {
      *
      * @return The number of tiles down the map
      */
-    public int getDepthInTiles();
+    public int getZSize();
 
 
     /**

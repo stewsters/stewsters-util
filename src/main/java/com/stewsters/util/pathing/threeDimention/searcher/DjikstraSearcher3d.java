@@ -43,10 +43,10 @@ public class DjikstraSearcher3d implements Searcher3d {
         this.maxSearchDistance = maxSearchDistance;
         this.allowDiagMovement = allowDiagMovement;
 
-        nodes = new PathNode3d[map.getWidthInTiles()][map.getHeightInTiles()][map.getDepthInTiles()];
-        for (int x = 0; x < map.getWidthInTiles(); x++) {
-            for (int y = 0; y < map.getHeightInTiles(); y++) {
-                for (int z = 0; z < map.getDepthInTiles(); z++) {
+        nodes = new PathNode3d[map.getXSize()][map.getYSize()][map.getZSize()];
+        for (int x = 0; x < map.getXSize(); x++) {
+            for (int y = 0; y < map.getYSize(); y++) {
+                for (int z = 0; z < map.getZSize(); z++) {
                     nodes[x][y][z] = new PathNode3d(x, y, z);
                 }
             }
@@ -79,7 +79,7 @@ public class DjikstraSearcher3d implements Searcher3d {
                 break;
             }
 
-            addToClosed(current);
+            closed.add(current);
 
             // them as next steps
             for (int x = -1; x < 2; x++) {
@@ -112,7 +112,7 @@ public class DjikstraSearcher3d implements Searcher3d {
                             // cost to reach this node. Note that the heuristic value is only used
                             // in the sorted open list
 
-                            float nextStepCost = current.cost + getMovementCost(mover, current.x, current.y, current.z, xp, yp, zp);
+                            float nextStepCost = current.cost + mover.getCost(mover, current.x, current.y, current.z, xp, yp, zp);
                             PathNode3d neighbour = nodes[xp][yp][zp];
                             map.pathFinderVisited(xp, yp, zp);
 
@@ -120,10 +120,10 @@ public class DjikstraSearcher3d implements Searcher3d {
                             // if the PathNode hasn't already been processed and discarded then
                             // reset it's cost to our current cost and add it as a next possible
                             // step (i.e. to the open list)
-                            if (!inOpenList(neighbour) && !inClosedList(neighbour)) {
+                            if (!open.contains(neighbour) && !closed.contains(neighbour)) {
                                 neighbour.cost = nextStepCost;
                                 maxDepth = Math.max(maxDepth, neighbour.setParent(current));
-                                addToOpen(neighbour);
+                                open.add(neighbour);
                             }
                         }
                     }
@@ -155,45 +155,6 @@ public class DjikstraSearcher3d implements Searcher3d {
 
 
     /**
-     * Add a PathNode to the open list
-     *
-     * @param node The PathNode to be added to the open list
-     */
-    protected void addToOpen(PathNode3d node) {
-        open.add(node);
-    }
-
-    /**
-     * Check if a PathNode is in the open list
-     *
-     * @param node The PathNode to check for
-     * @return True if the PathNode given is in the open list
-     */
-    protected boolean inOpenList(PathNode3d node) {
-        return open.contains(node);
-    }
-
-
-    /**
-     * Add a PathNode to the closed list
-     *
-     * @param node The PathNode to add to the closed list
-     */
-    protected void addToClosed(PathNode3d node) {
-        closed.add(node);
-    }
-
-    /**
-     * Check if the PathNode supplied is in the closed list
-     *
-     * @param node The PathNode to search for
-     * @return True if the PathNode specified is in the closed list
-     */
-    protected boolean inClosedList(PathNode3d node) {
-        return closed.contains(node);
-    }
-
-    /**
      * Check if a given location is valid for the supplied mover
      *
      * @param mover The mover that would hold a given location
@@ -207,25 +168,8 @@ public class DjikstraSearcher3d implements Searcher3d {
      */
     protected boolean isValidLocation(Mover3d mover, int sx, int sy, int sz, int x, int y, int z) {
         return !((x < 0) || (y < 0) || (z < 0) ||
-                (x >= map.getWidthInTiles()) || (y >= map.getHeightInTiles()) || (z >= map.getDepthInTiles()))
+                (x >= map.getXSize()) || (y >= map.getYSize()) || (z >= map.getZSize()))
                 && (!map.isBlocked(mover, nodes[x][y][z]));
-    }
-
-    /**
-     * Get the cost to move through a given location
-     *
-     * @param mover The entity that is being moved
-     * @param sx    The x coordinate of the tile whose cost is being determined
-     * @param sy    The y coordiante of the tile whose cost is being determined
-     * @param sz    The y coordiante of the tile whose cost is being determined
-     * @param tx    The x coordinate of the target location
-     * @param ty    The y coordinate of the target location
-     * @param tz    The z coordinate of the target location
-     * @return The cost of movement through the given tile
-     */
-    public float getMovementCost(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
-        return mover.getCost(mover, sx, sy, sz, tx, ty, tz);
-
     }
 
 

@@ -62,8 +62,8 @@ public class GenerateMap2dTest {
 
     private void testEquality(ExampleGeneretedMap2d map1, ExampleGeneretedMap2d map2) {
 
-        for (int y = 0; y < map1.getWidthInTiles(); y++) {
-            for (int x = 0; x < map1.getWidthInTiles(); x++) {
+        for (int y = 0; y < map1.getXSize(); y++) {
+            for (int x = 0; x < map1.getXSize(); x++) {
                 assert map1.getCellTypeAt(x, y) == map2.getCellTypeAt(x, y);
             }
         }
@@ -71,8 +71,8 @@ public class GenerateMap2dTest {
 
     private void printMap(ExampleGeneretedMap2d exampleGeneretedMap2d) {
 
-        for (int y = 0; y < exampleGeneretedMap2d.getWidthInTiles(); y++) {
-            for (int x = 0; x < exampleGeneretedMap2d.getWidthInTiles(); x++) {
+        for (int y = 0; y < exampleGeneretedMap2d.getXSize(); y++) {
+            for (int x = 0; x < exampleGeneretedMap2d.getXSize(); x++) {
 
                 System.out.print(((ExampleCellType) exampleGeneretedMap2d.getCellTypeAt(x, y)).getGlyph());
             }
