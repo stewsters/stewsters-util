@@ -18,9 +18,9 @@ package com.stewsters.util.pathing.threeDimention.shared;
  */
 public interface Mover3d {
 
-    boolean canTraverse(int x, int y, int z);
+    boolean canTraverse(int sx, int sy, int sz, int tx, int ty, int tz);
 
-    boolean canTraverse(PathNode3d pathNode);
+    boolean canOccupy(int tx, int ty, int tz);
 
     float getCost(int sx, int sy, int sz, int tx, int ty, int tz);
 

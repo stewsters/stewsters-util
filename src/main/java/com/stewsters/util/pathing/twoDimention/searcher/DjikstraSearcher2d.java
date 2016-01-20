@@ -178,15 +178,15 @@ public class DjikstraSearcher2d implements Searcher2d {
      * @param mover The mover that would hold a given location
      * @param sx    The starting x coordinate
      * @param sy    The starting y coordinate
-     * @param x     The x coordinate of the location to check
-     * @param y     The y coordinate of the location to check
+     * @param tx    The x coordinate of the location to check
+     * @param ty    The y coordinate of the location to check
      * @return True if the location is valid for the given mover
      */
-    protected boolean isValidLocation(Mover2d mover, int sx, int sy, int x, int y) {
-        if ((x < 0) || (y < 0) || (x >= map.getXSize()) || (y >= map.getYSize())) {
+    protected boolean isValidLocation(Mover2d mover, int sx, int sy, int tx, int ty) {
+        if ((tx < 0) || (ty < 0) || (tx >= map.getXSize()) || (ty >= map.getYSize())) {
             return false;
         }
-        return mover.canTraverse(nodes[x][y]);
+        return mover.canTraverse(sx, sy, tx, ty);
     }
 
 

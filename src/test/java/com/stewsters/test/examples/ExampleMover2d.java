@@ -1,7 +1,6 @@
 package com.stewsters.test.examples;
 
 import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
-import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 
 public class ExampleMover2d implements Mover2d {
 
@@ -22,15 +21,10 @@ public class ExampleMover2d implements Mover2d {
     }
 
     @Override
-    public boolean canTraverse(PathNode2d pathNode) {
-        return canTraverse(pathNode.x, pathNode.y);
-    }
-
-    @Override
-    public boolean canTraverse(int xPos, int yPos) {
+    public boolean canTraverse(int sx, int sy, int tx, int ty) {
         for (int x = 0; x < xSize; x++) {
             for (int y = 0; y < ySize; y++) {
-                if (exampleMap2d.isBlocked(xPos + x, yPos + y)) {
+                if (exampleMap2d.isBlocked(tx + x, ty + y)) {
                     return false;
                 }
             }
@@ -38,6 +32,10 @@ public class ExampleMover2d implements Mover2d {
         return true;
     }
 
+    @Override
+    public boolean canOccupy(int tx, int ty) {
+        return !exampleMap2d.isBlocked(tx, ty);
+    }
 
     @Override
     public float getCost(int sx, int sy, int tx, int ty) {

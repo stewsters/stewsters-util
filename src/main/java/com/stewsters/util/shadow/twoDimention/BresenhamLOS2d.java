@@ -21,7 +21,7 @@ public class BresenhamLOS2d {
         int err = dx - dy;
 
         while (true) {
-            if (!mover.canTraverse(x1, y1))
+            if (!mover.canOccupy(x1, y1))
                 return false;
 
             if (x1 == x2 && y1 == y2) {

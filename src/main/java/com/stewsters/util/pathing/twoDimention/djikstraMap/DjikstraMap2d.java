@@ -96,7 +96,7 @@ public class DjikstraMap2d implements PathingMap2d {
                         int xp = x + current.x;
                         int yp = y + current.y;
 
-                        if (isValidLocation(mover, xp, yp)) {
+                        if (isValidLocation(mover, current.x, current.y, xp, yp)) {
                             // the cost to get to this PathNode is cost the current plus the movement
                             // cost to reach this node. Note that the heuristic value is only used
                             // in the sorted open list
@@ -137,16 +137,11 @@ public class DjikstraMap2d implements PathingMap2d {
 
     }
 
-    protected boolean isValidLocation(Mover2d mover, int x, int y) {
-        if ((x < 0) || (y < 0) || (x >= map.getXSize()) || (y >= map.getYSize())) {
+    protected boolean isValidLocation(Mover2d mover, int sx, int sy, int tx, int ty) {
+        if ((tx < 0) || (ty < 0) || (tx >= map.getXSize()) || (ty >= map.getYSize())) {
             return false;
         }
-        return mover.canTraverse(nodes[x][y]);
-    }
-
-
-    public PathNode2d[][] getNodes() {
-        return nodes;
+        return mover.canTraverse(sx, sy, tx, ty);
     }
 
     public float getDistanceAt(int x, int y) {

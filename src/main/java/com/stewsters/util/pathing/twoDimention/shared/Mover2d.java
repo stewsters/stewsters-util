@@ -18,9 +18,9 @@ package com.stewsters.util.pathing.twoDimention.shared;
  */
 public interface Mover2d {
 
-    boolean canTraverse(int x, int y);
+    boolean canTraverse(int sx, int sy, int tx, int ty);
 
-    boolean canTraverse(PathNode2d pathNode);
+    boolean canOccupy(int tx, int ty);
 
     float getCost(int sx, int sy, int tx, int ty);
 

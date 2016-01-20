@@ -90,7 +90,7 @@ public class AStarPathFinder3d implements PathFinder3d {
     public FullPath3d findPath(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
         // easy first check, if the destination is blocked, we can't get there
 
-        if (!mover.canTraverse(tx, ty, tz)) {
+        if (!mover.canOccupy(tx, ty, tz)) {
             return null;
         }
 
@@ -219,16 +219,16 @@ public class AStarPathFinder3d implements PathFinder3d {
      * @param sx    The starting x coordinate
      * @param sy    The starting y coordinate
      * @param sz    The starting z coordinate
-     * @param x     The x coordinate of the location to check
-     * @param y     The y coordinate of the location to check
-     * @param z     The z coordinate of the location to check
+     * @param tx    The x coordinate of the location to check
+     * @param ty    The y coordinate of the location to check
+     * @param tz    The z coordinate of the location to check
      * @return True if the location is valid for the given mover
      */
-    protected boolean isValidLocation(Mover3d mover, int sx, int sy, int sz, int x, int y, int z) {
-        if ((x < 0) || (y < 0) || (z < 0) || (x >= map.getXSize()) || (y >= map.getYSize()) || (z >= map.getZSize())) {
+    protected boolean isValidLocation(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
+        if ((tx < 0) || (ty < 0) || (tz < 0) || (tx >= map.getXSize()) || (ty >= map.getYSize()) || (tz >= map.getZSize())) {
             return false;
         }
-        return mover.canTraverse(nodes[x][y][z]);
+        return mover.canTraverse(sx, sy, sz, tx, ty, tz);
     }
 
 }
