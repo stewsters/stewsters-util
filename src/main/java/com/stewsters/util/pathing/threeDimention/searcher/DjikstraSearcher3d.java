@@ -112,7 +112,7 @@ public class DjikstraSearcher3d implements Searcher3d {
                             // cost to reach this node. Note that the heuristic value is only used
                             // in the sorted open list
 
-                            float nextStepCost = current.cost + mover.getCost(mover, current.x, current.y, current.z, xp, yp, zp);
+                            float nextStepCost = current.cost + mover.getCost(current.x, current.y, current.z, xp, yp, zp);
                             PathNode3d neighbour = nodes[xp][yp][zp];
                             map.pathFinderVisited(xp, yp, zp);
 
@@ -169,7 +169,7 @@ public class DjikstraSearcher3d implements Searcher3d {
     protected boolean isValidLocation(Mover3d mover, int sx, int sy, int sz, int x, int y, int z) {
         return !((x < 0) || (y < 0) || (z < 0) ||
                 (x >= map.getXSize()) || (y >= map.getYSize()) || (z >= map.getZSize()))
-                && (!map.isBlocked(mover, nodes[x][y][z]));
+                && mover.canTraverse(nodes[x][y][z]);
     }
 
 

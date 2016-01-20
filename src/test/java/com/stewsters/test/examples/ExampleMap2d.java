@@ -11,7 +11,7 @@ public class ExampleMap2d implements TileBasedMap2d {
 
     private final int width;
     private final int height;
-    protected ExampleCellType[][] ground;
+    public ExampleCellType[][] ground;
 
     public ExampleMap2d(int width, int height, ExampleCellType baseType) {
         this.width = width;
@@ -43,13 +43,14 @@ public class ExampleMap2d implements TileBasedMap2d {
 
     }
 
-    @Override
-    public boolean isBlocked(Mover2d mover, PathNode2d pathNode) {
+    public boolean isBlocked(PathNode2d pathNode) {
         return ground[pathNode.x][pathNode.y].isBlocking();
     }
 
-    @Override
-    public boolean isBlocked(Mover2d mover, int x, int y) {
+    public boolean isBlocked(int x, int y) {
+        if (x < 0 || x >= getXSize() || y < 0 || y >= getYSize())
+            return false;
+
         return ground[x][y].isBlocking();
     }
 

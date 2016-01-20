@@ -90,7 +90,7 @@ public class AStarPathFinder3d implements PathFinder3d {
     public FullPath3d findPath(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
         // easy first check, if the destination is blocked, we can't get there
 
-        if (map.isBlocked(mover, tx, ty, tz)) {
+        if (!mover.canTraverse(tx, ty, tz)) {
             return null;
         }
 
@@ -151,7 +151,7 @@ public class AStarPathFinder3d implements PathFinder3d {
                             // cost to reach this node. Note that the heuristic value is only used
                             // in the sorted open list
 
-                            float nextStepCost = current.cost + map.getCost(mover, current.x, current.y, current.z, xp, yp, zp);
+                            float nextStepCost = current.cost + mover.getCost(current.x, current.y, current.z, xp, yp, zp);
                             PathNode3d neighbour = nodes[xp][yp][zp];
                             map.pathFinderVisited(xp, yp, zp);
 
@@ -225,13 +225,10 @@ public class AStarPathFinder3d implements PathFinder3d {
      * @return True if the location is valid for the given mover
      */
     protected boolean isValidLocation(Mover3d mover, int sx, int sy, int sz, int x, int y, int z) {
-        boolean invalid = (x < 0) || (y < 0) || (z < 0) || (x >= map.getXSize()) || (y >= map.getYSize()) || (z >= map.getZSize());
-
-        if ((!invalid) && ((sx != x) || (sy != y) || (sz != z))) {
-            invalid = map.isBlocked(mover, nodes[x][y][z]);
+        if ((x < 0) || (y < 0) || (z < 0) || (x >= map.getXSize()) || (y >= map.getYSize()) || (z >= map.getZSize())) {
+            return false;
         }
-
-        return !invalid;
+        return mover.canTraverse(nodes[x][y][z]);
     }
 
 }

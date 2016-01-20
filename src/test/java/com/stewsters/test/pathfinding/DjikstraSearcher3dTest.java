@@ -1,4 +1,4 @@
-package com.stewsters.test;
+package com.stewsters.test.pathfinding;
 
 
 import com.stewsters.test.examples.ExampleMap3d;

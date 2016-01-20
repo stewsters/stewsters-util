@@ -112,7 +112,7 @@ public class DjikstraSearcher2d implements Searcher2d {
                         // cost to reach this node. Note that the heuristic value is only used
                         // in the sorted open list
 
-                        float nextStepCost = current.cost + getMovementCost(mover, current.x, current.y, xp, yp);
+                        float nextStepCost = current.cost + mover.getCost(current.x, current.y, xp, yp);
                         PathNode2d neighbour = nodes[xp][yp];
                         map.pathFinderVisited(xp, yp);
 
@@ -183,27 +183,10 @@ public class DjikstraSearcher2d implements Searcher2d {
      * @return True if the location is valid for the given mover
      */
     protected boolean isValidLocation(Mover2d mover, int sx, int sy, int x, int y) {
-        boolean invalid = (x < 0) || (y < 0) || (x >= map.getXSize()) || (y >= map.getYSize());
-
-        if ((!invalid) && ((sx != x) || (sy != y))) {
-            invalid = map.isBlocked(mover, nodes[x][y]);
+        if ((x < 0) || (y < 0) || (x >= map.getXSize()) || (y >= map.getYSize())) {
+            return false;
         }
-
-        return !invalid;
-    }
-
-    /**
-     * Get the cost to move through a given location
-     *
-     * @param mover The entity that is being moved
-     * @param sx    The x coordinate of the tile whose cost is being determined
-     * @param sy    The y coordiante of the tile whose cost is being determined
-     * @param tx    The x coordinate of the target location
-     * @param ty    The y coordinate of the target location
-     * @return The cost of movement through the given tile
-     */
-    public float getMovementCost(Mover2d mover, int sx, int sy, int tx, int ty) {
-        return map.getCost(mover, sx, sy, tx, ty);
+        return mover.canTraverse(nodes[x][y]);
     }
 
 

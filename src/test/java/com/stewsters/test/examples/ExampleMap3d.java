@@ -1,6 +1,5 @@
 package com.stewsters.test.examples;
 
-import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
 import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
 import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
@@ -56,19 +55,15 @@ public class ExampleMap3d implements TileBasedMap3d {
 
     }
 
-    @Override
-    public boolean isBlocked(Mover3d mover, PathNode3d pathNode) {
-        return ground[pathNode.x][pathNode.y][pathNode.z];
+    public boolean isBlocked(PathNode3d pathNode) {
+        return isBlocked(pathNode.x, pathNode.y, pathNode.z);
     }
 
-    @Override
-    public boolean isBlocked(Mover3d mover, int x, int y, int z) {
+    public boolean isBlocked(int x, int y, int z) {
+        if (x < 0 || x >= getXSize() || y < 0 || y >= getYSize() || z < 0 || z >= getZSize())
+            return false;
         return ground[x][y][z];
     }
 
-    @Override
-    public float getCost(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
-        return mover.getCost(mover, sx, sy, sz, tx, ty, tz);
-    }
 
 }

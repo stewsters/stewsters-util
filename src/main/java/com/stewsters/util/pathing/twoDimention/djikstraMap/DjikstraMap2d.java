@@ -101,7 +101,7 @@ public class DjikstraMap2d implements PathingMap2d {
                             // cost to reach this node. Note that the heuristic value is only used
                             // in the sorted open list
 
-                            float nextStepCost = current.cost + map.getCost(mover, current.x, current.y, xp, yp);
+                            float nextStepCost = current.cost + mover.getCost(current.x, current.y, xp, yp);
                             PathNode2d neighbour = nodes[xp][yp];
                             map.pathFinderVisited(xp, yp);
 
@@ -141,7 +141,7 @@ public class DjikstraMap2d implements PathingMap2d {
         if ((x < 0) || (y < 0) || (x >= map.getXSize()) || (y >= map.getYSize())) {
             return false;
         }
-        return !map.isBlocked(mover, nodes[x][y]);
+        return mover.canTraverse(nodes[x][y]);
     }
 
 

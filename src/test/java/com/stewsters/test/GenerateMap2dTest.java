@@ -5,7 +5,11 @@ import com.stewsters.test.examples.ExampleGeneretedMap2d;
 import com.stewsters.util.mapgen.terrain.NoiseFunction2d;
 import com.stewsters.util.mapgen.twoDimension.MapGen2d;
 import com.stewsters.util.mapgen.twoDimension.brush.DrawCell2d;
-import com.stewsters.util.mapgen.twoDimension.predicate.*;
+import com.stewsters.util.mapgen.twoDimension.predicate.AndPredicate2d;
+import com.stewsters.util.mapgen.twoDimension.predicate.CellEquals2d;
+import com.stewsters.util.mapgen.twoDimension.predicate.CellNearEdge2d;
+import com.stewsters.util.mapgen.twoDimension.predicate.NoiseGreaterThan;
+import com.stewsters.util.mapgen.twoDimension.predicate.NotPredicate2d;
 import org.junit.Test;
 
 public class GenerateMap2dTest {

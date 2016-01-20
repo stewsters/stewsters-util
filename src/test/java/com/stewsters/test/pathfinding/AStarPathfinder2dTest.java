@@ -1,23 +1,23 @@
-package com.stewsters.test;
+package com.stewsters.test.pathfinding;
 
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap2d;
 import com.stewsters.test.examples.ExampleMover2d;
-import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.pathfinder.AStarPathFinder2d;
 import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
 import org.junit.Test;
-
-import java.util.LinkedList;
 
 import static org.junit.Assert.assertEquals;
 
 public class AStarPathfinder2dTest {
 
+    ExampleCellType floor = new ExampleCellType('.', false);
+    ExampleCellType wall = new ExampleCellType('#', true);
+
     @Test
     public void test4WayPathingTest() {
         System.out.println("Test 4 way path");
-        ExampleCellType floor = new ExampleCellType('.', false);
+
         ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, false);
@@ -31,14 +31,41 @@ public class AStarPathfinder2dTest {
         }
 
 
-        assertEquals(fullPath2d.getLength(), 15);
+        assertEquals(15, fullPath2d.getLength());
+
+    }
+
+
+    @Test
+    public void test4WayFatPathingTest() {
+        System.out.println("Test 4 way path with fat enemy");
+
+        ExampleMap2d map = new ExampleMap2d(10, 10, floor);
+
+        for (int y = 0; y < 8; y++) {
+            map.ground[5][y] = wall;
+        }
+        map.ground[5][2] = floor;
+
+        AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, false);
+
+        ExampleMover2d exampleMover2d = new ExampleMover2d(map, 2, 2);
+
+        FullPath2d fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 8, 1);
+
+        for (int i = 0; i < fullPath2d.getLength(); i++) {
+            System.out.println("x:" + fullPath2d.getStep(i).getX() + " y:" + fullPath2d.getStep(i).getY());
+        }
+
+
+        assertEquals(22, fullPath2d.getLength());
 
     }
 
     @Test
     public void test8WayPathingTest() {
         System.out.println("Test 8 way path");
-        ExampleCellType floor = new ExampleCellType('.', false);
+
         ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, true);
@@ -52,7 +79,7 @@ public class AStarPathfinder2dTest {
             System.out.println("x:" + fullPath2d.getStep(i).getX() + " y:" + fullPath2d.getStep(i).getY());
         }
 
-        assertEquals(fullPath2d.getLength(), 8);
+        assertEquals(8, fullPath2d.getLength());
 
     }
 
