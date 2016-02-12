@@ -11,18 +11,18 @@ public class ExampleMap3d implements TileBasedMap3d {
     private final int width;
     private final int height;
     private final int depth;
-    private boolean ground[][][];
+    private ExampleCellType ground[][][];
 
-    public ExampleMap3d(int width, int height, int depth) {
+    public ExampleMap3d(int width, int height, int depth, ExampleCellType baseType) {
         this.width = width;
         this.height = height;
         this.depth = depth;
 
-        ground = new boolean[width][height][depth];
+        ground = new ExampleCellType[width][height][depth];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 for (int z = 0; z < height; z++) {
-                    ground[x][y][z] = (x == 0 || x >= width - 1 || y == 0 || y >= width - 1 || z == 0 || (z >= depth - 1));
+                    ground[x][y][z] = baseType;
                 }
             }
         }
@@ -31,8 +31,8 @@ public class ExampleMap3d implements TileBasedMap3d {
 
     }
 
-    public void setTile(int x, int y, int z, boolean blocks) {
-        ground[x][y][z] = blocks;
+    public void setTile(int x, int y, int z, ExampleCellType baseType) {
+        ground[x][y][z] = baseType;
     }
 
     @Override
@@ -55,14 +55,10 @@ public class ExampleMap3d implements TileBasedMap3d {
 
     }
 
-    public boolean isBlocked(PathNode3d pathNode) {
-        return isBlocked(pathNode.x, pathNode.y, pathNode.z);
-    }
-
     public boolean isBlocked(int x, int y, int z) {
         if (x < 0 || x >= getXSize() || y < 0 || y >= getYSize() || z < 0 || z >= getZSize())
             return false;
-        return ground[x][y][z];
+        return ground[x][y][z].isBlocking();
     }
 
 

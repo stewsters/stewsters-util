@@ -1,5 +1,6 @@
 package com.stewsters.test.pathfinding;
 
+import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap3d;
 import com.stewsters.test.examples.ExampleMover3d;
 import com.stewsters.util.pathing.threeDimention.pathfinder.AStarPathFinder3d;
@@ -10,10 +11,13 @@ import static org.junit.Assert.assertEquals;
 
 public class AStarPathfinder3dTest {
 
+    ExampleCellType floor = new ExampleCellType('.', false);
+    ExampleCellType wall = new ExampleCellType('#', true);
+
     @Test
     public void test6WayPathingTest() {
 
-        ExampleMap3d map = new ExampleMap3d(10, 10, 10);
+        ExampleMap3d map = new ExampleMap3d(10, 10, 10, floor);
 
         AStarPathFinder3d pathfinder = new AStarPathFinder3d(map, 100, false);
 
@@ -33,7 +37,7 @@ public class AStarPathfinder3dTest {
     @Test
     public void test26WayPathingTest() {
 
-        ExampleMap3d map = new ExampleMap3d(10, 10, 10);
+        ExampleMap3d map = new ExampleMap3d(10, 10, 10, floor);
 
         AStarPathFinder3d pathfinder = new AStarPathFinder3d(map, 1000, true);
 

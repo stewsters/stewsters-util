@@ -1,6 +1,7 @@
 package com.stewsters.test.pathfinding;
 
 
+import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap3d;
 import com.stewsters.test.examples.ExampleMover3d;
 import com.stewsters.util.pathing.threeDimention.searcher.DjikstraSearcher3d;
@@ -13,11 +14,13 @@ import static org.junit.Assert.assertEquals;
 
 public class DjikstraSearcher3dTest {
 
+    ExampleCellType floor = new ExampleCellType('.', false);
+    ExampleCellType wall = new ExampleCellType('#', true);
 
     @Test
     public void testFindSomething4Way() {
 
-        ExampleMap3d map = new ExampleMap3d(10, 10, 10);
+        ExampleMap3d map = new ExampleMap3d(10, 10, 10, floor);
 
         DjikstraSearcher3d pathfinder = new DjikstraSearcher3d(map, 100, false);
 
@@ -42,19 +45,19 @@ public class DjikstraSearcher3dTest {
     @Test
     public void testFindSomething8Way() {
 
-        ExampleMap3d map = new ExampleMap3d(100, 100, 100);
+        ExampleMap3d map = new ExampleMap3d(100, 100, 100, floor);
 
         for (int x = 0; x < map.getXSize(); x++) {
             for (int y = 0; y < map.getYSize(); y++) {
                 for (int z = 0; z < map.getZSize(); z++) {
-                    map.setTile(x, y, z, true);
+                    map.setTile(x, y, z, wall);
                 }
             }
         }
 
         for (int x = -2; x <= 2; x++) {
             for (int y = -2; y <= 2; y++) {
-                map.setTile(50 + x, 50 + y, 50, false);
+                map.setTile(50 + x, 50 + y, 50, floor);
             }
         }
 
