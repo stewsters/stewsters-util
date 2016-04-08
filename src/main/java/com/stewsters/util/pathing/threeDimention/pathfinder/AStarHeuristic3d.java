@@ -1,6 +1,5 @@
 package com.stewsters.util.pathing.threeDimention.pathfinder;
 
-import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
 import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
 /**
@@ -18,15 +17,14 @@ public interface AStarHeuristic3d {
      * target location. The lower the cost the more likely the tile will
      * be searched.
      *
-     * @param map   The map on which the path is being found
-     * @param mover The entity that is moving along the path
-     * @param x     The x coordinate of the tile being evaluated
-     * @param y     The y coordinate of the tile being evaluated
-     * @param z     The z coordinate of the tile being evaluated
-     * @param tx    The x coordinate of the target location
-     * @param ty    The y coordinate of the target location
-     * @param tz    The z coordinate of the target location
+     * @param map The map on which the path is being found
+     * @param x   The x coordinate of the tile being evaluated
+     * @param y   The y coordinate of the tile being evaluated
+     * @param z   The z coordinate of the tile being evaluated
+     * @param tx  The x coordinate of the target location
+     * @param ty  The y coordinate of the target location
+     * @param tz  The z coordinate of the target location
      * @return The cost associated with the given tile
      */
-    public float getCost(TileBasedMap3d map, Mover3d mover, int x, int y, int z, int tx, int ty, int tz);
+    float getCost(TileBasedMap3d map, int x, int y, int z, int tx, int ty, int tz);
 }

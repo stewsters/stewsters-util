@@ -171,7 +171,7 @@ public class AStarPathFinder2d implements PathFinder2d {
 
                         if (!open.contains(neighbour) && !(closed.contains(neighbour))) {
                             neighbour.cost = nextStepCost;
-                            neighbour.heuristic = heuristic.getCost(map, mover, xp, yp, tx, ty);
+                            neighbour.heuristic = heuristic.getCost(map, xp, yp, tx, ty);
                             maxDepth = Math.max(maxDepth, neighbour.setParent(current));
                             open.add(neighbour);
                         }

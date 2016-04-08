@@ -175,7 +175,7 @@ public class AStarPathFinder3d implements PathFinder3d {
 
                             if (!open.contains(neighbour) && !(closed.contains(neighbour))) {
                                 neighbour.cost = nextStepCost;
-                                neighbour.heuristic = heuristic.getCost(map, mover, xp, yp, zp, tx, ty, tz);
+                                neighbour.heuristic = heuristic.getCost(map, xp, yp, zp, tx, ty, tz);
                                 maxDepth = Math.max(maxDepth, neighbour.setParent(current));
                                 open.add(neighbour);
                             }

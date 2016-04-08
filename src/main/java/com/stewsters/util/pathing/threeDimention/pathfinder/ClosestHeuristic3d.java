@@ -11,10 +11,8 @@ import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
  * @author Adrian Moore
  */
 public class ClosestHeuristic3d implements AStarHeuristic3d {
-    /**
-     * @see AStarHeuristic3d#getCost(com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d, com.stewsters.util.pathing.threeDimention.shared.Mover3d, int, int, int, int, int, int)
-     */
-    public float getCost(TileBasedMap3d map, Mover3d mover, int x, int y, int z, int tx, int ty, int tz) {
+
+    public float getCost(TileBasedMap3d map, int x, int y, int z, int tx, int ty, int tz) {
 
         float dx = tx - x;
         float dy = ty - y;

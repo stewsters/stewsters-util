@@ -32,11 +32,11 @@ public class DjikstraMap3dTest {
             System.out.println();
         }
 
-        assert djikstraMap3d.getDistanceAt(0, 0, 0) == 10;
-        assert djikstraMap3d.getDistanceAt(6, 6, 6) == 2;
-        assert djikstraMap3d.getDistanceAt(7, 5, 6) == 2;
-        assert djikstraMap3d.getDistanceAt(5, 8, 6) == 3;
-        assert djikstraMap3d.getDistanceAt(9, 9, 9) == 8;
+        assert djikstraMap3d.getDistanceAt(0, 0, 0) == 15f;
+        assert djikstraMap3d.getDistanceAt(6, 6, 6) == 3f;
+        assert djikstraMap3d.getDistanceAt(7, 5, 6) == 3f;
+        assert djikstraMap3d.getDistanceAt(5, 8, 6) == 4f;
+        assert djikstraMap3d.getDistanceAt(9, 9, 9) == 12f;
 
     }
 
