@@ -30,5 +30,5 @@ public interface PathFinder3d {
      * @param tz    The z coordinate of the target location
      * @return The path found from start to end, or null if no path can be found.
      */
-    public FullPath3d findPath(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz);
+    FullPath3d findPath(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz);
 }

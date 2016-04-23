@@ -14,7 +14,7 @@ public interface TileBasedMap2d {
      *
      * @return The number of tiles across the map
      */
-    public int getXSize();
+    int getXSize();
 
     /**
      * Get the height of the tile map. The slightly odd name is used
@@ -22,7 +22,7 @@ public interface TileBasedMap2d {
      *
      * @return The number of tiles down the map
      */
-    public int getYSize();
+    int getYSize();
 
 
     /**
@@ -32,6 +32,6 @@ public interface TileBasedMap2d {
      * @param x The x coordinate of the tile that was visited
      * @param y The y coordinate of the tile that was visited
      */
-    public void pathFinderVisited(int x, int y);
+    void pathFinderVisited(int x, int y);
 
 }

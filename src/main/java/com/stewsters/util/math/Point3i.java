@@ -33,8 +33,7 @@ public class Point3i {
         Point3i other = (Point3i) obj;
         if (x != other.x) return false;
         if (y != other.y) return false;
-        if (z != other.z) return false;
-        return true;
+        return z == other.z;
     }
 
     public List<Point3i> mooreNeighborhood() {

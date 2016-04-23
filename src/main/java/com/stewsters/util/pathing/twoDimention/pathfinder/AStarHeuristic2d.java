@@ -24,5 +24,5 @@ public interface AStarHeuristic2d {
      * @param ty  Teh y coordinate of the target location
      * @return The cost associated with the given tile
      */
-    public float getCost(TileBasedMap2d map, int x, int y, int tx, int ty);
+    float getCost(TileBasedMap2d map, int x, int y, int tx, int ty);
 }

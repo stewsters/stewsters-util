@@ -5,11 +5,11 @@ import com.stewsters.util.mapgen.CellType;
 
 public interface GeneratedMap2d {
 
-    public int getXSize();
+    int getXSize();
 
-    public int getYSize();
+    int getYSize();
 
-    public CellType getCellTypeAt(int x, int y);
+    CellType getCellTypeAt(int x, int y);
 
-    public void setCellTypeAt(int x, int y, CellType cellType);
+    void setCellTypeAt(int x, int y, CellType cellType);
 }

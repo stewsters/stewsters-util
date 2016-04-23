@@ -14,5 +14,5 @@ public enum MedievalRank {
     COUNT,
     VISCOUNT,
     BARON,
-    KNIGHT;
+    KNIGHT
 }

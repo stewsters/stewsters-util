@@ -1,6 +1,5 @@
 package com.stewsters.test.examples;
 
-import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
 import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
 /**

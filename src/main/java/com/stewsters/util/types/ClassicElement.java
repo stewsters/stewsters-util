@@ -6,6 +6,6 @@ public enum ClassicElement {
     FIRE,
     AIR,
     WATER,
-    EARTH;
+    EARTH
 
 }

@@ -5,15 +5,15 @@ import com.stewsters.util.mapgen.CellType;
 
 public interface GeneratedMap3d {
 
-    public int getXSize();
+    int getXSize();
 
-    public int getYSize();
+    int getYSize();
 
-    public int getZSize();
+    int getZSize();
 
-    public CellType getCellTypeAt(int x, int y, int z);
+    CellType getCellTypeAt(int x, int y, int z);
 
-    public void setCellTypeAt(int x, int y, int z, CellType cellType);
+    void setCellTypeAt(int x, int y, int z, CellType cellType);
 
 
 }

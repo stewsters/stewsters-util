@@ -2,14 +2,14 @@ package com.stewsters.util.timing;
 
 public interface Actor {
 
-    public int getEnergy();
+    int getEnergy();
 
-    public void removeEnergy(int actionCost);
+    void removeEnergy(int actionCost);
 
-    public void addEnergy(int speed);
+    void addEnergy(int speed);
 
-    public int getSpeed();
+    int getSpeed();
 
-    public int act();
+    int act();
 
 }

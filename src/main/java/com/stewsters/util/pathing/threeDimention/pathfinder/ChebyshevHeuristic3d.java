@@ -1,7 +1,6 @@
 package com.stewsters.util.pathing.threeDimention.pathfinder;
 
 
-import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
 import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
 /**
