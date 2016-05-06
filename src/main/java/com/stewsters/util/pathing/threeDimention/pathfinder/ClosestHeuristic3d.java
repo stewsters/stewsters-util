@@ -17,9 +17,7 @@ public class ClosestHeuristic3d implements AStarHeuristic3d {
         float dy = ty - y;
         float dz = ty - z;
 
-        float result = (float) (Math.sqrt((dx * dx) + (dy * dy) + (dz * dz)));
-
-        return result;
+        return (float) (Math.sqrt((dx * dx) + (dy * dy) + (dz * dz)));
     }
 
 }

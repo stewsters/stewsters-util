@@ -1,15 +1,18 @@
 package com.stewsters.test.spatial;
 
+import com.stewsters.test.examples.Spacecraft3d;
 import com.stewsters.util.spatial.IntervalKDTree3d;
+import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class Test3d {
+public class IntervalKDTree3dTest {
 
-    public static void main(String[] args) {
+    @Test
+    public void testCollision() {
         final int range = 10000;
         final int quantity = 1000000;
 

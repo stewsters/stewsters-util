@@ -66,7 +66,7 @@ public class DjikstraSearcher2d implements Searcher2d {
         // while we haven't exceeded our max search depth
         int maxDepth = 0;
         PathNode2d target = null;
-        FullPath2d path = null;
+
         while ((maxDepth < maxSearchDistance) && (open.size() != 0)) {
             // pull out the first PathNode in our open list, this is determined to
             // be the most likely to be the next step based on our heuristic
@@ -158,8 +158,7 @@ public class DjikstraSearcher2d implements Searcher2d {
         // references of the nodes to find out way from the target location back
 
         // to the start recording the nodes on the way.
-
-        path = new FullPath2d();
+        FullPath2d path = new FullPath2d();
         while (target != nodes[sx][sy]) {
             path.prependStep(target.x, target.y);
             target = target.parent;

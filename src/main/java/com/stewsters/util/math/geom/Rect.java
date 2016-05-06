@@ -33,7 +33,7 @@ public class Rect {
     }
 
     public String toString() {
-        return "$x1 $y1 $x2 $y2";
+        return x1 + " " + y1 + " " + x2 + " " + y2;
     }
 
     public boolean contains(int x, int y) {

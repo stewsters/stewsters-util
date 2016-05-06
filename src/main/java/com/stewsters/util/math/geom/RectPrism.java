@@ -39,7 +39,7 @@ public class RectPrism {
     }
 
     public String toString() {
-        return "$x1 $y1 $z1 $x2 $y2 $z2";
+        return x1 + " " + y1 + " " + z1 + " " + x2 + " " + y2 + " " + z2;
     }
 
     public boolean contains(int x, int y, int z) {

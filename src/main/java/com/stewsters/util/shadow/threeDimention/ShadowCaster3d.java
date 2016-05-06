@@ -91,7 +91,6 @@ public class ShadowCaster3d {
                 if (blocked) { //previous cell was a blocking one
                     if (litMap3d.getResistance(currentX, currentY, currentZ) >= 1) {//hit a wall
                         newStart = rightSlope;
-                        continue;
                     } else {
                         blocked = false;
                         start = newStart;

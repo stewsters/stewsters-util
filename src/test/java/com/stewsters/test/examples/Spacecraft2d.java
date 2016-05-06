@@ -1,4 +1,4 @@
-package com.stewsters.test.spatial;
+package com.stewsters.test.examples;
 
 import com.stewsters.util.spatial.IntervalKDTree2d;
 

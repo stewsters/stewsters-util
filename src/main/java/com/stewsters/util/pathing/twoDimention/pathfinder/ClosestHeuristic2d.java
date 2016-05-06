@@ -15,9 +15,8 @@ public class ClosestHeuristic2d implements AStarHeuristic2d {
         float dx = tx - x;
         float dy = ty - y;
 
-        float result = (float) (Math.sqrt((dx * dx) + (dy * dy)));
+        return (float) (Math.sqrt((dx * dx) + (dy * dy)));
 
-        return result;
     }
 
 }
