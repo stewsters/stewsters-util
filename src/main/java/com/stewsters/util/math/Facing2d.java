@@ -11,8 +11,8 @@ public enum Facing2d {
     WEST(-1, 0),
     NORTHWEST(-1, 1);
 
-    public int x;
-    public int y;
+    public final int x;
+    public final int y;
 
     Facing2d(int x, int y) {
         this.x = x;
@@ -52,6 +52,20 @@ public enum Facing2d {
                 return NORTHWEST;
 
         }
+    }
+
+    public Facing2d right() {
+        return values()[(ordinal() + 1) % values().length];
+    }
+
+    public Facing2d left() {
+        if (ordinal() == 0)
+            return values()[values().length - 1];
+        return values()[(ordinal() - 1)];
+    }
+
+    public Facing2d reverse() {
+        return values()[(ordinal() + 4) % values().length];
     }
 
 }

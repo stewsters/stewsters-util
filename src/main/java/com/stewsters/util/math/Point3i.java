@@ -32,8 +32,7 @@ public class Point3i {
         if (!(obj instanceof Point3i)) return false;
         Point3i other = (Point3i) obj;
         if (x != other.x) return false;
-        if (y != other.y) return false;
-        return z == other.z;
+        return y == other.y && z == other.z;
     }
 
     public List<Point3i> mooreNeighborhood() {
@@ -69,51 +68,6 @@ public class Point3i {
         Collections.shuffle(points);
         return points;
     }
-
-//    public List<Point3i> vonNeumannNeighborhood() {
-//        final List<Point3i> points = new ArrayList<Point3i>();
-//
-//        new ArrayList<Integer>(Arrays.asList(-1, 1)).invokeMethod("each", new Object[]{new Closure(this, this) {
-//            public Object doCall(int ox) {
-//                return new ArrayList<Integer>(Arrays.asList(-1, 1)).invokeMethod("each", new Object[]{new Closure(DUMMY__1234567890_DUMMYYYYYY___.this, DUMMY__1234567890_DUMMYYYYYY___.this) {
-//                    public Boolean doCall(int oy) {
-//                        return points.add(new Point3i(x + ox, y + oy, z));
-//
-//                    }
-//
-//                }});
-//
-//            }
-//
-//        }});
-//
-//        Collections.shuffle(points);
-//        return points;
-//    }
-
-//    public List<Point3i> vonNeumannNeighborhood3d() {
-//        final List<Point3i> points = new ArrayList<Point3i>();
-//
-//        new ArrayList<Integer>(Arrays.asList(-1, 1)).invokeMethod("each", new Object[]{new Closure(this, this) {
-//            public Object doCall(int ox) {
-//                return new ArrayList<Integer>(Arrays.asList(-1, 1)).invokeMethod("each", new Object[]{new Closure(DUMMY__1234567890_DUMMYYYYYY___.this, DUMMY__1234567890_DUMMYYYYYY___.this) {
-//                    public Object doCall(int oy) {
-//                        return new ArrayList<Integer>(Arrays.asList(-1, 1)).invokeMethod("each", new Object[]{new Closure(DUMMY__1234567890_DUMMYYYYYY___.this, DUMMY__1234567890_DUMMYYYYYY___.this) {
-//                            public Boolean doCall(int oz) {
-//                                return points.add(new Point3i(x + ox, y + oy, z + oz));
-//                            }
-//
-//                        }});
-//                    }
-//
-//                }});
-//            }
-//
-//        }});
-//
-//        Collections.shuffle(points);
-//        return points;
-//    }
 
     @Override
     public String toString() {

@@ -27,7 +27,7 @@ targetCompatibility = 1.7
 
 
 group = 'com.stewsters.util'
-version = '0.15'
+version = '0.16'
 
 
 
@@ -109,8 +109,8 @@ bintray {
 
         //Optional version descriptor
         version {
-            name = "0.15" //Bintray logical version name
-            vcsTag = "0.15"
+            name = "0.16" //Bintray logical version name
+            vcsTag = "0.16"
         }
     }
 

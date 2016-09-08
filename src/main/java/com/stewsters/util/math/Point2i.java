@@ -2,7 +2,6 @@ package com.stewsters.util.math;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Point2i {
@@ -10,7 +9,7 @@ public class Point2i {
     public int x;
     public int y;
 
-    public static final int[] zeroOrOne = {-1, 1};
+    public static final int[] negativeOneOrOne = {-1, 1};
 
     public Point2i(int x, int y) {
         this.x = x;
@@ -35,9 +34,7 @@ public class Point2i {
         if (!(obj instanceof Point2i))
             return false;
         Point2i other = (Point2i) obj;
-        if (x != other.x)
-            return false;
-        return y == other.y;
+        return x == other.x && y == other.y;
     }
 
     public List<Point2i> mooreNeighborhood() {
@@ -51,21 +48,17 @@ public class Point2i {
                 points.add(new Point2i(x + ox, y + oy));
             }
         }
-
-        Collections.shuffle(points);
         return points;
     }
 
     public List<Point2i> vonNeumannNeighborhood() {
         List<Point2i> points = new ArrayList<Point2i>();
 
-        for (int ox : zeroOrOne) {
-            for (int oy : zeroOrOne) {
+        for (int ox : negativeOneOrOne) {
+            for (int oy : negativeOneOrOne) {
                 points.add(new Point2i(x + ox, y + oy));
             }
         }
-
-        Collections.shuffle(points);
         return points;
     }
 
