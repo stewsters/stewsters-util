@@ -160,15 +160,14 @@ public class DjikstraSearcher2d implements Searcher2d {
         // to the start recording the nodes on the way.
         FullPath2d path = new FullPath2d();
         while (target != nodes[sx][sy]) {
-            path.prependStep(target.x, target.y);
+            path.appendStep(target.x, target.y);
             target = target.parent;
         }
-        path.prependStep(sx, sy);
+        path.appendStep(sx, sy);
+        path.reverse();
 
-//        jobPath.path = path;
         // thats it, we have our path
         return path;
-
     }
 
     /**

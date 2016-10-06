@@ -1,6 +1,7 @@
 package com.stewsters.util.pathing.twoDimention.shared;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A path determined by some path finding algorithm. A series of steps from
@@ -93,6 +94,10 @@ public class FullPath2d {
         return steps.contains(new Step(x, y));
     }
 
+    public void reverse() {
+        Collections.reverse(steps);
+    }
+
 
     /**
      * A single step within the path
@@ -100,40 +105,18 @@ public class FullPath2d {
      * @author Kevin Glass
      */
     public class Step {
-        /**
-         * The x coordinate at the given step
-         */
         private int x;
-        /**
-         * The y coordinate at the given step
-         */
         private int y;
 
-        /**
-         * Create a new step
-         *
-         * @param x The x coordinate of the new step
-         * @param y The y coordinate of the new step
-         */
         public Step(int x, int y) {
             this.x = x;
             this.y = y;
         }
 
-        /**
-         * Get the x coordinate of the new step
-         *
-         * @return The x coordinate of the new step
-         */
         public int getX() {
             return x;
         }
 
-        /**
-         * Get the y coordinate of the new step
-         *
-         * @return The y coordinate of the new step
-         */
         public int getY() {
             return y;
         }

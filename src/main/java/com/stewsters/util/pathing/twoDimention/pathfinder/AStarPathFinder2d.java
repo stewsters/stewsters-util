@@ -194,10 +194,11 @@ public class AStarPathFinder2d implements PathFinder2d {
         FullPath2d path = new FullPath2d();
         PathNode2d target = nodes[tx][ty];
         while (target != nodes[sx][sy]) {
-            path.prependStep(target.x, target.y);
+            path.appendStep(target.x, target.y);
             target = target.parent;
         }
-        path.prependStep(sx, sy);
+        path.appendStep(sx, sy);
+        path.reverse();
 
         // That's it, we have our path
         return path;

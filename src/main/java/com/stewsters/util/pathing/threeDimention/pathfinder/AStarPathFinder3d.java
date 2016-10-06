@@ -202,13 +202,13 @@ public class AStarPathFinder3d implements PathFinder3d {
         FullPath3d path = new FullPath3d();
         PathNode3d target = nodes[tx][ty][tz];
         while (target != nodes[sx][sy][sz]) {
-            path.prependStep(target.x, target.y, target.z);
+            path.appendStep(target.x, target.y, target.z);
             target = target.parent;
         }
-        path.prependStep(sx, sy, sz);
+        path.appendStep(sx, sy, sz);
+        path.reverse();
 
         // thats it, we have our path
-
         return path;
     }
 

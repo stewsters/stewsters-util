@@ -143,14 +143,14 @@ public class DjikstraSearcher3d implements Searcher3d {
 
         FullPath3d path = new FullPath3d();
         while (target != nodes[sx][sy][sz]) {
-            path.prependStep(target.x, target.y, target.z);
+            path.appendStep(target.x, target.y, target.z);
             target = target.parent;
         }
-        path.prependStep(sx, sy, sz);
+        path.appendStep(sx, sy, sz);
+        path.reverse();
 
         // thats it, we have our path
         return path;
-
     }
 
 

@@ -83,4 +83,24 @@ public class AStarPathfinder2dTest {
 
     }
 
+
+    @Test
+    public void testHugePathfinding() {
+        System.out.println("Test huge path");
+
+        ExampleMap2d map = new ExampleMap2d(2000, 2000, floor);
+
+        AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 1000000, true);
+
+        ExampleMover2d exampleMover2d = new ExampleMover2d(map);
+
+        FullPath2d fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 1999, 1999);
+
+//        for (int i = 0; i < fullPath2d.getLength(); i++) {
+//            System.out.println("x:" + fullPath2d.getStep(i).getX() + " y:" + fullPath2d.getStep(i).getY());
+//        }
+
+        assertEquals(1999, fullPath2d.getLength());
+
+    }
 }
