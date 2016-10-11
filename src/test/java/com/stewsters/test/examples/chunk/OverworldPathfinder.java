@@ -10,37 +10,38 @@ import java.util.PriorityQueue;
 
 public class OverworldPathfinder {
 
-    public ArrayList<Point2i> getPath(OverworldExample overworld, int sx, int sy, int tx, int ty, Mover2dV2 mover2d, float maxSearchDistance) {
+    public ArrayList<Point2i> getPath(OverworldExample overworld, int globalStartingX, int globalStartingY,
+                                      int globalDestinationX, int globalDestinationY, Mover2dV2 mover2d, float maxSearchDistance) {
 
         AStarHeuristic2d heuristic = mover2d.getHeuristic();
 //        boolean allowDiag = mover2d.getDiagonal();
 
-        if (!mover2d.canOccupy(tx, ty))
+        if (!mover2d.canOccupy(globalDestinationX, globalDestinationY))
             return null;
 
-        int xSPrecise = sx % Chunk.xSize;
-        int ySPrecise = sy % Chunk.ySize;
+        int preciseStartingX = globalStartingX % Chunk.xSize;
+        int preciseStartingY = globalStartingY % Chunk.ySize;
 
-        int xTPrecise = tx % Chunk.xSize;
-        int yTPrecise = ty % Chunk.ySize;
+        int preciseDestinationX = globalDestinationX % Chunk.xSize;
+        int preciseDestinationY = globalDestinationY % Chunk.ySize;
 
-        Chunk sourceChunk = overworld.getChunk(sx, sy);
-        int sourceRegionId = sourceChunk.regionIds[xSPrecise][ySPrecise];
+        Chunk sourceChunk = overworld.getChunk(globalStartingX, globalStartingY);
+        int sourceRegionId = sourceChunk.regionIds[preciseStartingX][preciseStartingY];
 
-        Chunk destinationChunk = overworld.getChunk(tx, ty);
-        int destinationRegionId = destinationChunk.regionIds[xTPrecise][yTPrecise];
+        Chunk destinationChunk = overworld.getChunk(globalDestinationX, globalDestinationY);
+        int destinationRegionId = destinationChunk.regionIds[preciseDestinationX][preciseDestinationY];
 
-        OverworldPathNode startingNode = new OverworldPathNode(sourceChunk, xSPrecise, ySPrecise);
-        OverworldPathNode destinationNode = new OverworldPathNode(destinationChunk, xTPrecise,yTPrecise);
+        OverworldPathNode startingNode = new OverworldPathNode(sourceChunk, preciseStartingX, preciseStartingY);
+        OverworldPathNode destinationNode = new OverworldPathNode(destinationChunk, preciseDestinationX, preciseDestinationY);
 
         for (OverworldPathNode overworldPathNode : sourceChunk.overworldPathNodes) {
 
-            if (sourceChunk.regionIds[overworldPathNode.x % Chunk.xSize][overworldPathNode.y % Chunk.ySize] == sourceRegionId) {
+            if (sourceChunk.regionIds[overworldPathNode.getPreciseX()][overworldPathNode.getPreciseY()] == sourceRegionId) {
                 new OverworldEdge(startingNode, overworldPathNode, 1);
             }
         }
         for (OverworldPathNode overworldPathNode : destinationChunk.overworldPathNodes) {
-            if (sourceChunk.regionIds[overworldPathNode.x % Chunk.xSize][overworldPathNode.y % Chunk.ySize] == destinationRegionId) {
+            if (sourceChunk.regionIds[overworldPathNode.getPreciseX()][overworldPathNode.getPreciseY()] == destinationRegionId) {
                 new OverworldEdge(destinationNode, overworldPathNode, 1);
             }
         }
@@ -83,9 +84,9 @@ public class OverworldPathfinder {
                     }
                 }
 
-                if (!open.contains(neighbor) && !(closed.contains(neighbor))) {
+                if (!open.contains(neighbor) && !closed.contains(neighbor)) {
                     neighbor.cost = nextStepCost;
-                    neighbor.heuristic = heuristic.getCost(overworld, neighbor.x, neighbor.y, tx, ty);
+                    neighbor.heuristic = heuristic.getCost(overworld, neighbor.getGlobalX(), neighbor.getGlobalY(), globalDestinationX, globalDestinationY);
                     maxDepth = Math.max(maxDepth, neighbor.setParent(current));
                     open.add(neighbor);
                 }
@@ -101,10 +102,10 @@ public class OverworldPathfinder {
 
         OverworldPathNode target = destinationNode;
         while (target != startingNode) {
-            path.add(new Point2i(target.x, target.y));
+            path.add(new Point2i(target.getGlobalX(), target.getGlobalY()));
             target = target.parent;
         }
-        path.add(new Point2i(sx, sy));
+        path.add(new Point2i(globalStartingX, globalStartingY));
 
         Collections.reverse(path);
         //TODO: disconnect parents

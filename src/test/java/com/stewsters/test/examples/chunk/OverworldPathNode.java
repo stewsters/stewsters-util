@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class OverworldPathNode implements Comparable<OverworldPathNode> {
 
     public final Chunk chunk;
-    public final int x;
-    public final int y;
+    private final int x;
+    private final int y;
 
     public final ArrayList<OverworldEdge> edges;
 
@@ -21,6 +21,14 @@ public class OverworldPathNode implements Comparable<OverworldPathNode> {
         this.x = x;
         this.y = y;
         edges = new ArrayList<>();
+    }
+
+    public int getPreciseX() {
+        return x;
+    }
+
+    public int getPreciseY() {
+        return y;
     }
 
     public int getGlobalX() {
