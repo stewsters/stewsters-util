@@ -4,38 +4,15 @@ package com.stewsters.util.pathing.twoDimention.shared;
  * A single PathNode in the search graph
  */
 public class PathNode2d implements Comparable<PathNode2d> {
-    /**
-     * The x coordinate of the node
-     */
+
     public int x;
-    /**
-     * The y coordinate of the node
-     */
     public int y;
 
-    /**
-     * The path cost for this node
-     */
     public float cost;
-    /**
-     * The parent of this node, how we reached it in the search
-     */
     public PathNode2d parent;
-    /**
-     * The heuristic cost of this node
-     */
     public float heuristic;
-    /**
-     * The search depth of this node
-     */
     public int depth;
 
-    /**
-     * Create a new node
-     *
-     * @param x The x coordinate of the node
-     * @param y The y coordinate of the node
-     */
     public PathNode2d(int x, int y) {
         this.x = x;
         this.y = y;
@@ -54,9 +31,7 @@ public class PathNode2d implements Comparable<PathNode2d> {
         return depth;
     }
 
-    /**
-     * @see Comparable#compareTo(Object)
-     */
+    @Override
     public int compareTo(PathNode2d other) {
 
         float f = heuristic + cost;
