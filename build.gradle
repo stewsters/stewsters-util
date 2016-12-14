@@ -27,8 +27,7 @@ targetCompatibility = 1.7
 
 
 group = 'com.stewsters.util'
-version = '0.16'
-
+version = '0.17'
 
 
 if (!project.hasProperty('bintray_net_user')) {
@@ -109,8 +108,8 @@ bintray {
 
         //Optional version descriptor
         version {
-            name = "0.16" //Bintray logical version name
-            vcsTag = "0.16"
+            name = "0.17" //Bintray logical version name
+            vcsTag = "0.17"
         }
     }
 
