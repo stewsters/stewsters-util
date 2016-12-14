@@ -27,13 +27,22 @@ public class IntervalKDTree3d<T> {
     private Map<Box<T>, Node> boxNodeDictionary = new HashMap<Box<T>, Node>();
     private Map<T, Box<T>> valueBoxDictionary = new HashMap<T, Box<T>>();
 
+    private double maxRange;
+
     public IntervalKDTree3d(double range, int divisionThreshold) {
+        this.maxRange = range;
         this.divisionThreshold = divisionThreshold;
         rootNode = new Node(this, null, 0, -range, -range, -range, range, range, range);
     }
 
 
     public void put(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, T value) {
+        if (minX > maxX || minY > maxY || minZ > maxZ)
+            throw new InvalidBoundingBoxException();
+
+        if (minX < -maxRange || maxX > maxRange || minY < -maxRange || maxY > maxRange || minZ < -maxRange || maxZ > maxRange)
+            throw new OutOfBoundsException();
+
         if (!valueBoxDictionary.containsKey(value)) {
             addBox(new Box<T>(value, minX, minY, minZ, maxX, maxY, maxZ));
         } else {
