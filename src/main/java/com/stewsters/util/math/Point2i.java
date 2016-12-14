@@ -54,6 +54,16 @@ public class Point2i {
     public List<Point2i> vonNeumannNeighborhood() {
         List<Point2i> points = new ArrayList<Point2i>();
 
+        points.add(new Point2i(x + 1, y));
+        points.add(new Point2i(x - 1, y));
+        points.add(new Point2i(x, y + 1));
+        points.add(new Point2i(x, y - 1));
+        return points;
+    }
+
+    public List<Point2i> rotatedVonNeumannNeighborhood() {
+        List<Point2i> points = new ArrayList<Point2i>();
+
         for (int ox : negativeOneOrOne) {
             for (int oy : negativeOneOrOne) {
                 points.add(new Point2i(x + ox, y + oy));
