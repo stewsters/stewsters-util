@@ -11,7 +11,7 @@ import java.util.PriorityQueue;
 public class OverworldPathfinder {
 
     public ArrayList<Point2i> getPath(OverworldExample overworld, int globalStartingX, int globalStartingY,
-                                      int globalDestinationX, int globalDestinationY, Mover2dV2 mover2d, float maxSearchDistance) {
+                                      int globalDestinationX, int globalDestinationY, Mover2dV2 mover2d, float maxSearchCost) {
 
         AStarHeuristic2d heuristic = mover2d.getHeuristic();
 //        boolean allowDiag = mover2d.getDiagonal();
@@ -34,8 +34,8 @@ public class OverworldPathfinder {
         OverworldPathNode startingNode = new OverworldPathNode(sourceChunk, preciseStartingX, preciseStartingY);
         OverworldPathNode destinationNode = new OverworldPathNode(destinationChunk, preciseDestinationX, preciseDestinationY);
 
+        // Add edges
         for (OverworldPathNode overworldPathNode : sourceChunk.overworldPathNodes) {
-
             if (sourceChunk.regionIds[overworldPathNode.getPreciseX()][overworldPathNode.getPreciseY()] == sourceRegionId) {
                 new OverworldEdge(startingNode, overworldPathNode, 1);
             }
@@ -52,7 +52,7 @@ public class OverworldPathfinder {
         open.add(startingNode);
 
         float maxDepth = 0;
-        while ((maxDepth < maxSearchDistance) && (open.size() != 0)) {
+        while ((maxDepth < maxSearchCost) && (open.size() != 0)) {
 
             OverworldPathNode current = open.peek();
 
@@ -75,6 +75,7 @@ public class OverworldPathfinder {
 
                 float nextStepCost = current.cost + edge.cost;
 
+                // Then this next one is lower cost than any previous encounter with it
                 if (nextStepCost < neighbor.cost) {
                     if (open.contains(neighbor)) {
                         open.remove(neighbor);
@@ -108,7 +109,15 @@ public class OverworldPathfinder {
         path.add(new Point2i(globalStartingX, globalStartingY));
 
         Collections.reverse(path);
-        //TODO: disconnect parents
+
+        for (OverworldPathNode node : sourceChunk.overworldPathNodes) {
+            node.edges.removeAll(startingNode.edges);
+        }
+
+        for (OverworldPathNode node : destinationChunk.overworldPathNodes) {
+            node.edges.removeAll(destinationNode.edges);
+        }
+
         return path;
     }
 
@@ -118,8 +127,8 @@ public class OverworldPathfinder {
         for (int y = 0; y < overworld.getYSizeInChunks(); y++) {
             for (int x = 0; x < overworld.getXSizeInChunks() - 1; x++) {
 
-                Chunk left = overworld.chunks[x][y];
-                Chunk right = overworld.chunks[x + 1][y];
+                Chunk leftChunk = overworld.chunks[x][y];
+                Chunk rightChunk = overworld.chunks[x + 1][y];
 
                 // Iterate from top to bottom
                 int i = 0;
@@ -128,8 +137,7 @@ public class OverworldPathfinder {
 
                 while (i < Chunk.ySize) {
 
-                    if (!left.ground[Chunk.xSize - 1][i].isBlocking() &&
-                            !right.ground[0][i].isBlocking()) {
+                    if (!leftChunk.ground[Chunk.xSize - 1][i].isBlocking() && !rightChunk.ground[0][i].isBlocking()) {
                         if (!open) {
                             open = true;
                             start = i;
@@ -137,26 +145,27 @@ public class OverworldPathfinder {
                     } else if (open) {
                         // close it down
 
-                        OverworldPathNode leftNode = new OverworldPathNode(left, 0, (i - start) / 2);
-                        OverworldPathNode rightNode = new OverworldPathNode(right, Chunk.xSize - 1, (i - start) / 2);
+                        OverworldPathNode leftNode = new OverworldPathNode(leftChunk, Chunk.xSize - 1, (i - start) / 2);
+                        OverworldPathNode rightNode = new OverworldPathNode(rightChunk, 0, (i - start) / 2);
 
-                        OverworldEdge edge = new OverworldEdge(leftNode, rightNode, 1);
+                        new OverworldEdge(leftNode, rightNode, 1);
 
-                        left.overworldPathNodes.add(leftNode);
-                        right.overworldPathNodes.add(rightNode);
+                        leftChunk.overworldPathNodes.add(leftNode);
+                        rightChunk.overworldPathNodes.add(rightNode);
                         open = false;
                     }
                     i++;
                 }
                 if (open) {
                     // Close any remaining openings
-                    OverworldPathNode leftNode = new OverworldPathNode(left, 0, (i - start) / 2);
-                    OverworldPathNode rightNode = new OverworldPathNode(left, Chunk.xSize - 1, (i - start) / 2);
+                    OverworldPathNode leftNode = new OverworldPathNode(leftChunk, Chunk.xSize - 1, (i - start) / 2);
+                    OverworldPathNode rightNode = new OverworldPathNode(rightChunk, 0, (i - start) / 2);
 
-                    OverworldEdge edge = new OverworldEdge(leftNode, rightNode, 1);
+                    new OverworldEdge(leftNode, rightNode, 1);
 
-                    left.overworldPathNodes.add(leftNode);
-                    right.overworldPathNodes.add(rightNode);
+
+                    leftChunk.overworldPathNodes.add(leftNode);
+                    rightChunk.overworldPathNodes.add(rightNode);
                 }
 
             }
@@ -184,8 +193,10 @@ public class OverworldPathfinder {
                         }
                     } else if (open) {
                         // close it down
-                        OverworldPathNode topNode = new OverworldPathNode(top, (i - start) / 2, 0);
-                        OverworldPathNode bottomNode = new OverworldPathNode(bottom, (i - start) / 2, Chunk.xSize - 1);
+                        OverworldPathNode topNode = new OverworldPathNode(top, (i - start) / 2, Chunk.xSize - 1);
+                        OverworldPathNode bottomNode = new OverworldPathNode(bottom, (i - start) / 2, 0);
+
+                        new OverworldEdge(topNode, bottomNode, 1);
 
                         top.overworldPathNodes.add(topNode);
                         bottom.overworldPathNodes.add(bottomNode);
@@ -196,8 +207,10 @@ public class OverworldPathfinder {
                 }
                 if (open) {
                     // Close any remaining openings
-                    OverworldPathNode topNode = new OverworldPathNode(top, (i - start) / 2, 0);
-                    OverworldPathNode bottomNode = new OverworldPathNode(bottom, (i - start) / 2, Chunk.xSize - 1);
+                    OverworldPathNode topNode = new OverworldPathNode(top, (i - start) / 2, Chunk.xSize - 1);
+                    OverworldPathNode bottomNode = new OverworldPathNode(bottom, (i - start) / 2, 0);
+
+                    new OverworldEdge(topNode, bottomNode, 1);
 
                     top.overworldPathNodes.add(topNode);
                     bottom.overworldPathNodes.add(bottomNode);
@@ -206,5 +219,23 @@ public class OverworldPathfinder {
 
             }
         }
+
+        // Interconnect the central peices
+        for (int x = 0; x < overworld.getXSizeInChunks(); x++) {
+
+            for (int y = 0; y < overworld.getYSizeInChunks(); y++) {
+                Chunk chunk = overworld.getChunk(x * Chunk.xSize, y * Chunk.ySize);
+
+                for (OverworldPathNode owpn1 : chunk.overworldPathNodes) {
+                    for (OverworldPathNode owpn2 : chunk.overworldPathNodes) {
+
+                        if (chunk.regionIds[owpn1.getPreciseX()][owpn1.getPreciseY()] == chunk.regionIds[owpn1.getPreciseX()][owpn1.getPreciseY()]) {
+                            OverworldEdge edge = new OverworldEdge(owpn1, owpn2, 1);
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }

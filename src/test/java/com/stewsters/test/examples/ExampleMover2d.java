@@ -39,6 +39,6 @@ public class ExampleMover2d implements Mover2d {
 
     @Override
     public float getCost(int sx, int sy, int tx, int ty) {
-        return 1;
+        return ((sx == tx) || (sy == ty)) ? 1f : 1f;
     }
 }

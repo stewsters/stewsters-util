@@ -32,11 +32,11 @@ public class OverworldPathNode implements Comparable<OverworldPathNode> {
     }
 
     public int getGlobalX() {
-        return x + chunk.xOffset;
+        return x + chunk.xOffset * Chunk.xSize;
     }
 
     public int getGlobalY() {
-        return y + chunk.yOffset;
+        return y + chunk.yOffset * Chunk.ySize;
     }
 
     public int setParent(OverworldPathNode parent) {
@@ -59,5 +59,10 @@ public class OverworldPathNode implements Comparable<OverworldPathNode> {
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public String toString() {
+        return chunk.toString() + " _ " + x + ", "+y;
     }
 }

@@ -17,8 +17,6 @@ public class Chunk implements TileBasedMap2d {
     public ExampleCellType[][] ground;
 
     public int[][] regionIds;
-//    ArrayList<Region> regions;
-
     public ArrayList<OverworldPathNode> overworldPathNodes;
 
 
@@ -34,14 +32,11 @@ public class Chunk implements TileBasedMap2d {
         }
 
         regionIds = new int[xSize][ySize];
-//        regions = new ArrayList<>();
         overworldPathNodes = new ArrayList<>();
     }
 
 
     public void recalculate() {
-//        regions.clear();
-
         //Reset
         for (int x = 0; x < xSize; x++) {
             for (int y = 0; y < ySize; y++) {
@@ -56,14 +51,12 @@ public class Chunk implements TileBasedMap2d {
         for (int x = 0; x < xSize; x++) {
             for (int y = 0; y < ySize; y++) {
                 if (regionIds[x][y] == uncalculatedRegion) {
-//                    regions.add(new Region()); // todo: this may not be what we want
                     floodFill(x, y, uncalculatedRegion, i++);
                 }
             }
         }
     }
 
-    //        Flood-fill (node, target-color, replacement-color):
     private void floodFill(int x, int y, int target, int replacement) {
 
         if (target == replacement)
@@ -96,5 +89,10 @@ public class Chunk implements TileBasedMap2d {
     @Override
     public void pathFinderVisited(int x, int y) {
 
+    }
+
+    @Override
+    public String toString() {
+        return xOffset + ", " + yOffset;
     }
 }

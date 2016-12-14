@@ -11,7 +11,7 @@ public class OverworldEdge {
         right = rightNode;
         this.cost = cost;
 
-        left.edges.add(this);
-        right.edges.add(this);
+        leftNode.edges.add(this);
+        rightNode.edges.add(this);
     }
 }

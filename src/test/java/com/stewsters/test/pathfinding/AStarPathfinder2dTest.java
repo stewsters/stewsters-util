@@ -4,6 +4,7 @@ import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap2d;
 import com.stewsters.test.examples.ExampleMover2d;
 import com.stewsters.util.pathing.twoDimention.pathfinder.AStarPathFinder2d;
+import com.stewsters.util.pathing.twoDimention.pathfinder.ClosestHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
 import org.junit.Test;
 
@@ -80,6 +81,28 @@ public class AStarPathfinder2dTest {
         }
 
         assertEquals(8, fullPath2d.getLength());
+
+    }
+
+
+    @Test
+    public void test8WayPathingTest2() {
+        System.out.println("Test 8 way path");
+
+        ExampleMap2d map = new ExampleMap2d(10, 20, floor);
+
+        AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, true, new ClosestHeuristic2d());
+
+        ExampleMover2d exampleMover2d = new ExampleMover2d(map);
+
+        FullPath2d fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 9, 19);
+
+
+        for (int i = 0; i < fullPath2d.getLength(); i++) {
+            System.out.println("x:" + fullPath2d.getStep(i).getX() + " y:" + fullPath2d.getStep(i).getY());
+        }
+
+        assertEquals(19, fullPath2d.getLength());
 
     }
 
