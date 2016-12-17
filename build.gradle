@@ -18,6 +18,7 @@ allprojects {
 
 apply plugin: 'idea'
 apply plugin: 'java'
+apply plugin: 'groovy'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'net.saliman.cobertura'
@@ -44,6 +45,7 @@ repositories {
 
 dependencies {
     testCompile 'junit:junit:4.11'
+    testCompile "org.codehaus.groovy:groovy-all:2.4.7"
 }
 
 // custom tasks for creating source/javadoc jars

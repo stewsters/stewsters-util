@@ -37,6 +37,33 @@ public class Point2i {
         return x == other.x && y == other.y;
     }
 
+
+    @Override
+    public String toString() {
+        return (x + " " + y);
+    }
+
+    public Point2i copy() {
+        return new Point2i(x, y);
+    }
+
+    /* Groovy operator overloading */
+    public Point2i plus(Point2i other) {
+        return new Point2i(this.x + other.x, this.y + other.y);
+    }
+
+    public Point2i minus(Point2i other) {
+        return new Point2i(this.x - other.x, this.y - other.y);
+    }
+
+    public Point2i multiply(int scalar) {
+        return new Point2i(this.x * scalar, this.y * scalar);
+    }
+
+    public Point2i div(int scalar) {
+        return new Point2i(this.x / scalar, this.y / scalar);
+    }
+
     public List<Point2i> mooreNeighborhood() {
         List<Point2i> points = new ArrayList<Point2i>();
 
@@ -72,9 +99,8 @@ public class Point2i {
         return points;
     }
 
-
     public int getManhattanDistance(Point2i other) {
-        return Math.abs(this.x - other.x) + Math.abs(this.y - other.y);
+        return getManhattanDistance(other.x, other.y);
     }
 
     public int getManhattanDistance(int x, int y) {
@@ -83,18 +109,11 @@ public class Point2i {
 
     // Manhattan distance with diagonals
     public int getChebyshevDistance(Point2i other) {
-        return Math.max(Math.abs(this.x - other.x), Math.abs(this.y - other.y));
+        return getChebyshevDistance(other.x, other.y);
     }
 
     public int getChebyshevDistance(int x, int y) {
         return Math.max(Math.abs(this.x - x), Math.abs(this.y - y));
     }
-
-
-    @Override
-    public String toString() {
-        return (x + " " + y);
-    }
-
 
 }
