@@ -11,7 +11,7 @@ import java.util.PriorityQueue;
 public class OverworldPathfinder {
 
     public ArrayList<Point2i> getPath(OverworldExample overworld, int globalStartingX, int globalStartingY,
-                                      int globalDestinationX, int globalDestinationY, Mover2dV2 mover2d, float maxSearchCost) {
+                                      int globalDestinationX, int globalDestinationY, ChunkedMover mover2d, float maxSearchCost) {
 
         AStarHeuristic2d heuristic = mover2d.getHeuristic();
 //        boolean allowDiag = mover2d.getDiagonal();
@@ -19,29 +19,29 @@ public class OverworldPathfinder {
         if (!mover2d.canOccupy(globalDestinationX, globalDestinationY))
             return null;
 
-        int preciseStartingX = globalStartingX % Chunk.xSize;
-        int preciseStartingY = globalStartingY % Chunk.ySize;
+        int preciseStartingX = globalStartingX % ExampleChunk.xSize;
+        int preciseStartingY = globalStartingY % ExampleChunk.ySize;
 
-        int preciseDestinationX = globalDestinationX % Chunk.xSize;
-        int preciseDestinationY = globalDestinationY % Chunk.ySize;
+        int preciseDestinationX = globalDestinationX % ExampleChunk.xSize;
+        int preciseDestinationY = globalDestinationY % ExampleChunk.ySize;
 
-        Chunk sourceChunk = overworld.getChunk(globalStartingX, globalStartingY);
-        int sourceRegionId = sourceChunk.regionIds[preciseStartingX][preciseStartingY];
+        ExampleChunk sourceChunk = overworld.getChunk(globalStartingX, globalStartingY);
+        int sourceRegionId = sourceChunk.getRegionId(preciseStartingX, preciseStartingY);
 
-        Chunk destinationChunk = overworld.getChunk(globalDestinationX, globalDestinationY);
-        int destinationRegionId = destinationChunk.regionIds[preciseDestinationX][preciseDestinationY];
+        ExampleChunk destinationChunk = overworld.getChunk(globalDestinationX, globalDestinationY);
+        int destinationRegionId = destinationChunk.getRegionId(preciseDestinationX, preciseDestinationY);
 
         OverworldPathNode startingNode = new OverworldPathNode(sourceChunk, preciseStartingX, preciseStartingY);
         OverworldPathNode destinationNode = new OverworldPathNode(destinationChunk, preciseDestinationX, preciseDestinationY);
 
         // Add edges
         for (OverworldPathNode overworldPathNode : sourceChunk.overworldPathNodes) {
-            if (sourceChunk.regionIds[overworldPathNode.getPreciseX()][overworldPathNode.getPreciseY()] == sourceRegionId) {
+            if (sourceChunk.getRegionId(overworldPathNode.getPreciseX(), overworldPathNode.getPreciseY()) == sourceRegionId) {
                 new OverworldEdge(startingNode, overworldPathNode, 1);
             }
         }
         for (OverworldPathNode overworldPathNode : destinationChunk.overworldPathNodes) {
-            if (sourceChunk.regionIds[overworldPathNode.getPreciseX()][overworldPathNode.getPreciseY()] == destinationRegionId) {
+            if (sourceChunk.getRegionId(overworldPathNode.getPreciseX(), overworldPathNode.getPreciseY()) == destinationRegionId) {
                 new OverworldEdge(destinationNode, overworldPathNode, 1);
             }
         }
@@ -127,17 +127,17 @@ public class OverworldPathfinder {
         for (int y = 0; y < overworld.getYSizeInChunks(); y++) {
             for (int x = 0; x < overworld.getXSizeInChunks() - 1; x++) {
 
-                Chunk leftChunk = overworld.chunks[x][y];
-                Chunk rightChunk = overworld.chunks[x + 1][y];
+                ExampleChunk leftChunk = overworld.chunks[x][y];
+                ExampleChunk rightChunk = overworld.chunks[x + 1][y];
 
                 // Iterate from top to bottom
                 int i = 0;
                 boolean open = false;
                 int start = 0;
 
-                while (i < Chunk.ySize) {
+                while (i < ExampleChunk.ySize) {
 
-                    if (!leftChunk.ground[Chunk.xSize - 1][i].isBlocking() && !rightChunk.ground[0][i].isBlocking()) {
+                    if (!leftChunk.ground[ExampleChunk.xSize - 1][i].isBlocking() && !rightChunk.ground[0][i].isBlocking()) {
                         if (!open) {
                             open = true;
                             start = i;
@@ -145,7 +145,7 @@ public class OverworldPathfinder {
                     } else if (open) {
                         // close it down
 
-                        OverworldPathNode leftNode = new OverworldPathNode(leftChunk, Chunk.xSize - 1, (i - start) / 2);
+                        OverworldPathNode leftNode = new OverworldPathNode(leftChunk, ExampleChunk.xSize - 1, (i - start) / 2);
                         OverworldPathNode rightNode = new OverworldPathNode(rightChunk, 0, (i - start) / 2);
 
                         new OverworldEdge(leftNode, rightNode, 1);
@@ -158,7 +158,7 @@ public class OverworldPathfinder {
                 }
                 if (open) {
                     // Close any remaining openings
-                    OverworldPathNode leftNode = new OverworldPathNode(leftChunk, Chunk.xSize - 1, (i - start) / 2);
+                    OverworldPathNode leftNode = new OverworldPathNode(leftChunk, ExampleChunk.xSize - 1, (i - start) / 2);
                     OverworldPathNode rightNode = new OverworldPathNode(rightChunk, 0, (i - start) / 2);
 
                     new OverworldEdge(leftNode, rightNode, 1);
@@ -175,17 +175,17 @@ public class OverworldPathfinder {
         // Build Vertical connections
         for (int x = 0; x < overworld.getXSizeInChunks(); x++) {
             for (int y = 0; y < overworld.getYSizeInChunks() - 1; y++) {
-                Chunk top = overworld.chunks[x][y];
-                Chunk bottom = overworld.chunks[x][y + 1];
+                ExampleChunk top = overworld.chunks[x][y];
+                ExampleChunk bottom = overworld.chunks[x][y + 1];
 
                 // Iterate from left to right
                 int i = 0;
                 boolean open = false;
                 int start = 0;
 
-                while (i < Chunk.xSize) {
+                while (i < ExampleChunk.xSize) {
 
-                    if (!top.ground[i][Chunk.ySize - 1].isBlocking() &&
+                    if (!top.ground[i][ExampleChunk.ySize - 1].isBlocking() &&
                             !bottom.ground[i][0].isBlocking()) {
                         if (!open) {
                             open = true;
@@ -193,7 +193,7 @@ public class OverworldPathfinder {
                         }
                     } else if (open) {
                         // close it down
-                        OverworldPathNode topNode = new OverworldPathNode(top, (i - start) / 2, Chunk.xSize - 1);
+                        OverworldPathNode topNode = new OverworldPathNode(top, (i - start) / 2, ExampleChunk.xSize - 1);
                         OverworldPathNode bottomNode = new OverworldPathNode(bottom, (i - start) / 2, 0);
 
                         new OverworldEdge(topNode, bottomNode, 1);
@@ -207,7 +207,7 @@ public class OverworldPathfinder {
                 }
                 if (open) {
                     // Close any remaining openings
-                    OverworldPathNode topNode = new OverworldPathNode(top, (i - start) / 2, Chunk.xSize - 1);
+                    OverworldPathNode topNode = new OverworldPathNode(top, (i - start) / 2, ExampleChunk.xSize - 1);
                     OverworldPathNode bottomNode = new OverworldPathNode(bottom, (i - start) / 2, 0);
 
                     new OverworldEdge(topNode, bottomNode, 1);
@@ -224,13 +224,13 @@ public class OverworldPathfinder {
         for (int x = 0; x < overworld.getXSizeInChunks(); x++) {
 
             for (int y = 0; y < overworld.getYSizeInChunks(); y++) {
-                Chunk chunk = overworld.getChunk(x * Chunk.xSize, y * Chunk.ySize);
+                ExampleChunk chunk = overworld.getChunk(x * ExampleChunk.xSize, y * ExampleChunk.ySize);
 
                 for (OverworldPathNode owpn1 : chunk.overworldPathNodes) {
                     for (OverworldPathNode owpn2 : chunk.overworldPathNodes) {
 
-                        if (chunk.regionIds[owpn1.getPreciseX()][owpn1.getPreciseY()] == chunk.regionIds[owpn1.getPreciseX()][owpn1.getPreciseY()]) {
-                            OverworldEdge edge = new OverworldEdge(owpn1, owpn2, 1);
+                        if (chunk.getRegionId(owpn1.getPreciseX(), owpn1.getPreciseY()) == chunk.getRegionId(owpn1.getPreciseX(), owpn1.getPreciseY())) {
+                            new OverworldEdge(owpn1, owpn2, 1);
                         }
                     }
                 }

@@ -4,10 +4,10 @@ import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
 
 public class ExampleMover3d implements Mover3d {
 
-    private ExampleMap3d exampleMap3d;
     int xSize;
     int ySize;
     int zSize;
+    private ExampleMap3d exampleMap3d;
 
 
     public ExampleMover3d(ExampleMap3d exampleMap3d) {

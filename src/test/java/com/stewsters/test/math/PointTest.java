@@ -66,8 +66,8 @@ public class PointTest {
         assert 30 == one.getManhattanDistance(two);
         assert 20 == one.getChebyshevDistance(two);
 
-        Point3i one3d = new Point3i(0, 0,0);
-        Point3i two3d = new Point3i(10, 20,5);
+        Point3i one3d = new Point3i(0, 0, 0);
+        Point3i two3d = new Point3i(10, 20, 5);
 
         assert 35 == one3d.getManhattanDistance(two3d);
         assert 20 == one3d.getChebyshevDistance(two3d);

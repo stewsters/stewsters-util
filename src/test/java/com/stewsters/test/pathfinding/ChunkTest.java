@@ -1,13 +1,13 @@
 package com.stewsters.test.pathfinding;
 
 import com.stewsters.test.examples.ExampleCellType;
-import com.stewsters.test.examples.chunk.Chunk;
 import com.stewsters.test.examples.chunk.ChunkPathfinder;
-import com.stewsters.test.examples.chunk.Mover;
-import com.stewsters.test.examples.chunk.Mover2dV2;
+import com.stewsters.test.examples.chunk.ChunkedMover;
+import com.stewsters.test.examples.chunk.ExampleChunk;
 import com.stewsters.test.examples.chunk.OverworldExample;
 import com.stewsters.test.examples.chunk.OverworldPathNode;
 import com.stewsters.test.examples.chunk.OverworldPathfinder;
+import com.stewsters.test.examples.chunk.TestMover;
 import com.stewsters.util.math.Point2i;
 import org.junit.Test;
 
@@ -18,7 +18,7 @@ public class ChunkTest {
     @Test
     public void testRecalculatingChunks() {
 
-        Chunk chunk = new Chunk(0, 0);
+        ExampleChunk chunk = new ExampleChunk(0, 0);
 
         for (int x = 0; x < chunk.xSize; x++) {
             for (int y = 0; y < chunk.ySize; y++) {
@@ -34,7 +34,7 @@ public class ChunkTest {
         for (int y = 0; y < chunk.ySize; y++) {
             for (int x = 0; x < chunk.xSize; x++) {
 
-                System.out.print(chunk.regionIds[x][y]);
+                System.out.print(chunk.getRegionId(x, y));
             }
             System.out.println();
         }
@@ -43,11 +43,11 @@ public class ChunkTest {
     @Test
     public void testChunkPathfinder() {
 
-        final Chunk chunk = new Chunk(0, 0);
+        final ExampleChunk chunk = new ExampleChunk(0, 0);
         ChunkPathfinder chunkPathfinder = new ChunkPathfinder();
-        Mover mover = new Mover(null);
+        TestMover testMover = new TestMover(null);
 
-        ArrayList<Point2i> points = chunkPathfinder.getPath(chunk, 0, 0, Chunk.xSize - 1, Chunk.ySize - 1, mover, 1000);
+        ArrayList<Point2i> points = chunkPathfinder.getPath(chunk, 0, 0, ExampleChunk.xSize - 1, ExampleChunk.ySize - 1, testMover, 1000);
 
         assert points.size() == 31;
     }
@@ -61,8 +61,8 @@ public class ChunkTest {
 
         OverworldExample overworldExample = new OverworldExample(xChunks, yChunks);
 
-        assert overworldExample.getXSize() == xChunks * Chunk.xSize;
-        assert overworldExample.getYSize() == yChunks * Chunk.ySize;
+        assert overworldExample.getXSize() == xChunks * ExampleChunk.xSize;
+        assert overworldExample.getYSize() == yChunks * ExampleChunk.ySize;
 
         OverworldPathfinder pathfinder = new OverworldPathfinder();
         pathfinder.buildEntrances(overworldExample);
@@ -70,7 +70,7 @@ public class ChunkTest {
         for (int x = 0; x < overworldExample.getXSizeInChunks(); x++) {
             for (int y = 0; y < overworldExample.getYSizeInChunks(); y++) {
 
-                Chunk chunk = overworldExample.getChunk(x * Chunk.xSize, y * Chunk.ySize);
+                ExampleChunk chunk = overworldExample.getChunk(x * ExampleChunk.xSize, y * ExampleChunk.ySize);
 
                 int expected = 2;
                 if (x > 0 && x < overworldExample.getXSizeInChunks() - 1) {
@@ -101,17 +101,17 @@ public class ChunkTest {
 
         OverworldExample overworldExample = new OverworldExample(xChunks, yChunks);
 
-        assert overworldExample.getXSize() == xChunks * Chunk.xSize;
-        assert overworldExample.getYSize() == yChunks * Chunk.ySize;
+        assert overworldExample.getXSize() == xChunks * ExampleChunk.xSize;
+        assert overworldExample.getYSize() == yChunks * ExampleChunk.ySize;
 
         OverworldPathfinder pathfinder = new OverworldPathfinder();
         pathfinder.buildEntrances(overworldExample);
 
-        Mover2dV2 mover2dV2 = new Mover(overworldExample);
+        ChunkedMover chunkedMover = new TestMover(overworldExample);
 
         ArrayList<Point2i> path = pathfinder.getPath(overworldExample,
                 1, 1, overworldExample.getXSize() - 1, overworldExample.getYSize() - 1,
-                mover2dV2, 1000);
+                chunkedMover, 1000);
 
         assert path != null;
         assert path.get(0).x == 1;

@@ -4,19 +4,16 @@ import java.util.ArrayList;
 
 public class OverworldPathNode implements Comparable<OverworldPathNode> {
 
-    public final Chunk chunk;
+    public final ExampleChunk chunk;
+    public final ArrayList<OverworldEdge> edges;
     private final int x;
     private final int y;
-
-    public final ArrayList<OverworldEdge> edges;
-
-
     public float cost;
     public OverworldPathNode parent;
     public float heuristic;
     public int depth;
 
-    public OverworldPathNode(Chunk chunk, int x, int y) {
+    public OverworldPathNode(ExampleChunk chunk, int x, int y) {
         this.chunk = chunk;
         this.x = x;
         this.y = y;
@@ -32,11 +29,11 @@ public class OverworldPathNode implements Comparable<OverworldPathNode> {
     }
 
     public int getGlobalX() {
-        return x + chunk.xOffset * Chunk.xSize;
+        return x + chunk.xOffset * ExampleChunk.xSize;
     }
 
     public int getGlobalY() {
-        return y + chunk.yOffset * Chunk.ySize;
+        return y + chunk.yOffset * ExampleChunk.ySize;
     }
 
     public int setParent(OverworldPathNode parent) {
@@ -63,6 +60,6 @@ public class OverworldPathNode implements Comparable<OverworldPathNode> {
 
     @Override
     public String toString() {
-        return chunk.toString() + " _ " + x + ", "+y;
+        return chunk.toString() + " _ " + x + ", " + y;
     }
 }

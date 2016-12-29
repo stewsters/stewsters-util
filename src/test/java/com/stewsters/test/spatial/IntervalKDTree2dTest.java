@@ -87,7 +87,7 @@ public class IntervalKDTree2dTest {
         ArrayList<GridThing> results = new ArrayList<>();
         for (Point2i p : pointsInside) {
             results.clear();
-            if(!kdTree.getValues(p.x - 0.5, p.y - 0.5, p.x + 0.5, p.y + 0.5, results).contains(e)){
+            if (!kdTree.getValues(p.x - 0.5, p.y - 0.5, p.x + 0.5, p.y + 0.5, results).contains(e)) {
                 System.out.println(p);
 //                assert false;
             }
@@ -96,8 +96,8 @@ public class IntervalKDTree2dTest {
 
 
         ArrayList<Point2i> pointsOutside = new ArrayList<>();
-        pointsOutside.add(new Point2i(e.x-1, e.y));
-        pointsOutside.add(new Point2i(e.x - 1, e.y-1));
+        pointsOutside.add(new Point2i(e.x - 1, e.y));
+        pointsOutside.add(new Point2i(e.x - 1, e.y - 1));
         pointsOutside.add(new Point2i(e.x, e.y + 2));
         pointsOutside.add(new Point2i(e.x + 2, e.y + 2));
 

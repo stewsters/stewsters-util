@@ -5,29 +5,30 @@ import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
 import java.util.ArrayList;
 
-public class Chunk implements TileBasedMap2d {
-    private static final int uncalculatedRegion = -1;
-    private static final int blockedRegion = -2;
+public class ExampleChunk implements TileBasedMap2d {
+
     public static final int xSize = 16;
     public static final int ySize = 16;
-
+    private static final int uncalculatedRegion = -1;
+    private static final int blockedRegion = -2;
     public final int xOffset;
     public final int yOffset;
 
     public ExampleCellType[][] ground;
-
-    public int[][] regionIds;
     public ArrayList<OverworldPathNode> overworldPathNodes;
+    private int[][] regionIds;
 
 
-    public Chunk(int xOffset, int yOffset) {
+    public ExampleChunk(int xOffset, int yOffset) {
         this.xOffset = xOffset;
         this.yOffset = yOffset;
+
+        ExampleCellType floor = new ExampleCellType('.', false);
 
         ground = new ExampleCellType[xSize][ySize];
         for (int x = 0; x < xSize; x++) {
             for (int y = 0; y < ySize; y++) {
-                ground[x][y] = new ExampleCellType('.', false);
+                ground[x][y] = floor;
             }
         }
 
@@ -55,6 +56,10 @@ public class Chunk implements TileBasedMap2d {
                 }
             }
         }
+    }
+
+    public int getRegionId(int x, int y) {
+        return regionIds[x][y];
     }
 
     private void floodFill(int x, int y, int target, int replacement) {
@@ -95,4 +100,6 @@ public class Chunk implements TileBasedMap2d {
     public String toString() {
         return xOffset + ", " + yOffset;
     }
+
+
 }

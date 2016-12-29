@@ -4,9 +4,9 @@ import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 
 public class ExampleMover2d implements Mover2d {
 
-    private ExampleMap2d exampleMap2d;
     int xSize;
     int ySize;
+    private ExampleMap2d exampleMap2d;
 
     public ExampleMover2d(ExampleMap2d exampleMap2d) {
         this.exampleMap2d = exampleMap2d;

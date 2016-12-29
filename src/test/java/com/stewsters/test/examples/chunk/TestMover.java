@@ -3,12 +3,12 @@ package com.stewsters.test.examples.chunk;
 import com.stewsters.util.pathing.twoDimention.pathfinder.AStarHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.pathfinder.ManhattanHeuristic2d;
 
-public class Mover implements Mover2dV2 {
+public class TestMover implements ChunkedMover {
 
     private AStarHeuristic2d heuristic;
     private OverworldExample overworldExample;
 
-    public Mover(OverworldExample overworldExample) {
+    public TestMover(OverworldExample overworldExample) {
         this.overworldExample = overworldExample;
         heuristic = new ManhattanHeuristic2d();
     }
@@ -20,7 +20,7 @@ public class Mover implements Mover2dV2 {
     }
 
     @Override
-    public boolean canTraverse(Chunk chunk, int sx, int sy, int tx, int ty) {
+    public boolean canTraverse(ExampleChunk chunk, int sx, int sy, int tx, int ty) {
         return !chunk.ground[tx][ty].isBlocking();
     }
 
@@ -30,7 +30,7 @@ public class Mover implements Mover2dV2 {
     }
 
     @Override
-    public boolean canOccupy(Chunk chunk, int tx, int ty) {
+    public boolean canOccupy(ExampleChunk chunk, int tx, int ty) {
         return !chunk.ground[tx][ty].isBlocking();
     }
 

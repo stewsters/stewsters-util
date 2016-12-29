@@ -5,19 +5,18 @@ import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
 public class OverworldExample implements ChunkedMap2d, TileBasedMap2d {
 
+    ExampleChunk[][] chunks;
     private int regionX;
     private int regionY;
-
-    Chunk[][] chunks;
 
     public OverworldExample(int xRegionSize, int yRegionSize) {
         regionX = xRegionSize;
         regionY = yRegionSize;
-        chunks = new Chunk[regionX][regionY];
+        chunks = new ExampleChunk[regionX][regionY];
 
         for (int x = 0; x < regionX; x++) {
             for (int y = 0; y < regionY; y++) {
-                chunks[x][y] = new Chunk(x, y);
+                chunks[x][y] = new ExampleChunk(x, y);
                 chunks[x][y].recalculate();
             }
         }
@@ -26,12 +25,12 @@ public class OverworldExample implements ChunkedMap2d, TileBasedMap2d {
 
     @Override
     public int getXSize() {
-        return regionX * Chunk.xSize;
+        return regionX * ExampleChunk.xSize;
     }
 
     @Override
     public int getYSize() {
-        return regionY * Chunk.ySize;
+        return regionY * ExampleChunk.ySize;
     }
 
     @Override
@@ -52,14 +51,14 @@ public class OverworldExample implements ChunkedMap2d, TileBasedMap2d {
     }
 
     public ExampleCellType getCell(int gx, int gy) {
-        return chunks[gx / Chunk.xSize][gy / Chunk.ySize].ground[gx % Chunk.xSize][gx % Chunk.ySize];
+        return chunks[gx / ExampleChunk.xSize][gy / ExampleChunk.ySize].ground[gx % ExampleChunk.xSize][gx % ExampleChunk.ySize];
     }
 
     public boolean isBlocking(int gx, int gy) {
-        return chunks[gx / Chunk.xSize][gy / Chunk.ySize].ground[gx % Chunk.xSize][gx % Chunk.ySize].isBlocking();
+        return chunks[gx / ExampleChunk.xSize][gy / ExampleChunk.ySize].ground[gx % ExampleChunk.xSize][gx % ExampleChunk.ySize].isBlocking();
     }
 
-    public Chunk getChunk(int gx, int gy) {
-        return chunks[gx / Chunk.xSize][gy / Chunk.ySize];
+    public ExampleChunk getChunk(int gx, int gy) {
+        return chunks[gx / ExampleChunk.xSize][gy / ExampleChunk.ySize];
     }
 }

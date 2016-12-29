@@ -6,10 +6,9 @@ import java.util.List;
 
 public class Point2i {
 
+    public static final int[] negativeOneOrOne = {-1, 1};
     public int x;
     public int y;
-
-    public static final int[] negativeOneOrOne = {-1, 1};
 
     public Point2i(int x, int y) {
         this.x = x;

@@ -13,19 +13,19 @@ public class ChunkPathfinder {
     private PathNode2d[][] nodes;
 
     public ChunkPathfinder() {
-        nodes = new PathNode2d[Chunk.xSize][Chunk.ySize];
-        for (int x = 0; x < Chunk.xSize; x++) {
-            for (int y = 0; y < Chunk.ySize; y++) {
+        nodes = new PathNode2d[ExampleChunk.xSize][ExampleChunk.ySize];
+        for (int x = 0; x < ExampleChunk.xSize; x++) {
+            for (int y = 0; y < ExampleChunk.ySize; y++) {
                 nodes[x][y] = new PathNode2d(x, y);
             }
         }
     }
 
-    public ArrayList<Point2i> getPath(Chunk chunk, Point2i start, Point2i end, Mover2dV2 mover2d, float maxSearchDistance) {
+    public ArrayList<Point2i> getPath(ExampleChunk chunk, Point2i start, Point2i end, ChunkedMover mover2d, float maxSearchDistance) {
         return getPath(chunk, start.x, start.y, end.x, end.y, mover2d, maxSearchDistance);
     }
 
-    public ArrayList<Point2i> getPath(Chunk chunk, int sx, int sy, int tx, int ty, Mover2dV2 mover2d, float maxSearchDistance) {
+    public ArrayList<Point2i> getPath(ExampleChunk chunk, int sx, int sy, int tx, int ty, ChunkedMover mover2d, float maxSearchDistance) {
 
         AStarHeuristic2d heuristic = mover2d.getHeuristic();
         boolean allowDiag = mover2d.getDiagonal();
@@ -78,7 +78,7 @@ public class ChunkPathfinder {
                     int xp = x + current.x;
                     int yp = y + current.y;
 
-                    if (xp < 0 || yp < 0 || xp >= Chunk.xSize || yp >= Chunk.ySize)
+                    if (xp < 0 || yp < 0 || xp >= ExampleChunk.xSize || yp >= ExampleChunk.ySize)
                         continue;
 
                     if (mover2d.canTraverse(chunk, sx, sy, xp, yp)) {
