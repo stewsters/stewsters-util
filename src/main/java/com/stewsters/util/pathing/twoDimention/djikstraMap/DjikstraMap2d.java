@@ -54,7 +54,6 @@ public class DjikstraMap2d implements PathingMap2d {
 
         nodes[sX][sY].cost = 0;
         nodes[sX][sY].depth = 0;
-        nodes[sX][sY].parent = null;
         open.add(nodes[sX][sY]);
 
         // while we haven't exceeded our max search depth

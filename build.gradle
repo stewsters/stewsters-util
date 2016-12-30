@@ -2,10 +2,14 @@ buildscript {
     repositories {
         mavenCentral()
         jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
         classpath "net.saliman:gradle-cobertura-plugin:2.2.5"
+        classpath "me.champeau.gradle:jmh-gradle-plugin:0.3.1"
     }
 }
 allprojects {
@@ -22,6 +26,7 @@ apply plugin: 'groovy'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'net.saliman.cobertura'
+apply plugin: "me.champeau.gradle.jmh"
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7

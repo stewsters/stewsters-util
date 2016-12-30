@@ -20,7 +20,7 @@ public class ExampleMap3d implements TileBasedMap3d {
         ground = new ExampleCellType[width][height][depth];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                for (int z = 0; z < height; z++) {
+                for (int z = 0; z < depth; z++) {
                     ground[x][y][z] = baseType;
                 }
             }

@@ -116,12 +116,11 @@ public class AStarPathFinder3d implements PathFinder3d {
             // pull out the first PathNode in our open list, this is determined to
             // be the most likely to be the next step based on our heuristic
 
-            PathNode3d current = open.peek();
+            PathNode3d current = open.poll();
             if (current == nodes[tx][ty][tz]) {
                 break;
             }
 
-            open.remove(current);
             current.closed = true;
 
             // search through all the neighbors of the current PathNode evaluating
@@ -190,9 +189,7 @@ public class AStarPathFinder3d implements PathFinder3d {
 
         // since we'e've run out of search
         // there was no path. Just return null
-
         if (nodes[tx][ty][tz].parent == null) {
-//            throw new RuntimeException("out of nodes");
             return null;
         }
 

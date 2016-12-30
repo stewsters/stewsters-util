@@ -94,9 +94,9 @@ public class AStarPathFinder2d implements PathFinder2d {
         // tile is in the open list and it's already there
         nodes[sx][sy].cost = 0;
         nodes[sx][sy].depth = 0;
-        nodes[tx][ty].parent = null;
-
         open.add(nodes[sx][sy]);
+
+        nodes[tx][ty].parent = null;
 
         // while we haven't exceeded our max search depth
         int maxDepth = 0;
@@ -104,12 +104,11 @@ public class AStarPathFinder2d implements PathFinder2d {
             // pull out the first PathNode in our open list, this is determined to
             // be the most likely to be the next step based on our heuristic
 
-            PathNode2d current = open.peek();
+            PathNode2d current = open.poll();
             if (current == nodes[tx][ty]) {
                 break;
             }
 
-            open.remove(current);
             current.closed = true;
 
             // search through all the neighbors of the current PathNode evaluating them as next steps

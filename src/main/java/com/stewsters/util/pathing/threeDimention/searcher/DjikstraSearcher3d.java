@@ -56,7 +56,6 @@ public class DjikstraSearcher3d implements Searcher3d {
 
         nodes[sx][sy][sz].cost = 0;
         nodes[sx][sy][sz].depth = 0;
-        nodes[sx][sy][sz].parent = null;
 
         open.add(nodes[sx][sy][sz]);
 

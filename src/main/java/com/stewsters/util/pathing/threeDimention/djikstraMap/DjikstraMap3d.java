@@ -66,7 +66,6 @@ public class DjikstraMap3d implements PathingMap3d {
 
         nodes[sX][sY][sZ].cost = 0;
         nodes[sX][sY][sZ].depth = 0;
-        nodes[sX][sY][sZ].parent = null;
         open.add(nodes[sX][sY][sZ]);
 
         // while we haven't exceeded our max search depth

@@ -53,7 +53,6 @@ public class DjikstraSearcher2d implements Searcher2d {
 
         nodes[sx][sy].cost = 0;
         nodes[sx][sy].depth = 0;
-        nodes[sx][sy].parent = null;
 
         open.add(nodes[sx][sy]);
 
