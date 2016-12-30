@@ -5,37 +5,23 @@ import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
 import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
 import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
-import java.util.HashSet;
 import java.util.PriorityQueue;
 
 public class DjikstraSearcher3d implements Searcher3d {
 
-    /**
-     * The set of nodes that have been searched through
-     */
-    private HashSet<PathNode3d> closed = new HashSet<>();
-    /**
-     * The set of nodes that we do not yet consider fully searched
-     */
+    // The set of nodes that we do not yet consider fully searched
     private PriorityQueue<PathNode3d> open = new PriorityQueue<>();
 
-    /**
-     * The map being searched
-     */
+    // The map being searched
     private TileBasedMap3d map;
 
-    /**
-     * The maximum depth of search we're willing to accept before giving up
-     */
+    // The maximum depth of search we're willing to accept before giving up
     private int maxSearchDistance;
 
-    /**
-     * The complete set of nodes across the map
-     */
+    // The complete set of nodes across the map
     private PathNode3d[][][] nodes;
-    /**
-     * True if we allow diagonal movement
-     */
+
+    // True if we allow diagonal movement
     private boolean allowDiagMovement;
 
     public DjikstraSearcher3d(TileBasedMap3d map, int maxSearchDistance, boolean allowDiagMovement) {
@@ -53,15 +39,25 @@ public class DjikstraSearcher3d implements Searcher3d {
         }
     }
 
+    public void reset() {
+        open.clear();
+        for (int x = 0; x < map.getXSize(); x++) {
+            for (int y = 0; y < map.getYSize(); y++) {
+                for (int z = 0; z < map.getZSize(); z++) {
+                    nodes[x][y][z].closed = false;
+                }
+            }
+        }
+    }
+
     @Override
     public FullPath3d search(Mover3d mover, int sx, int sy, int sz, Objective3d objective) {
+        reset();
 
         nodes[sx][sy][sz].cost = 0;
         nodes[sx][sy][sz].depth = 0;
         nodes[sx][sy][sz].parent = null;
 
-        closed.clear();
-        open.clear();
         open.add(nodes[sx][sy][sz]);
 
         // while we haven't exceeded our max search depth
@@ -79,7 +75,7 @@ public class DjikstraSearcher3d implements Searcher3d {
                 break;
             }
 
-            closed.add(current);
+            current.closed = true;
 
             // them as next steps
             for (int x = -1; x < 2; x++) {
@@ -115,10 +111,21 @@ public class DjikstraSearcher3d implements Searcher3d {
                             float nextStepCost = current.cost + mover.getCost(current.x, current.y, current.z, xp, yp, zp);
                             PathNode3d neighbour = nodes[xp][yp][zp];
 
+                            // if the new cost we've determined for this PathNode is lower than
+                            // it has been previously,
+                            // there might have been a better path to get to
+                            // this PathNode so it needs to be re-evaluated
+                            if (nextStepCost < neighbour.cost) {
+                                if (open.contains(neighbour)) {
+                                    open.remove(neighbour);
+                                }
+                                neighbour.closed = false;
+                            }
+
                             // if the PathNode hasn't already been processed and discarded then
                             // reset it's cost to our current cost and add it as a next possible
                             // step (i.e. to the open list)
-                            if (!open.contains(neighbour) && !closed.contains(neighbour)) {
+                            if (!open.contains(neighbour) && !neighbour.closed) {
                                 neighbour.cost = nextStepCost;
                                 maxDepth = Math.max(maxDepth, neighbour.setParent(current));
                                 open.add(neighbour);
@@ -165,10 +172,8 @@ public class DjikstraSearcher3d implements Searcher3d {
      * @return True if the location is valid for the given mover
      */
     protected boolean isValidLocation(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
-        return !((tx < 0) || (ty < 0) || (tz < 0) ||
-                (tx >= map.getXSize()) || (ty >= map.getYSize()) || (tz >= map.getZSize()))
+        return !((tx < 0) || (ty < 0) || (tz < 0)
+                || (tx >= map.getXSize()) || (ty >= map.getYSize()) || (tz >= map.getZSize()))
                 && mover.canTraverse(sx, sy, sz, tx, ty, tz);
     }
-
-
 }

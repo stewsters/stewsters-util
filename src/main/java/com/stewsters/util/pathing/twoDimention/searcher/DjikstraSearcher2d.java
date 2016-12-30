@@ -5,36 +5,23 @@ import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
-import java.util.HashSet;
 import java.util.PriorityQueue;
 
 public class DjikstraSearcher2d implements Searcher2d {
 
-    /**
-     * The set of nodes that have been searched through
-     */
-    private HashSet<PathNode2d> closed = new HashSet<>();
-    /**
-     * The set of nodes that we do not yet consider fully searched
-     */
+    // The set of nodes that we do not yet consider fully searched
     private PriorityQueue<PathNode2d> open = new PriorityQueue<>();
 
-    /**
-     * The map being searched
-     */
+    // The map being searched
     private TileBasedMap2d map;
-    /**
-     * The maximum depth of search we're willing to accept before giving up
-     */
+
+    // The maximum depth of search we're willing to accept before giving up
     private int maxSearchDistance;
 
-    /**
-     * The complete set of nodes across the map
-     */
+    // The complete set of nodes across the map
     private PathNode2d[][] nodes;
-    /**
-     * True if we allow diagonal movement
-     */
+
+    // True if we allow diagonal movement
     private boolean allowDiagMovement;
 
     public DjikstraSearcher2d(TileBasedMap2d map, int maxSearchDistance, boolean allowDiagMovement) {
@@ -49,20 +36,27 @@ public class DjikstraSearcher2d implements Searcher2d {
                 nodes[x][y] = new PathNode2d(x, y);
             }
         }
+    }
 
+    public void reset() {
+        open.clear();
+        for (int x = 0; x < map.getXSize(); x++) {
+            for (int y = 0; y < map.getYSize(); y++) {
+                nodes[x][y].closed = false;
+            }
+        }
     }
 
     @Override
     public FullPath2d search(Mover2d mover, int sx, int sy, Objective2d objective) {
+        reset();
 
         nodes[sx][sy].cost = 0;
         nodes[sx][sy].depth = 0;
-        closed.clear();
-        open.clear();
+        nodes[sx][sy].parent = null;
+
         open.add(nodes[sx][sy]);
 
-        //TODO: had to comment this out, it will provide some crucial errors later on
-//        nodes[tx][ty][tz].parent = null;
         // while we haven't exceeded our max search depth
         int maxDepth = 0;
         PathNode2d target = null;
@@ -71,7 +65,7 @@ public class DjikstraSearcher2d implements Searcher2d {
             // pull out the first PathNode in our open list, this is determined to
             // be the most likely to be the next step based on our heuristic
 
-            PathNode2d current = open.peek();
+            PathNode2d current = open.poll();
 
 
             if (objective.satisfiedBy(current)) {
@@ -79,8 +73,8 @@ public class DjikstraSearcher2d implements Searcher2d {
                 target = current;
                 break;
             }
-            open.remove(current);
-            closed.add(current);
+
+            current.closed = true;
 
             // search through all the neighbors of the current PathNode evaluating
 
@@ -124,18 +118,15 @@ public class DjikstraSearcher2d implements Searcher2d {
                             if (open.contains(neighbour)) {
                                 open.remove(neighbour);
                             }
-                            if (closed.contains(neighbour)) {
-                                closed.remove(neighbour);
-                            }
+                            neighbour.closed = false;
                         }
 
                         // if the PathNode hasn't already been processed and discarded then
                         // reset it's cost to our current cost and add it as a next possible
                         // step (i.e. to the open list)
 
-                        if (!open.contains(neighbour) && !(closed.contains(neighbour))) {
+                        if (!open.contains(neighbour) && !neighbour.closed) {
                             neighbour.cost = nextStepCost;
-                            neighbour.heuristic = 0; //getHeuristicCost(mover, xp, yp, zp, tx, ty, tz);
                             maxDepth = Math.max(maxDepth, neighbour.setParent(current));
                             open.add(neighbour);
                         }
@@ -180,11 +171,8 @@ public class DjikstraSearcher2d implements Searcher2d {
      * @return True if the location is valid for the given mover
      */
     protected boolean isValidLocation(Mover2d mover, int sx, int sy, int tx, int ty) {
-        if ((tx < 0) || (ty < 0) || (tx >= map.getXSize()) || (ty >= map.getYSize())) {
-            return false;
-        }
-        return mover.canTraverse(sx, sy, tx, ty);
+        return !((tx < 0) || (ty < 0)
+                || (tx >= map.getXSize()) || (ty >= map.getYSize()))
+                && mover.canTraverse(sx, sy, tx, ty);
     }
-
-
 }

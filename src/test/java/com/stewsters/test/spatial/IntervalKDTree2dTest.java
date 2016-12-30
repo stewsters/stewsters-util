@@ -15,13 +15,15 @@ public class IntervalKDTree2dTest {
 
     @Test
     public void testCollision() {
-        final int range = 100;
-        final int quantity = 10;
+        final int range = 1000;
+        final int quantity = 1000;
 
         IntervalKDTree2d<Spacecraft2d> spacecrafts = new IntervalKDTree2d<Spacecraft2d>(range, 10);
 
         for (int i = 0; i < quantity; i++) {
-            Spacecraft2d spacecraft = new Spacecraft2d(MatUtils.getIntInRange(-range + 1, range - 1), MatUtils.getIntInRange(-range + 1, range - 1));
+            Spacecraft2d spacecraft = new Spacecraft2d(
+                    MatUtils.getIntInRange(-range + 1, range - 1),
+                    MatUtils.getIntInRange(-range + 1, range - 1));
             spacecraft.addToTree(spacecrafts);
         }
 

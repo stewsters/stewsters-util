@@ -5,7 +5,6 @@ import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
-import java.util.HashSet;
 import java.util.PriorityQueue;
 
 /**
@@ -15,35 +14,23 @@ import java.util.PriorityQueue;
  * @author Kevin Glass
  */
 public class AStarPathFinder2d implements PathFinder2d {
-    /**
-     * The set of nodes that have been searched through
-     */
-    private HashSet<PathNode2d> closed = new HashSet<>();
-    /**
-     * The set of nodes that we do not yet consider fully searched
-     */
+
+    // The set of nodes that we do not yet consider fully searched
     private PriorityQueue<PathNode2d> open = new PriorityQueue<>();
 
-    /**
-     * The map being searched
-     */
+    // The map being searched
     private TileBasedMap2d map;
-    /**
-     * The maximum depth of search we're willing to accept before giving up
-     */
+
+    // The maximum depth of search we're willing to accept before giving up
     private int maxSearchDistance;
 
-    /**
-     * The complete set of nodes across the map
-     */
+    // The complete set of nodes across the map
     private PathNode2d[][] nodes;
-    /**
-     * True if we allow diagonal movement
-     */
+
+    // True if we allow diagonal movement
     private boolean allowDiagMovement;
-    /**
-     * The heuristic we're applying to determine which nodes to search first
-     */
+
+    // The heuristic we're applying to determine which nodes to search first
     private AStarHeuristic2d heuristic;
 
     /**
@@ -82,6 +69,15 @@ public class AStarPathFinder2d implements PathFinder2d {
         }
     }
 
+    public void reset() {
+        open.clear();
+        for (int x = 0; x < map.getXSize(); x++) {
+            for (int y = 0; y < map.getYSize(); y++) {
+                nodes[x][y].closed = false;
+            }
+        }
+    }
+
     /**
      * @see PathFinder2d#findPath(com.stewsters.util.pathing.twoDimention.shared.Mover2d, int, int, int, int)
      */
@@ -92,15 +88,15 @@ public class AStarPathFinder2d implements PathFinder2d {
             return null;
         }
 
+        reset();
+
         // initial state for A*. The closed group is empty. Only the starting
         // tile is in the open list and it's already there
         nodes[sx][sy].cost = 0;
         nodes[sx][sy].depth = 0;
-        closed.clear();
-        open.clear();
-        open.add(nodes[sx][sy]);
-
         nodes[tx][ty].parent = null;
+
+        open.add(nodes[sx][sy]);
 
         // while we haven't exceeded our max search depth
         int maxDepth = 0;
@@ -114,12 +110,9 @@ public class AStarPathFinder2d implements PathFinder2d {
             }
 
             open.remove(current);
-            closed.add(current);
+            current.closed = true;
 
-            // search through all the neighbors of the current PathNode evaluating
-
-            // them as next steps
-
+            // search through all the neighbors of the current PathNode evaluating them as next steps
             for (int x = -1; x < 2; x++) {
                 for (int y = -1; y < 2; y++) {
                     // not a neighbour, its the current tile
@@ -159,16 +152,14 @@ public class AStarPathFinder2d implements PathFinder2d {
                             if (open.contains(neighbour)) {
                                 open.remove(neighbour);
                             }
-                            if (closed.contains(neighbour)) {
-                                closed.remove(neighbour);
-                            }
+                            neighbour.closed = false;
                         }
 
                         // if the PathNode hasn't already been processed and discarded then
                         // reset it's cost to our current cost and add it as a next possible
                         // step (i.e. to the open list)
 
-                        if (!open.contains(neighbour) && !(closed.contains(neighbour))) {
+                        if (!open.contains(neighbour) && !neighbour.closed) {
                             neighbour.cost = nextStepCost;
                             neighbour.heuristic = heuristic.getCost(map, xp, yp, tx, ty);
                             maxDepth = Math.max(maxDepth, neighbour.setParent(current));

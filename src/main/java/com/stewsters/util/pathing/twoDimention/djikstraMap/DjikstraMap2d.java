@@ -4,34 +4,21 @@ import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
-import java.util.HashSet;
 import java.util.PriorityQueue;
 
 public class DjikstraMap2d implements PathingMap2d {
 
-    /**
-     * The set of nodes that have been searched through
-     */
-    private HashSet<PathNode2d> closed = new HashSet<>();
-    /**
-     * The set of nodes that we do not yet consider fully searched
-     */
+    // The set of nodes that we do not yet consider fully searched
     private PriorityQueue<PathNode2d> open = new PriorityQueue<>();
 
-    /**
-     * The map being searched
-     */
+    // The map being searched
     private TileBasedMap2d map;
-    /**
-     * The maximum depth of search we're willing to accept before giving up
-     */
+
+    // The maximum depth of search we're willing to accept before giving up
     private int maxSearchDistance;
 
-    /**
-     * The complete set of nodes across the map
-     */
+    // The complete set of nodes across the map
     private PathNode2d[][] nodes;
-
 
     /**
      * True if we allow diagonal movement
@@ -52,10 +39,18 @@ public class DjikstraMap2d implements PathingMap2d {
 
     }
 
+    public void reset() {
+        open.clear();
+        for (int x = 0; x < map.getXSize(); x++) {
+            for (int y = 0; y < map.getYSize(); y++) {
+                nodes[x][y].closed = false;
+            }
+        }
+    }
+
     @Override
     public void recalculate(int sX, int sY, Mover2d mover) {
-        closed.clear();
-        open.clear();
+        reset();
 
         nodes[sX][sY].cost = 0;
         nodes[sX][sY].depth = 0;
@@ -70,7 +65,7 @@ public class DjikstraMap2d implements PathingMap2d {
             PathNode2d current = open.peek();
 
             open.remove(current);
-            closed.add(current);
+            current.closed = true;
 
             // search through all the neighbors of the current PathNode evaluating them as next steps
             for (int x = -1; x < 2; x++) {
@@ -113,16 +108,14 @@ public class DjikstraMap2d implements PathingMap2d {
                                 if (open.contains(neighbour)) {
                                     open.remove(neighbour);
                                 }
-                                if (closed.contains(neighbour)) {
-                                    closed.remove(neighbour);
-                                }
+                                neighbour.closed = false;
                             }
 
                             // if the PathNode hasn't already been processed and discarded then
                             // reset it's cost to our current cost and add it as a next possible
                             // step (i.e. to the open list)
 
-                            if (!open.contains(neighbour) && !(closed.contains(neighbour))) {
+                            if (!open.contains(neighbour) && !neighbour.closed) {
                                 neighbour.cost = nextStepCost;
                                 neighbour.heuristic = 0; //getHeuristicCost(mover, xp, yp, zp, tx, ty, tz);
                                 maxDepth = Math.max(maxDepth, neighbour.setParent(current));

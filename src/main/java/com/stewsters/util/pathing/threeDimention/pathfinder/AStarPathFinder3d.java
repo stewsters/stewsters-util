@@ -5,7 +5,6 @@ import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
 import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
 import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
-import java.util.HashSet;
 import java.util.PriorityQueue;
 
 /**
@@ -16,10 +15,6 @@ import java.util.PriorityQueue;
  * @author Kevin Glass
  */
 public class AStarPathFinder3d implements PathFinder3d {
-    /**
-     * The set of nodes that have been searched through
-     */
-    private HashSet<PathNode3d> closed = new HashSet<>();
     /**
      * The set of nodes that we do not yet consider fully searched
      */
@@ -84,6 +79,17 @@ public class AStarPathFinder3d implements PathFinder3d {
         }
     }
 
+    public void reset() {
+        open.clear();
+        for (int x = 0; x < map.getXSize(); x++) {
+            for (int y = 0; y < map.getYSize(); y++) {
+                for (int z = 0; z < map.getZSize(); z++) {
+                    nodes[x][y][z].closed = false;
+                }
+            }
+        }
+    }
+
     /**
      * @see PathFinder3d#findPath(com.stewsters.util.pathing.threeDimention.shared.Mover3d, int, int, int, int, int, int)
      */
@@ -94,12 +100,12 @@ public class AStarPathFinder3d implements PathFinder3d {
             return null;
         }
 
+        reset();
+
         // initial state for A*. The closed group is empty. Only the starting
         // tile is in the open list and it's already there
         nodes[sx][sy][sz].cost = 0;
         nodes[sx][sy][sz].depth = 0;
-        closed.clear();
-        open.clear();
         open.add(nodes[sx][sy][sz]);
 
         nodes[tx][ty][tz].parent = null;
@@ -116,7 +122,7 @@ public class AStarPathFinder3d implements PathFinder3d {
             }
 
             open.remove(current);
-            closed.add(current);
+            current.closed = true;
 
             // search through all the neighbors of the current PathNode evaluating
 
@@ -163,16 +169,14 @@ public class AStarPathFinder3d implements PathFinder3d {
                                 if (open.contains(neighbour)) {
                                     open.remove(neighbour);
                                 }
-                                if (closed.contains(neighbour)) {
-                                    closed.remove(neighbour);
-                                }
+                                neighbour.closed = false;
                             }
 
                             // if the PathNode hasn't already been processed and discarded then
                             // reset it's cost to our current cost and add it as a next possible
                             // step (i.e. to the open list)
 
-                            if (!open.contains(neighbour) && !(closed.contains(neighbour))) {
+                            if (!open.contains(neighbour) && !neighbour.closed) {
                                 neighbour.cost = nextStepCost;
                                 neighbour.heuristic = heuristic.getCost(map, xp, yp, zp, tx, ty, tz);
                                 maxDepth = Math.max(maxDepth, neighbour.setParent(current));

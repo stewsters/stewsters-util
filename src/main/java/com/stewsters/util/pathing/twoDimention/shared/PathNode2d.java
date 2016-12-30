@@ -13,9 +13,12 @@ public class PathNode2d implements Comparable<PathNode2d> {
     public float heuristic;
     public int depth;
 
+    public boolean closed;
+
     public PathNode2d(int x, int y) {
         this.x = x;
         this.y = y;
+        this.closed = false;
     }
 
     /**
