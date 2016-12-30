@@ -38,10 +38,6 @@ public class OverworldExample implements ChunkedMap2d, TileBasedMap2d {
         return (tx < 0 || ty < 0 || tx >= getXSize() || ty >= getYSize());
     }
 
-    @Override
-    public void pathFinderVisited(int x, int y) {
-    }
-
     public int getXSizeInChunks() {
         return regionX;
     }

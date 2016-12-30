@@ -24,14 +24,4 @@ public interface TileBasedMap2d {
      */
     int getYSize();
 
-
-    /**
-     * Notification that the path finder visited a given tile. This is
-     * used for debugging new heuristics.
-     *
-     * @param x The x coordinate of the tile that was visited
-     * @param y The y coordinate of the tile that was visited
-     */
-    void pathFinderVisited(int x, int y);
-
 }

@@ -103,7 +103,6 @@ public class DjikstraMap2d implements PathingMap2d {
 
                             float nextStepCost = current.cost + mover.getCost(current.x, current.y, xp, yp);
                             PathNode2d neighbour = nodes[xp][yp];
-                            map.pathFinderVisited(xp, yp);
 
                             // if the new cost we've determined for this PathNode is lower than
                             // it has been previously,

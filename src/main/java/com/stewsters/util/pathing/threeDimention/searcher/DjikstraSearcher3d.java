@@ -114,8 +114,6 @@ public class DjikstraSearcher3d implements Searcher3d {
 
                             float nextStepCost = current.cost + mover.getCost(current.x, current.y, current.z, xp, yp, zp);
                             PathNode3d neighbour = nodes[xp][yp][zp];
-                            map.pathFinderVisited(xp, yp, zp);
-
 
                             // if the PathNode hasn't already been processed and discarded then
                             // reset it's cost to our current cost and add it as a next possible

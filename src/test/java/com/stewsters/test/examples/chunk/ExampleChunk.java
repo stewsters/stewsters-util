@@ -9,13 +9,15 @@ public class ExampleChunk implements TileBasedMap2d {
 
     public static final int xSize = 16;
     public static final int ySize = 16;
-    private static final int uncalculatedRegion = -1;
-    private static final int blockedRegion = -2;
+
     public final int xOffset;
     public final int yOffset;
 
     public ExampleCellType[][] ground;
+
     public ArrayList<OverworldPathNode> overworldPathNodes;
+    private static final int uncalculatedRegion = -1;
+    private static final int blockedRegion = -2;
     private int[][] regionIds;
 
 
@@ -89,11 +91,6 @@ public class ExampleChunk implements TileBasedMap2d {
     @Override
     public int getYSize() {
         return ySize;
-    }
-
-    @Override
-    public void pathFinderVisited(int x, int y) {
-
     }
 
     @Override

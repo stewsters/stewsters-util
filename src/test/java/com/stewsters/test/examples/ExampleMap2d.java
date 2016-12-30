@@ -36,11 +36,6 @@ public class ExampleMap2d implements TileBasedMap2d {
         return height;
     }
 
-    @Override
-    public void pathFinderVisited(int x, int y) {
-
-    }
-
     public boolean isBlocked(int x, int y) {
         if (x < 0 || x >= getXSize() || y < 0 || y >= getYSize())
             return false;

@@ -153,7 +153,6 @@ public class AStarPathFinder3d implements PathFinder3d {
 
                             float nextStepCost = current.cost + mover.getCost(current.x, current.y, current.z, xp, yp, zp);
                             PathNode3d neighbour = nodes[xp][yp][zp];
-                            map.pathFinderVisited(xp, yp, zp);
 
                             // if the new cost we've determined for this PathNode is lower than
                             // it has been previously,

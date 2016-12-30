@@ -1,6 +1,7 @@
 package com.stewsters.test.spatial;
 
 import com.stewsters.test.examples.Spacecraft2d;
+import com.stewsters.util.math.MatUtils;
 import com.stewsters.util.math.Point2i;
 import com.stewsters.util.spatial.IntervalKDTree2d;
 import org.junit.Test;
@@ -9,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 public class IntervalKDTree2dTest {
 
@@ -20,11 +20,9 @@ public class IntervalKDTree2dTest {
 
         IntervalKDTree2d<Spacecraft2d> spacecrafts = new IntervalKDTree2d<Spacecraft2d>(range, 10);
 
-        Random random = new Random();
         for (int i = 0; i < quantity; i++) {
-            Spacecraft2d spacecraft = new Spacecraft2d(random.nextInt(2 * range) - range, random.nextInt(2 * range) - range);
+            Spacecraft2d spacecraft = new Spacecraft2d(MatUtils.getIntInRange(-range + 1, range - 1), MatUtils.getIntInRange(-range + 1, range - 1));
             spacecraft.addToTree(spacecrafts);
-
         }
 
         HashSet<Spacecraft2d> fillThis = new HashSet<Spacecraft2d>();

@@ -49,11 +49,6 @@ public class ExampleMap3d implements TileBasedMap3d {
         return depth;
     }
 
-    @Override
-    public void pathFinderVisited(int x, int y, int z) {
-
-    }
-
     public boolean isBlocked(int x, int y, int z) {
         if (x < 0 || x >= getXSize() || y < 0 || y >= getYSize() || z < 0 || z >= getZSize())
             return false;
