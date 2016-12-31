@@ -93,7 +93,6 @@ publishing {
 bintray {
     apiUrl = "https://api.bintray.com"
 
-
     user = bintray_net_user
     key = bintray_net_key
 
@@ -120,4 +119,14 @@ bintray {
         }
     }
 
+}
+
+jmh {
+   // include = ['PathfindingBenchmark']
+
+    iterations = 5
+    fork = 5
+    warmupIterations = 5
+
+    jmhVersion = '1.12'
 }

@@ -55,6 +55,10 @@ public class PathNode3d implements Comparable<PathNode3d> {
             return -1;
         } else if (f > of) {
             return 1;
+        } else if (cost > other.cost) {
+            return -1;
+        } else if (cost < other.cost) {
+            return 1;
         } else {
             return 0;
         }

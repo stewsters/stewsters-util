@@ -31,11 +31,11 @@ public class PathfindingBenchmark {
         ExampleCellType wall = new ExampleCellType('#', true);
 
         ExampleMap2d map2d = new ExampleMap2d(100, 100, floor);
-        pathfinder2d = new AStarPathFinder2d(map2d, 1000, false, new ChebyshevHeuristic2d());
+        pathfinder2d = new AStarPathFinder2d(map2d, 1000, true);
         exampleMover2d = new ExampleMover2d(map2d);
 
-        ExampleMap3d map3d = new ExampleMap3d(100, 100, 30, floor);
-        pathfinder3d = new AStarPathFinder3d(map3d, 1000, false);
+        ExampleMap3d map3d = new ExampleMap3d(100, 100, 1, floor);
+        pathfinder3d = new AStarPathFinder3d(map3d, 1000, true);
         exampleMover3d = new ExampleMover3d(map3d);
 
     }
@@ -44,13 +44,15 @@ public class PathfindingBenchmark {
     //======== benchmarks ========//
     @Benchmark
     public void timePathing2d() {
-        FullPath2d fullPath2d = pathfinder2d.findPath(exampleMover2d, 1, 1, 98, 98);
+        FullPath2d fullPath2d = pathfinder2d.findPath(exampleMover2d, 0, 0, 99, 99);
         assert fullPath2d != null;
+        assert fullPath2d.getLength() == 198;
     }
 
     @Benchmark
     public void timePathing3d() {
-        FullPath3d fullPath3d = pathfinder3d.findPath(exampleMover3d, 1, 1, 1, 98, 98, 29);
+        FullPath3d fullPath3d = pathfinder3d.findPath(exampleMover3d, 0, 0, 0, 99, 99, 0);
         assert fullPath3d != null;
+        assert fullPath3d.getLength() == 198;
     }
 }

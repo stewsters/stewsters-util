@@ -51,7 +51,7 @@ public class AStarPathFinder3d implements PathFinder3d {
      */
     public AStarPathFinder3d(TileBasedMap3d map, int maxSearchDistance, boolean allowDiagMovement) {
         this(map, maxSearchDistance, allowDiagMovement,
-                allowDiagMovement ? new RoundedChebyshevHeuristic3d() : new ChebyshevHeuristic3d());
+                allowDiagMovement ? new RoundedChebyshevHeuristic3d() : new ManhattanHeuristic3d());
     }
 
     /**
@@ -123,10 +123,7 @@ public class AStarPathFinder3d implements PathFinder3d {
 
             current.closed = true;
 
-            // search through all the neighbors of the current PathNode evaluating
-
-            // them as next steps
-
+            // search through all the neighbors of the current PathNode evaluating them as next steps
             for (int x = -1; x < 2; x++) {
                 for (int y = -1; y < 2; y++) {
                     for (int z = -1; z < 2; z++) {
@@ -193,12 +190,8 @@ public class AStarPathFinder3d implements PathFinder3d {
             return null;
         }
 
-        // At this point we've definitely found a path so we can uses the parent
-
-        // references of the nodes to find out way from the target location back
-
-        // to the start recording the nodes on the way.
-
+        // At this point we've definitely found a path so we can uses the parent  references of the nodes to find out
+        // way from the target location back to the start recording the nodes on the way.
         FullPath3d path = new FullPath3d();
         PathNode3d target = nodes[tx][ty][tz];
         while (target != nodes[sx][sy][sz]) {
