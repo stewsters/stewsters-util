@@ -44,13 +44,13 @@ public class SearchingBenchmark {
         };
 
 
-        ExampleMap3d map3d = new ExampleMap3d(100, 100, 1, floor);
+        ExampleMap3d map3d = new ExampleMap3d(10, 10, 10, floor);
         searcher3d = new DjikstraSearcher3d(map3d, 1000, true);
         exampleMover3d = new ExampleMover3d(map3d);
         objective3d = new Objective3d() {
             @Override
             public boolean satisfiedBy(PathNode3d current) {
-                return (current.x == 99 && current.y == 99 && current.z == 0);
+                return (current.x == 9 && current.y == 9 && current.z == 9);
             }
         };
     }

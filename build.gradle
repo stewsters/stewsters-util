@@ -128,5 +128,5 @@ jmh {
     fork = 5
     warmupIterations = 5
 
-    jmhVersion = '1.12'
+    jmhVersion = '1.17.3'
 }

@@ -34,7 +34,7 @@ public class PathfindingBenchmark {
         pathfinder2d = new AStarPathFinder2d(map2d, 1000, true);
         exampleMover2d = new ExampleMover2d(map2d);
 
-        ExampleMap3d map3d = new ExampleMap3d(100, 100, 1, floor);
+        ExampleMap3d map3d = new ExampleMap3d(100, 100, 100, floor);
         pathfinder3d = new AStarPathFinder3d(map3d, 1000, true);
         exampleMover3d = new ExampleMover3d(map3d);
 
@@ -51,7 +51,7 @@ public class PathfindingBenchmark {
 
     @Benchmark
     public void timePathing3d() {
-        FullPath3d fullPath3d = pathfinder3d.findPath(exampleMover3d, 0, 0, 0, 99, 99, 0);
+        FullPath3d fullPath3d = pathfinder3d.findPath(exampleMover3d, 0, 0, 0, 99, 99, 99);
         assert fullPath3d != null;
         assert fullPath3d.getLength() == 198;
     }
