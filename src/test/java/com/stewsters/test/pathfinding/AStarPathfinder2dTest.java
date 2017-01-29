@@ -26,7 +26,7 @@ public class AStarPathfinder2dTest {
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100);
 
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map,new ManhattanHeuristic2d(), false);
+        ExampleMover2d exampleMover2d = new ExampleMover2d(map, new ManhattanHeuristic2d(), false);
 
         FullPath2d fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 8, 8);
 
@@ -95,7 +95,7 @@ public class AStarPathfinder2dTest {
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100);
 
-       Mover2d exampleMover2d = new ExampleMover2d(map, new ClosestHeuristic2d(),true);
+        Mover2d exampleMover2d = new ExampleMover2d(map, new ClosestHeuristic2d(), true);
 
         FullPath2d fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 9, 19);
 

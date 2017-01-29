@@ -47,7 +47,7 @@ public class DjikstraSearcher2dTest {
 
         DjikstraSearcher2d pathfinder = new DjikstraSearcher2d(map, 100);
 
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map, new ChebyshevHeuristic2d(),true);
+        ExampleMover2d exampleMover2d = new ExampleMover2d(map, new ChebyshevHeuristic2d(), true);
 
         Objective2d objective2d = new Objective2d() {
             @Override

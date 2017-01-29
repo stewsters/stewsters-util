@@ -1,10 +1,7 @@
 package com.stewsters.test.examples.chunk;
 
 import com.stewsters.util.pathing.twoDimention.pathfinder.AStarHeuristic2d;
-import com.stewsters.util.pathing.twoDimention.hpa.ChunkedMover2d;
-import com.stewsters.util.pathing.twoDimention.pathfinder.ManhattanHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
-import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
 public class ExampleChunkedMover2d implements Mover2d {
 

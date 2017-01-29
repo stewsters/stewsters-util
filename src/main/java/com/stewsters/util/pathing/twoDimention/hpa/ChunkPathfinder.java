@@ -29,10 +29,10 @@ public class ChunkPathfinder {
     public ArrayList<Point2i> getPath(Chunk2d chunk, int sx, int sy, int tx, int ty, Mover2d mover2d, float maxSearchDistance) {
 
         AStarHeuristic2d heuristic = mover2d.getHeuristic();
-        if(heuristic==null)
+        if (heuristic == null)
             return null;
 
-        if (!mover2d.canOccupy( tx, ty))
+        if (!mover2d.canOccupy(tx, ty))
             return null;
 
         boolean allowDiag = mover2d.getDiagonal();
@@ -84,7 +84,7 @@ public class ChunkPathfinder {
                     if (xp < 0 || yp < 0 || xp >= chunk.getXSize() || yp >= chunk.getYSize())
                         continue;
 
-                    if (mover2d.canTraverse( sx, sy, xp, yp)) {
+                    if (mover2d.canTraverse(sx, sy, xp, yp)) {
                         // the cost to get to this PathNode is cost the current plus the movement
                         // cost to reach this node. Note that the heuristic value is only used
                         // in the sorted open list

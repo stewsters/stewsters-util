@@ -8,7 +8,6 @@ import com.stewsters.test.examples.chunk.OverworldPathfinder;
 import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.hpa.Chunk2d;
 import com.stewsters.util.pathing.twoDimention.hpa.ChunkPathfinder;
-import com.stewsters.util.pathing.twoDimention.hpa.ChunkedMover2d;
 import com.stewsters.util.pathing.twoDimention.hpa.OverworldPathNode;
 import com.stewsters.util.pathing.twoDimention.pathfinder.ManhattanHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.shared.Mover2d;

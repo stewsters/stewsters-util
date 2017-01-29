@@ -2,7 +2,6 @@ package com.stewsters.test.examples.chunk;
 
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.util.pathing.twoDimention.hpa.ChunkedMap2d;
-import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
 public class OverworldExample implements ChunkedMap2d {
 

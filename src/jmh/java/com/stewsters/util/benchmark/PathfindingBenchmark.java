@@ -8,6 +8,7 @@ import com.stewsters.test.examples.ExampleMover3d;
 import com.stewsters.util.pathing.threeDimention.pathfinder.AStarPathFinder3d;
 import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
 import com.stewsters.util.pathing.twoDimention.pathfinder.AStarPathFinder2d;
+import com.stewsters.util.pathing.twoDimention.pathfinder.ChebyshevHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Scope;
@@ -30,8 +31,8 @@ public class PathfindingBenchmark {
         ExampleCellType wall = new ExampleCellType('#', true);
 
         ExampleMap2d map2d = new ExampleMap2d(100, 100, floor);
-        pathfinder2d = new AStarPathFinder2d(map2d, 1000, true);
-        exampleMover2d = new ExampleMover2d(map2d);
+        pathfinder2d = new AStarPathFinder2d(map2d, 1000);
+        exampleMover2d = new ExampleMover2d(map2d, new ChebyshevHeuristic2d(), true);
 
         ExampleMap3d map3d = new ExampleMap3d(100, 100, 100, floor);
         pathfinder3d = new AStarPathFinder3d(map3d, 1000, true);

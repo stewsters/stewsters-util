@@ -9,6 +9,7 @@ import com.stewsters.util.pathing.threeDimention.searcher.DjikstraSearcher3d;
 import com.stewsters.util.pathing.threeDimention.searcher.Objective3d;
 import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
 import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
+import com.stewsters.util.pathing.twoDimention.pathfinder.ChebyshevHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.searcher.DjikstraSearcher2d;
 import com.stewsters.util.pathing.twoDimention.searcher.Objective2d;
 import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
@@ -34,8 +35,8 @@ public class SearchingBenchmark {
         ExampleCellType floor = new ExampleCellType('.', false);
 
         ExampleMap2d map2d = new ExampleMap2d(100, 100, floor);
-        searcher2d = new DjikstraSearcher2d(map2d, 1000, true);
-        exampleMover2d = new ExampleMover2d(map2d);
+        searcher2d = new DjikstraSearcher2d(map2d, 1000);
+        exampleMover2d = new ExampleMover2d(map2d, new ChebyshevHeuristic2d(), true);
         objective2d = new Objective2d() {
             @Override
             public boolean satisfiedBy(PathNode2d current) {
