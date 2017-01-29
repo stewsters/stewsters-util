@@ -1,37 +1,33 @@
 package com.stewsters.test.examples.chunk;
 
 import com.stewsters.util.pathing.twoDimention.pathfinder.AStarHeuristic2d;
+import com.stewsters.util.pathing.twoDimention.hpa.ChunkedMover2d;
 import com.stewsters.util.pathing.twoDimention.pathfinder.ManhattanHeuristic2d;
+import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
+import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
-public class TestMover implements ChunkedMover {
+public class ExampleChunkedMover2d implements Mover2d {
 
-    private AStarHeuristic2d heuristic;
+    private final boolean diagonal;
+    private final AStarHeuristic2d heuristic;
     private OverworldExample overworldExample;
 
-    public TestMover(OverworldExample overworldExample) {
+
+    public ExampleChunkedMover2d(OverworldExample overworldExample, AStarHeuristic2d heuristic, boolean diagonal) {
         this.overworldExample = overworldExample;
-        heuristic = new ManhattanHeuristic2d();
+        this.heuristic = heuristic;
+        this.diagonal = diagonal;
     }
 
     @Override
     public boolean canTraverse(int sx, int sy, int tx, int ty) {
 
-        return overworldExample.isOutsideMap(tx, ty) && !overworldExample.isBlocking(tx, ty);
-    }
-
-    @Override
-    public boolean canTraverse(ExampleChunk chunk, int sx, int sy, int tx, int ty) {
-        return !chunk.ground[tx][ty].isBlocking();
+        return !overworldExample.isOutsideMap(tx, ty) && !overworldExample.isBlocking(tx, ty);
     }
 
     @Override
     public boolean canOccupy(int tx, int ty) {
         return !overworldExample.isBlocking(tx, ty);
-    }
-
-    @Override
-    public boolean canOccupy(ExampleChunk chunk, int tx, int ty) {
-        return !chunk.ground[tx][ty].isBlocking();
     }
 
     @Override
@@ -46,6 +42,6 @@ public class TestMover implements ChunkedMover {
 
     @Override
     public boolean getDiagonal() {
-        return false;
+        return diagonal;
     }
 }

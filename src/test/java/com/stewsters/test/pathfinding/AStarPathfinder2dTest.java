@@ -4,8 +4,11 @@ import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap2d;
 import com.stewsters.test.examples.ExampleMover2d;
 import com.stewsters.util.pathing.twoDimention.pathfinder.AStarPathFinder2d;
+import com.stewsters.util.pathing.twoDimention.pathfinder.ChebyshevHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.pathfinder.ClosestHeuristic2d;
+import com.stewsters.util.pathing.twoDimention.pathfinder.ManhattanHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
+import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -21,16 +24,15 @@ public class AStarPathfinder2dTest {
 
         ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
-        AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, false);
+        AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100);
 
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map);
+        ExampleMover2d exampleMover2d = new ExampleMover2d(map,new ManhattanHeuristic2d(), false);
 
         FullPath2d fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 8, 8);
 
         for (int i = 0; i < fullPath2d.getLength(); i++) {
             System.out.println("x:" + fullPath2d.getStep(i).getX() + " y:" + fullPath2d.getStep(i).getY());
         }
-
 
         assertEquals(15, fullPath2d.getLength());
 
@@ -48,9 +50,9 @@ public class AStarPathfinder2dTest {
         }
         map.ground[5][2] = floor;
 
-        AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, false);
+        AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100);
 
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map, 2, 2);
+        ExampleMover2d exampleMover2d = new ExampleMover2d(map, new ManhattanHeuristic2d(), false, 2, 2);
 
         FullPath2d fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 8, 1);
 
@@ -69,9 +71,9 @@ public class AStarPathfinder2dTest {
 
         ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
-        AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, true);
+        AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100);
 
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map);
+        ExampleMover2d exampleMover2d = new ExampleMover2d(map, new ChebyshevHeuristic2d(), true);
 
         FullPath2d fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 8, 8);
 
@@ -91,9 +93,9 @@ public class AStarPathfinder2dTest {
 
         ExampleMap2d map = new ExampleMap2d(10, 20, floor);
 
-        AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100, true, new ClosestHeuristic2d());
+        AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100);
 
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map);
+       Mover2d exampleMover2d = new ExampleMover2d(map, new ClosestHeuristic2d(),true);
 
         FullPath2d fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 9, 19);
 
@@ -113,9 +115,9 @@ public class AStarPathfinder2dTest {
 
         ExampleMap2d map = new ExampleMap2d(2000, 2000, floor);
 
-        AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 1000000, true);
+        AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 1000000);
 
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map);
+        ExampleMover2d exampleMover2d = new ExampleMover2d(map, new ChebyshevHeuristic2d(), true);
 
         FullPath2d fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 1999, 1999);
 

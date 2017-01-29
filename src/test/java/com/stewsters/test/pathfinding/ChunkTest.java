@@ -1,14 +1,17 @@
 package com.stewsters.test.pathfinding;
 
 import com.stewsters.test.examples.ExampleCellType;
-import com.stewsters.test.examples.chunk.ChunkPathfinder;
-import com.stewsters.test.examples.chunk.ChunkedMover;
 import com.stewsters.test.examples.chunk.ExampleChunk;
+import com.stewsters.test.examples.chunk.ExampleChunkedMover2d;
 import com.stewsters.test.examples.chunk.OverworldExample;
-import com.stewsters.test.examples.chunk.OverworldPathNode;
 import com.stewsters.test.examples.chunk.OverworldPathfinder;
-import com.stewsters.test.examples.chunk.TestMover;
 import com.stewsters.util.math.Point2i;
+import com.stewsters.util.pathing.twoDimention.hpa.Chunk2d;
+import com.stewsters.util.pathing.twoDimention.hpa.ChunkPathfinder;
+import com.stewsters.util.pathing.twoDimention.hpa.ChunkedMover2d;
+import com.stewsters.util.pathing.twoDimention.hpa.OverworldPathNode;
+import com.stewsters.util.pathing.twoDimention.pathfinder.ManhattanHeuristic2d;
+import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -20,8 +23,8 @@ public class ChunkTest {
 
         ExampleChunk chunk = new ExampleChunk(0, 0);
 
-        for (int x = 0; x < chunk.xSize; x++) {
-            for (int y = 0; y < chunk.ySize; y++) {
+        for (int x = 0; x < chunk.getXSize(); x++) {
+            for (int y = 0; y < chunk.getYSize(); y++) {
 
                 if ((y == 5 || x == 7) && !(y == 5 && x == 3))
                     chunk.ground[x][y] = new ExampleCellType('X', true);
@@ -31,8 +34,8 @@ public class ChunkTest {
         }
 
         chunk.recalculate();
-        for (int y = 0; y < chunk.ySize; y++) {
-            for (int x = 0; x < chunk.xSize; x++) {
+        for (int y = 0; y < chunk.getXSize(); y++) {
+            for (int x = 0; x < chunk.getYSize(); x++) {
 
                 System.out.print(chunk.getRegionId(x, y));
             }
@@ -43,12 +46,21 @@ public class ChunkTest {
     @Test
     public void testChunkPathfinder() {
 
-        final ExampleChunk chunk = new ExampleChunk(0, 0);
-        ChunkPathfinder chunkPathfinder = new ChunkPathfinder();
-        TestMover testMover = new TestMover(null);
+        int xChunks = 2;
+        int yChunks = 2;
 
-        ArrayList<Point2i> points = chunkPathfinder.getPath(chunk, 0, 0, ExampleChunk.xSize - 1, ExampleChunk.ySize - 1, testMover, 1000);
+        OverworldExample overworldExample = new OverworldExample(xChunks, yChunks);
 
+        final ExampleChunk chunk = overworldExample.getChunk(0, 0);
+
+        ChunkPathfinder chunkPathfinder = new ChunkPathfinder(chunk.getXSize(), chunk.getYSize());
+        chunk.recalculate();
+
+        ExampleChunkedMover2d testMover = new ExampleChunkedMover2d(overworldExample, new ManhattanHeuristic2d(), false);
+
+        ArrayList<Point2i> points = chunkPathfinder.getPath(chunk, 0, 0, chunk.getXSize() - 1, chunk.getYSize() - 1, testMover, 1000);
+
+        assert points != null;
         assert points.size() == 31;
     }
 
@@ -60,9 +72,10 @@ public class ChunkTest {
         int yChunks = 6;
 
         OverworldExample overworldExample = new OverworldExample(xChunks, yChunks);
+        Chunk2d chunkTest = overworldExample.getChunk(0, 0);
 
-        assert overworldExample.getXSize() == xChunks * ExampleChunk.xSize;
-        assert overworldExample.getYSize() == yChunks * ExampleChunk.ySize;
+        assert overworldExample.getXSize() == xChunks * chunkTest.getXSize();
+        assert overworldExample.getYSize() == yChunks * chunkTest.getYSize();
 
         OverworldPathfinder pathfinder = new OverworldPathfinder();
         pathfinder.buildEntrances(overworldExample);
@@ -70,7 +83,7 @@ public class ChunkTest {
         for (int x = 0; x < overworldExample.getXSizeInChunks(); x++) {
             for (int y = 0; y < overworldExample.getYSizeInChunks(); y++) {
 
-                ExampleChunk chunk = overworldExample.getChunk(x * ExampleChunk.xSize, y * ExampleChunk.ySize);
+                ExampleChunk chunk = overworldExample.getChunk(x * chunkTest.getXSize(), y * chunkTest.getYSize());
 
                 int expected = 2;
                 if (x > 0 && x < overworldExample.getXSizeInChunks() - 1) {
@@ -100,18 +113,19 @@ public class ChunkTest {
         int yChunks = 20;
 
         OverworldExample overworldExample = new OverworldExample(xChunks, yChunks);
+        Chunk2d chunkTest = overworldExample.getChunk(0, 0);
 
-        assert overworldExample.getXSize() == xChunks * ExampleChunk.xSize;
-        assert overworldExample.getYSize() == yChunks * ExampleChunk.ySize;
+        assert overworldExample.getXSize() == xChunks * chunkTest.getXSize();
+        assert overworldExample.getYSize() == yChunks * chunkTest.getYSize();
 
         OverworldPathfinder pathfinder = new OverworldPathfinder();
         pathfinder.buildEntrances(overworldExample);
 
-        ChunkedMover chunkedMover = new TestMover(overworldExample);
+        Mover2d mover2d = new ExampleChunkedMover2d(overworldExample, new ManhattanHeuristic2d(), false);
 
         ArrayList<Point2i> path = pathfinder.getPath(overworldExample,
                 1, 1, overworldExample.getXSize() - 1, overworldExample.getYSize() - 1,
-                chunkedMover, 1000);
+                mover2d, 1000);
 
         assert path != null;
         assert path.get(0).x == 1;

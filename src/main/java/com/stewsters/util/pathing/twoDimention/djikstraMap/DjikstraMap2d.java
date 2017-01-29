@@ -20,15 +20,10 @@ public class DjikstraMap2d implements PathingMap2d {
     // The complete set of nodes across the map
     private PathNode2d[][] nodes;
 
-    /**
-     * True if we allow diagonal movement
-     */
-    private boolean allowDiagMovement;
 
-    public DjikstraMap2d(TileBasedMap2d map, int maxSearchDistance, boolean allowDiagMovement) {
+    public DjikstraMap2d(TileBasedMap2d map, int maxSearchDistance) {
         this.map = map;
         this.maxSearchDistance = maxSearchDistance;
-        this.allowDiagMovement = allowDiagMovement;
 
         nodes = new PathNode2d[map.getXSize()][map.getYSize()];
         for (int x = 0; x < map.getXSize(); x++) {
@@ -52,6 +47,7 @@ public class DjikstraMap2d implements PathingMap2d {
     public void recalculate(int sX, int sY, Mover2d mover) {
         reset();
 
+        boolean allowDiagMovement = mover.getDiagonal();
         nodes[sX][sY].cost = 0;
         nodes[sX][sY].depth = 0;
         open.add(nodes[sX][sY]);

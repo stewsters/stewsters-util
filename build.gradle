@@ -122,8 +122,6 @@ bintray {
 }
 
 jmh {
-   // include = ['PathfindingBenchmark']
-
     iterations = 5
     fork = 5
     warmupIterations = 5

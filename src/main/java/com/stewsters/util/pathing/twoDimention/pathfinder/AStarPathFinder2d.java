@@ -27,39 +27,16 @@ public class AStarPathFinder2d implements PathFinder2d {
     // The complete set of nodes across the map
     private PathNode2d[][] nodes;
 
-    // True if we allow diagonal movement
-    private boolean allowDiagMovement;
-
-    // The heuristic we're applying to determine which nodes to search first
-    private AStarHeuristic2d heuristic;
-
-    /**
-     * Create a path finder with the default heuristic - closest to target.
-     *
-     * @param map               The map to be searched
-     * @param maxSearchDistance The maximum depth we'll search before giving up
-     * @param allowDiagMovement True if the search should try diagonal movement
-     */
-    public AStarPathFinder2d(TileBasedMap2d map, int maxSearchDistance, boolean allowDiagMovement) {
-
-        this(map, maxSearchDistance, allowDiagMovement,
-                allowDiagMovement ? new RoundedChebyshevHeuristic2d() : new ManhattanHeuristic2d());
-    }
-
     /**
      * Create a path finder
      *
-     * @param heuristic         The heuristic used to determine the search order of the map
      * @param map               The map to be searched
      * @param maxSearchDistance The maximum depth we'll search before giving up
-     * @param allowDiagMovement True if the search should try diagonal movement
      */
-    public AStarPathFinder2d(TileBasedMap2d map, int maxSearchDistance,
-                             boolean allowDiagMovement, AStarHeuristic2d heuristic) {
-        this.heuristic = heuristic;
+    public AStarPathFinder2d(TileBasedMap2d map, int maxSearchDistance) {
+
         this.map = map;
         this.maxSearchDistance = maxSearchDistance;
-        this.allowDiagMovement = allowDiagMovement;
 
         nodes = new PathNode2d[map.getXSize()][map.getYSize()];
         for (int x = 0; x < map.getXSize(); x++) {
@@ -87,6 +64,9 @@ public class AStarPathFinder2d implements PathFinder2d {
         if (!mover.canOccupy(tx, ty)) {
             return null;
         }
+
+        AStarHeuristic2d heuristic = mover.getHeuristic();
+        boolean allowDiagMovement = mover.getDiagonal();
 
         reset();
 

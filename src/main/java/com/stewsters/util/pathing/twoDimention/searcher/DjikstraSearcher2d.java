@@ -21,13 +21,10 @@ public class DjikstraSearcher2d implements Searcher2d {
     // The complete set of nodes across the map
     private PathNode2d[][] nodes;
 
-    // True if we allow diagonal movement
-    private boolean allowDiagMovement;
 
-    public DjikstraSearcher2d(TileBasedMap2d map, int maxSearchDistance, boolean allowDiagMovement) {
+    public DjikstraSearcher2d(TileBasedMap2d map, int maxSearchDistance) {
         this.map = map;
         this.maxSearchDistance = maxSearchDistance;
-        this.allowDiagMovement = allowDiagMovement;
 
         nodes = new PathNode2d[map.getXSize()][map.getYSize()];
         for (int x = 0; x < map.getXSize(); x++) {
@@ -50,6 +47,8 @@ public class DjikstraSearcher2d implements Searcher2d {
     @Override
     public FullPath2d search(Mover2d mover, int sx, int sy, Objective2d objective) {
         reset();
+
+        boolean allowDiagMovement = mover.getDiagonal();
 
         nodes[sx][sy].cost = 0;
         nodes[sx][sy].depth = 0;

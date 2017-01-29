@@ -1,4 +1,4 @@
-package com.stewsters.test.examples.chunk;
+package com.stewsters.util.pathing.twoDimention.hpa;
 
 public class OverworldEdge {
 

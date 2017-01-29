@@ -1,23 +1,22 @@
 package com.stewsters.test.examples.chunk;
 
 import com.stewsters.test.examples.ExampleCellType;
-import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
+import com.stewsters.util.pathing.twoDimention.hpa.Chunk2d;
+import com.stewsters.util.pathing.twoDimention.hpa.OverworldPathNode;
 
 import java.util.ArrayList;
 
-public class ExampleChunk implements TileBasedMap2d {
+public class ExampleChunk implements Chunk2d {
 
     public static final int xSize = 16;
     public static final int ySize = 16;
-
-    public final int xOffset;
-    public final int yOffset;
-
-    public ExampleCellType[][] ground;
-
-    public ArrayList<OverworldPathNode> overworldPathNodes;
     private static final int uncalculatedRegion = -1;
     private static final int blockedRegion = -2;
+    private final int xOffset;
+    private final int yOffset;
+
+    public ExampleCellType[][] ground;
+    public ArrayList<OverworldPathNode> overworldPathNodes;
     private int[][] regionIds;
 
 
@@ -99,4 +98,13 @@ public class ExampleChunk implements TileBasedMap2d {
     }
 
 
+    @Override
+    public int getXOffset() {
+        return xOffset;
+    }
+
+    @Override
+    public int getYOffset() {
+        return yOffset;
+    }
 }

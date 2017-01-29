@@ -17,8 +17,8 @@ public class DjikstraMap2dTest {
 
         ExampleMap2d map = new ExampleMap2d(11, 11, floor);
 
-        DjikstraMap2d djikstraMap2d = new DjikstraMap2d(map, 100, false);
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map);
+        DjikstraMap2d djikstraMap2d = new DjikstraMap2d(map, 100);
+        ExampleMover2d exampleMover2d = new ExampleMover2d(map,null, false);
 
         djikstraMap2d.recalculate(5, 5, exampleMover2d);
 
@@ -43,8 +43,8 @@ public class DjikstraMap2dTest {
 
         ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
-        DjikstraMap2d djikstraMap2d = new DjikstraMap2d(map, 100, true);
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map);
+        DjikstraMap2d djikstraMap2d = new DjikstraMap2d(map, 100);
+        ExampleMover2d exampleMover2d = new ExampleMover2d(map, null,true);
 
         djikstraMap2d.recalculate(5, 5, exampleMover2d);
 

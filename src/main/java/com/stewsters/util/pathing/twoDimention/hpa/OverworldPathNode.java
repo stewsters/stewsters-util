@@ -1,10 +1,10 @@
-package com.stewsters.test.examples.chunk;
+package com.stewsters.util.pathing.twoDimention.hpa;
 
 import java.util.ArrayList;
 
 public class OverworldPathNode implements Comparable<OverworldPathNode> {
 
-    public final ExampleChunk chunk;
+    public final Chunk2d chunk;
     public final ArrayList<OverworldEdge> edges;
     private final int x;
     private final int y;
@@ -13,7 +13,7 @@ public class OverworldPathNode implements Comparable<OverworldPathNode> {
     public float heuristic;
     public int depth;
 
-    public OverworldPathNode(ExampleChunk chunk, int x, int y) {
+    public OverworldPathNode(Chunk2d chunk, int x, int y) {
         this.chunk = chunk;
         this.x = x;
         this.y = y;
@@ -29,11 +29,11 @@ public class OverworldPathNode implements Comparable<OverworldPathNode> {
     }
 
     public int getGlobalX() {
-        return x + chunk.xOffset * ExampleChunk.xSize;
+        return x + chunk.getXOffset() * chunk.getXSize();
     }
 
     public int getGlobalY() {
-        return y + chunk.yOffset * ExampleChunk.ySize;
+        return y + chunk.getYOffset() * chunk.getYSize();
     }
 
     public int setParent(OverworldPathNode parent) {

@@ -1,7 +1,11 @@
 package com.stewsters.test.examples.chunk;
 
 import com.stewsters.util.math.Point2i;
+import com.stewsters.util.pathing.twoDimention.hpa.OverworldEdge;
+import com.stewsters.util.pathing.twoDimention.hpa.OverworldPathNode;
 import com.stewsters.util.pathing.twoDimention.pathfinder.AStarHeuristic2d;
+import com.stewsters.util.pathing.twoDimention.hpa.ChunkedMover2d;
+import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,7 +15,7 @@ import java.util.PriorityQueue;
 public class OverworldPathfinder {
 
     public ArrayList<Point2i> getPath(OverworldExample overworld, int globalStartingX, int globalStartingY,
-                                      int globalDestinationX, int globalDestinationY, ChunkedMover mover2d, float maxSearchCost) {
+                                      int globalDestinationX, int globalDestinationY, Mover2d mover2d, float maxSearchCost) {
 
         AStarHeuristic2d heuristic = mover2d.getHeuristic();
 //        boolean allowDiag = mover2d.getDiagonal();

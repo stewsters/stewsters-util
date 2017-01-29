@@ -1,7 +1,8 @@
-package com.stewsters.test.examples.chunk;
+package com.stewsters.util.pathing.twoDimention.hpa;
 
 import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.pathfinder.AStarHeuristic2d;
+import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 
 import java.util.ArrayList;
@@ -12,26 +13,29 @@ import java.util.PriorityQueue;
 public class ChunkPathfinder {
     private PathNode2d[][] nodes;
 
-    public ChunkPathfinder() {
-        nodes = new PathNode2d[ExampleChunk.xSize][ExampleChunk.ySize];
-        for (int x = 0; x < ExampleChunk.xSize; x++) {
-            for (int y = 0; y < ExampleChunk.ySize; y++) {
+    public ChunkPathfinder(int xSize, int ySize) {
+        nodes = new PathNode2d[xSize][ySize];
+        for (int x = 0; x < xSize; x++) {
+            for (int y = 0; y < ySize; y++) {
                 nodes[x][y] = new PathNode2d(x, y);
             }
         }
     }
 
-    public ArrayList<Point2i> getPath(ExampleChunk chunk, Point2i start, Point2i end, ChunkedMover mover2d, float maxSearchDistance) {
+    public ArrayList<Point2i> getPath(Chunk2d chunk, Point2i start, Point2i end, Mover2d mover2d, float maxSearchDistance) {
         return getPath(chunk, start.x, start.y, end.x, end.y, mover2d, maxSearchDistance);
     }
 
-    public ArrayList<Point2i> getPath(ExampleChunk chunk, int sx, int sy, int tx, int ty, ChunkedMover mover2d, float maxSearchDistance) {
+    public ArrayList<Point2i> getPath(Chunk2d chunk, int sx, int sy, int tx, int ty, Mover2d mover2d, float maxSearchDistance) {
 
         AStarHeuristic2d heuristic = mover2d.getHeuristic();
-        boolean allowDiag = mover2d.getDiagonal();
-
-        if (!mover2d.canOccupy(chunk, tx, ty))
+        if(heuristic==null)
             return null;
+
+        if (!mover2d.canOccupy( tx, ty))
+            return null;
+
+        boolean allowDiag = mover2d.getDiagonal();
 
         HashSet<PathNode2d> closed = new HashSet<>();
         PriorityQueue<PathNode2d> open = new PriorityQueue<>();
@@ -46,12 +50,11 @@ public class ChunkPathfinder {
             // pull out the first PathNode in our open list, this is determined to
             // be the most likely to be the next step based on our heuristic
 
-            PathNode2d current = open.peek();
+            PathNode2d current = open.poll();
             if (current == nodes[tx][ty]) {
                 break;
             }
 
-            open.remove(current);
             closed.add(current);
 
             // search through all the neighbors of the current PathNode evaluating
@@ -78,10 +81,10 @@ public class ChunkPathfinder {
                     int xp = x + current.x;
                     int yp = y + current.y;
 
-                    if (xp < 0 || yp < 0 || xp >= ExampleChunk.xSize || yp >= ExampleChunk.ySize)
+                    if (xp < 0 || yp < 0 || xp >= chunk.getXSize() || yp >= chunk.getYSize())
                         continue;
 
-                    if (mover2d.canTraverse(chunk, sx, sy, xp, yp)) {
+                    if (mover2d.canTraverse( sx, sy, xp, yp)) {
                         // the cost to get to this PathNode is cost the current plus the movement
                         // cost to reach this node. Note that the heuristic value is only used
                         // in the sorted open list
