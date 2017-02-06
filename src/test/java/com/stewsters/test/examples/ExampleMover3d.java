@@ -1,24 +1,26 @@
 package com.stewsters.test.examples;
 
+import com.stewsters.util.pathing.threeDimention.pathfinder.AStarHeuristic3d;
 import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
 
 public class ExampleMover3d implements Mover3d {
 
-    int xSize;
-    int ySize;
-    int zSize;
+    private int xSize;
+    private int ySize;
+    private int zSize;
     private ExampleMap3d exampleMap3d;
+    private AStarHeuristic3d heuristic3d;
+    private boolean diagonal;
 
-
-    public ExampleMover3d(ExampleMap3d exampleMap3d) {
-        this.exampleMap3d = exampleMap3d;
-        xSize = 1;
-        ySize = 1;
-        zSize = 1;
+    public ExampleMover3d(ExampleMap3d exampleMap3d, AStarHeuristic3d heuristic, boolean diagonal) {
+        this(exampleMap3d, heuristic, diagonal, 1, 1, 1);
     }
 
-    public ExampleMover3d(ExampleMap3d exampleMap3d, int xSize, int ySize, int zSize) {
+    public ExampleMover3d(ExampleMap3d exampleMap3d, AStarHeuristic3d heuristic, boolean diagonal, int xSize, int ySize, int zSize) {
         this.exampleMap3d = exampleMap3d;
+        this.heuristic3d = heuristic;
+        this.diagonal = diagonal;
+
         this.xSize = xSize;
         this.ySize = ySize;
         this.zSize = zSize;
@@ -47,5 +49,15 @@ public class ExampleMover3d implements Mover3d {
     @Override
     public float getCost(int sx, int sy, int sz, int tx, int ty, int tz) {
         return 1;
+    }
+
+    @Override
+    public AStarHeuristic3d getHeuristic() {
+        return heuristic3d;
+    }
+
+    @Override
+    public boolean getDiagonal() {
+        return diagonal;
     }
 }

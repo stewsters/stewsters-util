@@ -1,4 +1,4 @@
-package com.stewsters.test;
+package com.stewsters.test.mapgen;
 
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleGeneretedMap2d;
@@ -8,39 +8,32 @@ import com.stewsters.util.mapgen.twoDimension.brush.DrawCell2d;
 import com.stewsters.util.mapgen.twoDimension.predicate.AndPredicate2d;
 import com.stewsters.util.mapgen.twoDimension.predicate.CellEquals2d;
 import com.stewsters.util.mapgen.twoDimension.predicate.CellNearEdge2d;
-import com.stewsters.util.mapgen.twoDimension.predicate.NoiseGreaterThan;
+import com.stewsters.util.mapgen.twoDimension.predicate.NoiseGreaterThan2d;
 import com.stewsters.util.mapgen.twoDimension.predicate.NotPredicate2d;
 import org.junit.Test;
 
 public class GenerateMap2dTest {
 
+    static final ExampleCellType unknown = new ExampleCellType('?', true);
+    static final ExampleCellType wall = new ExampleCellType('X', true);
+    static final ExampleCellType floor = new ExampleCellType('.', false);
+
+
     @Test
     public void testGenerationOfBoxViaPredicates() {
-        ExampleCellType unknown = new ExampleCellType('?', true);
-        ExampleCellType wall = new ExampleCellType('X', true);
-        ExampleCellType floor = new ExampleCellType('.', false);
 
         ExampleGeneretedMap2d em1 = new ExampleGeneretedMap2d(20, 20, unknown);
         MapGen2d.fillWithBorder(em1, floor, wall);
-
 
         ExampleGeneretedMap2d em2 = new ExampleGeneretedMap2d(20, 20, unknown);
         MapGen2d.fill(em2, new CellNearEdge2d(), new DrawCell2d(wall));
         MapGen2d.fill(em2, new NotPredicate2d(new CellNearEdge2d()), new DrawCell2d(floor));
 
-
         testEquality(em1, em2);
-
-//        System.out.println("Gen");
-//        printMap(em1);
     }
 
     @Test
     public void testGenerationOfTreesViaPredicates() {
-        ExampleCellType unknown = new ExampleCellType('?', true);
-        ExampleCellType wall = new ExampleCellType('X', true);
-        ExampleCellType floor = new ExampleCellType('.', false);
-
 
         ExampleGeneretedMap2d em = new ExampleGeneretedMap2d(20, 20, unknown);
         MapGen2d.fill(em, new CellNearEdge2d(), new DrawCell2d(wall));
@@ -51,13 +44,12 @@ public class GenerateMap2dTest {
 
         NoiseFunction2d vegitation = new NoiseFunction2d(10, 30, 16, 13);
         ExampleCellType tree = new ExampleCellType('T', true);
-        MapGen2d.fill(em, new AndPredicate2d(new NoiseGreaterThan(vegitation, 0.5), new CellEquals2d(floor)), new DrawCell2d(tree));
+        MapGen2d.fill(em, new AndPredicate2d(new NoiseGreaterThan2d(vegitation, 0.5), new CellEquals2d(floor)), new DrawCell2d(tree));
 
 
         NoiseFunction2d snow = new NoiseFunction2d(-10, -500, 20, 22);
         ExampleCellType pineTree = new ExampleCellType('p', true);
-        MapGen2d.fill(em, new AndPredicate2d(new NoiseGreaterThan(snow, 0.6), new CellEquals2d(tree)), new DrawCell2d(pineTree));
-
+        MapGen2d.fill(em, new AndPredicate2d(new NoiseGreaterThan2d(snow, 0.6), new CellEquals2d(tree)), new DrawCell2d(pineTree));
 
         System.out.println("Gen trees 2");
         printMap(em);

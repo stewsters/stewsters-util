@@ -7,7 +7,6 @@ import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.PriorityQueue;
 
 public class ChunkPathfinder {
@@ -37,7 +36,6 @@ public class ChunkPathfinder {
 
         boolean allowDiag = mover2d.getDiagonal();
 
-        HashSet<PathNode2d> closed = new HashSet<>();
         PriorityQueue<PathNode2d> open = new PriorityQueue<>();
 
         nodes[sx][sy].cost = 0;
@@ -55,7 +53,7 @@ public class ChunkPathfinder {
                 break;
             }
 
-            closed.add(current);
+            current.closed = true;
 
             // search through all the neighbors of the current PathNode evaluating
             // them as next steps
@@ -101,8 +99,8 @@ public class ChunkPathfinder {
                             if (open.contains(neighbour)) {
                                 open.remove(neighbour);
                             }
-                            if (closed.contains(neighbour)) {
-                                closed.remove(neighbour);
+                            if (neighbour.closed) {
+                                neighbour.closed = false;
                             }
                         }
 
@@ -110,7 +108,7 @@ public class ChunkPathfinder {
                         // reset it's cost to our current cost and add it as a next possible
                         // step (i.e. to the open list)
 
-                        if (!open.contains(neighbour) && !closed.contains(neighbour)) {
+                        if (!open.contains(neighbour) && !neighbour.closed) {
                             neighbour.cost = nextStepCost;
                             neighbour.heuristic = heuristic.getCost(chunk, xp, yp, tx, ty);
                             maxDepth = Math.max(maxDepth, neighbour.setParent(current));

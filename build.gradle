@@ -7,11 +7,23 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
-        classpath "net.saliman:gradle-cobertura-plugin:2.2.5"
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath "me.champeau.gradle:jmh-gradle-plugin:0.3.1"
     }
 }
+plugins {
+    id 'groovy'
+    id 'idea'
+    id 'maven-publish'
+    id "com.jfrog.bintray" version "1.7.3"
+    id "me.champeau.gradle.jmh" version "0.3.1"
+    id "net.saliman.cobertura" version "2.4.0"
+}
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
 allprojects {
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
@@ -20,37 +32,23 @@ allprojects {
     }
 }
 
-apply plugin: 'idea'
-apply plugin: 'java'
-apply plugin: 'groovy'
-apply plugin: 'maven-publish'
-apply plugin: 'com.jfrog.bintray'
-apply plugin: 'net.saliman.cobertura'
-apply plugin: "me.champeau.gradle.jmh"
-
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
-
 
 group = 'com.stewsters.util'
 version = '0.17'
 
+dependencies {
+    testCompile 'junit:junit:4.12'
+    testCompile "org.codehaus.groovy:groovy-all:2.4.8"
+    testRuntime 'org.slf4j:slf4j-nop:1.7.12' // for cobertura
+}
 
 if (!project.hasProperty('bintray_net_user')) {
     project.ext.bintray_net_user = 'default'
 }
 if (!project.hasProperty('bintray_net_key')) {
     project.ext.bintray_net_key = 'fake'
-}
-
-repositories {
-    mavenCentral()
-    jcenter()
-}
-
-dependencies {
-    testCompile 'junit:junit:4.11'
-    testCompile "org.codehaus.groovy:groovy-all:2.4.7"
 }
 
 // custom tasks for creating source/javadoc jars
@@ -127,4 +125,11 @@ jmh {
     warmupIterations = 5
 
     jmhVersion = '1.17.3'
+}
+
+cobertura {
+    coverageFormats = ['html']
+    coverageIgnoreTrivial = true
+    coverageIgnores = ['org.slf4j.Logger.*']
+    coverageReportDir = new File("$buildDir/reports/cobertura")
 }

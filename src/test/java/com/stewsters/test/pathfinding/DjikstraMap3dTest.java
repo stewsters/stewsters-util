@@ -5,6 +5,8 @@ import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap3d;
 import com.stewsters.test.examples.ExampleMover3d;
 import com.stewsters.util.pathing.threeDimention.djikstraMap.DjikstraMap3d;
+import com.stewsters.util.pathing.threeDimention.pathfinder.ChebyshevHeuristic3d;
+import com.stewsters.util.pathing.threeDimention.pathfinder.ManhattanHeuristic3d;
 import org.junit.Test;
 
 public class DjikstraMap3dTest {
@@ -18,7 +20,7 @@ public class DjikstraMap3dTest {
         ExampleMap3d map = new ExampleMap3d(11, 11, 11, floor);
 
         DjikstraMap3d djikstraMap3d = new DjikstraMap3d(map, 100, false);
-        ExampleMover3d exampleMover3d = new ExampleMover3d(map);
+        ExampleMover3d exampleMover3d = new ExampleMover3d(map, new ManhattanHeuristic3d(), false);
 
         djikstraMap3d.recalculate(5, 5, 5, exampleMover3d);
 
@@ -47,7 +49,7 @@ public class DjikstraMap3dTest {
         ExampleMap3d map = new ExampleMap3d(10, 10, 10, floor);
 
         DjikstraMap3d djikstraMap3d = new DjikstraMap3d(map, 100, true);
-        ExampleMover3d exampleMover3d = new ExampleMover3d(map);
+        ExampleMover3d exampleMover3d = new ExampleMover3d(map, new ChebyshevHeuristic3d(), true);
 
         djikstraMap3d.recalculate(5, 5, 5, exampleMover3d);
 

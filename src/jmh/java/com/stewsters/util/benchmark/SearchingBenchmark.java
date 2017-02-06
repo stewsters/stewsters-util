@@ -5,6 +5,7 @@ import com.stewsters.test.examples.ExampleMap2d;
 import com.stewsters.test.examples.ExampleMap3d;
 import com.stewsters.test.examples.ExampleMover2d;
 import com.stewsters.test.examples.ExampleMover3d;
+import com.stewsters.util.pathing.threeDimention.pathfinder.ChebyshevHeuristic3d;
 import com.stewsters.util.pathing.threeDimention.searcher.DjikstraSearcher3d;
 import com.stewsters.util.pathing.threeDimention.searcher.Objective3d;
 import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
@@ -47,7 +48,7 @@ public class SearchingBenchmark {
 
         ExampleMap3d map3d = new ExampleMap3d(10, 10, 10, floor);
         searcher3d = new DjikstraSearcher3d(map3d, 1000, true);
-        exampleMover3d = new ExampleMover3d(map3d);
+        exampleMover3d = new ExampleMover3d(map3d, new ChebyshevHeuristic3d(), true);
         objective3d = new Objective3d() {
             @Override
             public boolean satisfiedBy(PathNode3d current) {

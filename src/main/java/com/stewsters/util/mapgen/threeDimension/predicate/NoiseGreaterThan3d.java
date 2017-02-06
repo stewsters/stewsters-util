@@ -4,12 +4,12 @@ import com.stewsters.util.mapgen.terrain.NoiseFunction3d;
 import com.stewsters.util.mapgen.threeDimension.GeneratedMap3d;
 
 
-public class NoiseGreaterThan implements CellPredicate3d {
+public class NoiseGreaterThan3d implements CellPredicate3d {
 
     private NoiseFunction3d noiseFunction3d;
     private double threshold;
 
-    public NoiseGreaterThan(NoiseFunction3d noiseFunction3d, double threshold) {
+    public NoiseGreaterThan3d(NoiseFunction3d noiseFunction3d, double threshold) {
         this.noiseFunction3d = noiseFunction3d;
         this.threshold = threshold;
     }

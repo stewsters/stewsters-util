@@ -65,58 +65,57 @@ public class DjikstraMap2d implements PathingMap2d {
             // search through all the neighbors of the current PathNode evaluating them as next steps
             for (int x = -1; x < 2; x++) {
                 for (int y = -1; y < 2; y++) {
-                    for (int z = -1; z < 2; z++) {
-                        // not a neighbour, its the current tile
+                    // not a neighbour, its the current tile
 
-                        if ((x == 0) && (y == 0) && (z == 0)) {
+                    if ((x == 0) && (y == 0)) {
+                        continue;
+                    }
+
+                    // if we're not allowing diagonal movement then only
+                    // one of x or y can be set
+
+                    if (!allowDiagMovement) {
+                        if ((x != 0) && (y != 0)) {
                             continue;
                         }
+                    }
 
-                        // if we're not allowing diagonal movement then only
-                        // one of x or y can be set
+                    // determine the location of the neighbour and evaluate it
 
-                        if (!allowDiagMovement) {
-                            if ((x != 0) && (y != 0)) {
-                                continue;
+                    int xp = x + current.x;
+                    int yp = y + current.y;
+
+                    if (isValidLocation(mover, current.x, current.y, xp, yp)) {
+                        // the cost to get to this PathNode is cost the current plus the movement
+                        // cost to reach this node. Note that the heuristic value is only used
+                        // in the sorted open list
+
+                        float nextStepCost = current.cost + mover.getCost(current.x, current.y, xp, yp);
+                        PathNode2d neighbour = nodes[xp][yp];
+
+                        // if the new cost we've determined for this PathNode is lower than
+                        // it has been previously,
+                        // there might have been a better path to get to
+                        // this PathNode so it needs to be re-evaluated
+
+                        if (nextStepCost < neighbour.cost) {
+                            if (open.contains(neighbour)) {
+                                open.remove(neighbour);
                             }
+                            neighbour.closed = false;
                         }
 
-                        // determine the location of the neighbour and evaluate it
+                        // if the PathNode hasn't already been processed and discarded then
+                        // reset it's cost to our current cost and add it as a next possible
+                        // step (i.e. to the open list)
 
-                        int xp = x + current.x;
-                        int yp = y + current.y;
-
-                        if (isValidLocation(mover, current.x, current.y, xp, yp)) {
-                            // the cost to get to this PathNode is cost the current plus the movement
-                            // cost to reach this node. Note that the heuristic value is only used
-                            // in the sorted open list
-
-                            float nextStepCost = current.cost + mover.getCost(current.x, current.y, xp, yp);
-                            PathNode2d neighbour = nodes[xp][yp];
-
-                            // if the new cost we've determined for this PathNode is lower than
-                            // it has been previously,
-                            // there might have been a better path to get to
-                            // this PathNode so it needs to be re-evaluated
-
-                            if (nextStepCost < neighbour.cost) {
-                                if (open.contains(neighbour)) {
-                                    open.remove(neighbour);
-                                }
-                                neighbour.closed = false;
-                            }
-
-                            // if the PathNode hasn't already been processed and discarded then
-                            // reset it's cost to our current cost and add it as a next possible
-                            // step (i.e. to the open list)
-
-                            if (!open.contains(neighbour) && !neighbour.closed) {
-                                neighbour.cost = nextStepCost;
-                                neighbour.heuristic = 0; //getHeuristicCost(mover, xp, yp, zp, tx, ty, tz);
-                                maxDepth = Math.max(maxDepth, neighbour.setParent(current));
-                                open.add(neighbour);
-                            }
+                        if (!open.contains(neighbour) && !neighbour.closed) {
+                            neighbour.cost = nextStepCost;
+                            neighbour.heuristic = 0;
+                            maxDepth = Math.max(maxDepth, neighbour.setParent(current));
+                            open.add(neighbour);
                         }
+
                     }
                 }
             }

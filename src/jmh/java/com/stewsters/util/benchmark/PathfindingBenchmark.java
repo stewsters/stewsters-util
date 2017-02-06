@@ -6,6 +6,7 @@ import com.stewsters.test.examples.ExampleMap3d;
 import com.stewsters.test.examples.ExampleMover2d;
 import com.stewsters.test.examples.ExampleMover3d;
 import com.stewsters.util.pathing.threeDimention.pathfinder.AStarPathFinder3d;
+import com.stewsters.util.pathing.threeDimention.pathfinder.ChebyshevHeuristic3d;
 import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
 import com.stewsters.util.pathing.twoDimention.pathfinder.AStarPathFinder2d;
 import com.stewsters.util.pathing.twoDimention.pathfinder.ChebyshevHeuristic2d;
@@ -36,7 +37,7 @@ public class PathfindingBenchmark {
 
         ExampleMap3d map3d = new ExampleMap3d(100, 100, 100, floor);
         pathfinder3d = new AStarPathFinder3d(map3d, 1000, true);
-        exampleMover3d = new ExampleMover3d(map3d);
+        exampleMover3d = new ExampleMover3d(map3d, new ChebyshevHeuristic3d(), true);
 
     }
 

@@ -10,7 +10,7 @@ public class ExampleMap3d implements TileBasedMap3d {
     private final int width;
     private final int height;
     private final int depth;
-    private ExampleCellType ground[][][];
+    public ExampleCellType ground[][][];
 
     public ExampleMap3d(int width, int height, int depth, ExampleCellType baseType) {
         this.width = width;
@@ -25,8 +25,6 @@ public class ExampleMap3d implements TileBasedMap3d {
                 }
             }
         }
-
-        //set up some walls
 
     }
 

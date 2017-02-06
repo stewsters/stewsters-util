@@ -1,13 +1,14 @@
-package com.stewsters.util.shadow.twoDimention;
+package com.stewsters.util.math;
 
 
 import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
-public class BresenhamLOS2d {
+public class Bresenham2d {
+
     TileBasedMap2d map2d;
 
-    public BresenhamLOS2d(TileBasedMap2d map2d) {
+    public Bresenham2d(TileBasedMap2d map2d) {
         this.map2d = map2d;
     }
 

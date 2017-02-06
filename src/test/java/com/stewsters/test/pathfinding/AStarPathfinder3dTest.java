@@ -4,6 +4,8 @@ import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap3d;
 import com.stewsters.test.examples.ExampleMover3d;
 import com.stewsters.util.pathing.threeDimention.pathfinder.AStarPathFinder3d;
+import com.stewsters.util.pathing.threeDimention.pathfinder.ChebyshevHeuristic3d;
+import com.stewsters.util.pathing.threeDimention.pathfinder.ManhattanHeuristic3d;
 import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
 import org.junit.Test;
 
@@ -21,7 +23,7 @@ public class AStarPathfinder3dTest {
 
         AStarPathFinder3d pathfinder = new AStarPathFinder3d(map, 100, false);
 
-        ExampleMover3d exampleMover3d = new ExampleMover3d(map);
+        ExampleMover3d exampleMover3d = new ExampleMover3d(map, new ManhattanHeuristic3d(), false);
 
 
         FullPath3d fullPath3d = pathfinder.findPath(exampleMover3d, 1, 1, 1, 8, 8, 8);
@@ -41,7 +43,7 @@ public class AStarPathfinder3dTest {
 
         AStarPathFinder3d pathfinder = new AStarPathFinder3d(map, 1000, true);
 
-        ExampleMover3d exampleMover3d = new ExampleMover3d(map);
+        ExampleMover3d exampleMover3d = new ExampleMover3d(map, new ChebyshevHeuristic3d(), true);
 
         FullPath3d fullPath3d = pathfinder.findPath(exampleMover3d, 1, 1, 1, 8, 8, 8);
 
