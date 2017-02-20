@@ -5,7 +5,6 @@ import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
 import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
 import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
-import java.util.HashSet;
 import java.util.PriorityQueue;
 
 /**
@@ -16,10 +15,6 @@ import java.util.PriorityQueue;
  * @author Kevin Glass
  */
 public class AStarPathFinder3d implements PathFinder3d {
-    /**
-     * The set of nodes that have been searched through
-     */
-    private HashSet<PathNode3d> closed = new HashSet<>();
     /**
      * The set of nodes that we do not yet consider fully searched
      */
@@ -56,7 +51,7 @@ public class AStarPathFinder3d implements PathFinder3d {
      */
     public AStarPathFinder3d(TileBasedMap3d map, int maxSearchDistance, boolean allowDiagMovement) {
         this(map, maxSearchDistance, allowDiagMovement,
-                allowDiagMovement ? new RoundedChebyshevHeuristic3d() : new ChebyshevHeuristic3d());
+                allowDiagMovement ? new RoundedChebyshevHeuristic3d() : new ManhattanHeuristic3d());
     }
 
     /**
@@ -84,6 +79,17 @@ public class AStarPathFinder3d implements PathFinder3d {
         }
     }
 
+    public void reset() {
+        open.clear();
+        for (int x = 0; x < map.getXSize(); x++) {
+            for (int y = 0; y < map.getYSize(); y++) {
+                for (int z = 0; z < map.getZSize(); z++) {
+                    nodes[x][y][z].closed = false;
+                }
+            }
+        }
+    }
+
     /**
      * @see PathFinder3d#findPath(com.stewsters.util.pathing.threeDimention.shared.Mover3d, int, int, int, int, int, int)
      */
@@ -94,12 +100,12 @@ public class AStarPathFinder3d implements PathFinder3d {
             return null;
         }
 
+        reset();
+
         // initial state for A*. The closed group is empty. Only the starting
         // tile is in the open list and it's already there
         nodes[sx][sy][sz].cost = 0;
         nodes[sx][sy][sz].depth = 0;
-        closed.clear();
-        open.clear();
         open.add(nodes[sx][sy][sz]);
 
         nodes[tx][ty][tz].parent = null;
@@ -110,18 +116,14 @@ public class AStarPathFinder3d implements PathFinder3d {
             // pull out the first PathNode in our open list, this is determined to
             // be the most likely to be the next step based on our heuristic
 
-            PathNode3d current = open.peek();
+            PathNode3d current = open.poll();
             if (current == nodes[tx][ty][tz]) {
                 break;
             }
 
-            open.remove(current);
-            closed.add(current);
+            current.closed = true;
 
-            // search through all the neighbors of the current PathNode evaluating
-
-            // them as next steps
-
+            // search through all the neighbors of the current PathNode evaluating them as next steps
             for (int x = -1; x < 2; x++) {
                 for (int y = -1; y < 2; y++) {
                     for (int z = -1; z < 2; z++) {
@@ -153,7 +155,6 @@ public class AStarPathFinder3d implements PathFinder3d {
 
                             float nextStepCost = current.cost + mover.getCost(current.x, current.y, current.z, xp, yp, zp);
                             PathNode3d neighbour = nodes[xp][yp][zp];
-                            map.pathFinderVisited(xp, yp, zp);
 
                             // if the new cost we've determined for this PathNode is lower than
                             // it has been previously,
@@ -164,16 +165,14 @@ public class AStarPathFinder3d implements PathFinder3d {
                                 if (open.contains(neighbour)) {
                                     open.remove(neighbour);
                                 }
-                                if (closed.contains(neighbour)) {
-                                    closed.remove(neighbour);
-                                }
+                                neighbour.closed = false;
                             }
 
                             // if the PathNode hasn't already been processed and discarded then
                             // reset it's cost to our current cost and add it as a next possible
                             // step (i.e. to the open list)
 
-                            if (!open.contains(neighbour) && !(closed.contains(neighbour))) {
+                            if (!open.contains(neighbour) && !neighbour.closed) {
                                 neighbour.cost = nextStepCost;
                                 neighbour.heuristic = heuristic.getCost(map, xp, yp, zp, tx, ty, tz);
                                 maxDepth = Math.max(maxDepth, neighbour.setParent(current));
@@ -187,28 +186,22 @@ public class AStarPathFinder3d implements PathFinder3d {
 
         // since we'e've run out of search
         // there was no path. Just return null
-
         if (nodes[tx][ty][tz].parent == null) {
-//            throw new RuntimeException("out of nodes");
             return null;
         }
 
-        // At this point we've definitely found a path so we can uses the parent
-
-        // references of the nodes to find out way from the target location back
-
-        // to the start recording the nodes on the way.
-
+        // At this point we've definitely found a path so we can uses the parent  references of the nodes to find out
+        // way from the target location back to the start recording the nodes on the way.
         FullPath3d path = new FullPath3d();
         PathNode3d target = nodes[tx][ty][tz];
         while (target != nodes[sx][sy][sz]) {
-            path.prependStep(target.x, target.y, target.z);
+            path.appendStep(target.x, target.y, target.z);
             target = target.parent;
         }
-        path.prependStep(sx, sy, sz);
+        path.appendStep(sx, sy, sz);
+        path.reverse();
 
         // thats it, we have our path
-
         return path;
     }
 

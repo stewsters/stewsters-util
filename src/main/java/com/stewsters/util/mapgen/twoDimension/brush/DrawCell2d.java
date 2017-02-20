@@ -6,7 +6,7 @@ import com.stewsters.util.mapgen.twoDimension.GeneratedMap2d;
 
 public class DrawCell2d implements Brush2d {
 
-    CellType cellType;
+    private CellType cellType;
 
     public DrawCell2d(CellType tileType) {
         this.cellType = tileType;

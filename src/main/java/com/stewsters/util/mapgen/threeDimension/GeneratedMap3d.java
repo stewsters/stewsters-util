@@ -15,5 +15,5 @@ public interface GeneratedMap3d {
 
     void setCellTypeAt(int x, int y, int z, CellType cellType);
 
-
+    boolean isOutside(int x, int y, int z);
 }

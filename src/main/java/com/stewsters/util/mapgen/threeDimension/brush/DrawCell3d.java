@@ -6,7 +6,7 @@ import com.stewsters.util.mapgen.threeDimension.GeneratedMap3d;
 
 public class DrawCell3d implements Brush3d {
 
-    CellType cellType;
+    private CellType cellType;
 
     public DrawCell3d(CellType tileType) {
         this.cellType = tileType;

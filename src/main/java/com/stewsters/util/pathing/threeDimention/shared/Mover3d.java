@@ -1,6 +1,8 @@
 package com.stewsters.util.pathing.threeDimention.shared;
 
 
+import com.stewsters.util.pathing.threeDimention.pathfinder.AStarHeuristic3d;
+
 /**
  * <p>
  * A tagging interface for an object representing the entity in the game that
@@ -24,4 +26,7 @@ public interface Mover3d {
 
     float getCost(int sx, int sy, int sz, int tx, int ty, int tz);
 
+    AStarHeuristic3d getHeuristic();
+
+    boolean getDiagonal();
 }

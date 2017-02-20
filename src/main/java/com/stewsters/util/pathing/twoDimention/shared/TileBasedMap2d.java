@@ -8,30 +8,10 @@ package com.stewsters.util.pathing.twoDimention.shared;
  * @author Kevin Glass
  */
 public interface TileBasedMap2d {
-    /**
-     * Get the width of the tile map. The slightly odd name is used
-     * to distiguish this method from commonly used names in game maps.
-     *
-     * @return The number of tiles across the map
-     */
+
     int getXSize();
 
-    /**
-     * Get the height of the tile map. The slightly odd name is used
-     * to distiguish this method from commonly used names in game maps.
-     *
-     * @return The number of tiles down the map
-     */
     int getYSize();
 
-
-    /**
-     * Notification that the path finder visited a given tile. This is
-     * used for debugging new heuristics.
-     *
-     * @param x The x coordinate of the tile that was visited
-     * @param y The y coordinate of the tile that was visited
-     */
-    void pathFinderVisited(int x, int y);
-
+    boolean isOutside(int x, int y);
 }

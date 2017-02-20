@@ -1,6 +1,7 @@
 package com.stewsters.test.spatial;
 
 import com.stewsters.test.examples.Spacecraft2d;
+import com.stewsters.util.math.MatUtils;
 import com.stewsters.util.math.Point2i;
 import com.stewsters.util.spatial.IntervalKDTree2d;
 import org.junit.Test;
@@ -9,22 +10,21 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 public class IntervalKDTree2dTest {
 
     @Test
     public void testCollision() {
-        final int range = 100;
-        final int quantity = 10;
+        final int range = 1000;
+        final int quantity = 1000;
 
         IntervalKDTree2d<Spacecraft2d> spacecrafts = new IntervalKDTree2d<Spacecraft2d>(range, 10);
 
-        Random random = new Random();
         for (int i = 0; i < quantity; i++) {
-            Spacecraft2d spacecraft = new Spacecraft2d(random.nextInt(2 * range) - range, random.nextInt(2 * range) - range);
+            Spacecraft2d spacecraft = new Spacecraft2d(
+                    MatUtils.getIntInRange(-range + 1, range - 1),
+                    MatUtils.getIntInRange(-range + 1, range - 1));
             spacecraft.addToTree(spacecrafts);
-
         }
 
         HashSet<Spacecraft2d> fillThis = new HashSet<Spacecraft2d>();
@@ -87,7 +87,7 @@ public class IntervalKDTree2dTest {
         ArrayList<GridThing> results = new ArrayList<>();
         for (Point2i p : pointsInside) {
             results.clear();
-            if(!kdTree.getValues(p.x - 0.5, p.y - 0.5, p.x + 0.5, p.y + 0.5, results).contains(e)){
+            if (!kdTree.getValues(p.x - 0.5, p.y - 0.5, p.x + 0.5, p.y + 0.5, results).contains(e)) {
                 System.out.println(p);
 //                assert false;
             }
@@ -96,8 +96,8 @@ public class IntervalKDTree2dTest {
 
 
         ArrayList<Point2i> pointsOutside = new ArrayList<>();
-        pointsOutside.add(new Point2i(e.x-1, e.y));
-        pointsOutside.add(new Point2i(e.x - 1, e.y-1));
+        pointsOutside.add(new Point2i(e.x - 1, e.y));
+        pointsOutside.add(new Point2i(e.x - 1, e.y - 1));
         pointsOutside.add(new Point2i(e.x, e.y + 2));
         pointsOutside.add(new Point2i(e.x + 2, e.y + 2));
 

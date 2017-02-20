@@ -4,6 +4,7 @@ package com.stewsters.test.pathfinding;
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap2d;
 import com.stewsters.test.examples.ExampleMover2d;
+import com.stewsters.util.pathing.twoDimention.pathfinder.ChebyshevHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.searcher.DjikstraSearcher2d;
 import com.stewsters.util.pathing.twoDimention.searcher.Objective2d;
 import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
@@ -14,18 +15,14 @@ import static org.junit.Assert.assertEquals;
 
 public class DjikstraSearcher2dTest {
 
-
-//  TODO: investigate speed improvements:
-//  https://code.google.com/p/caliper/wiki/JavaMicrobenchmarks
-
     @Test
     public void testFindSomething4Way() {
         ExampleCellType floor = new ExampleCellType('.', false);
         ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
-        DjikstraSearcher2d pathfinder = new DjikstraSearcher2d(map, 100, false);
+        DjikstraSearcher2d pathfinder = new DjikstraSearcher2d(map, 100);
 
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map);
+        ExampleMover2d exampleMover2d = new ExampleMover2d(map, new ChebyshevHeuristic2d(), false);
 
         Objective2d objective2d = new Objective2d() {
             @Override
@@ -48,9 +45,9 @@ public class DjikstraSearcher2dTest {
         ExampleCellType floor = new ExampleCellType('.', false);
         ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
-        DjikstraSearcher2d pathfinder = new DjikstraSearcher2d(map, 100, true);
+        DjikstraSearcher2d pathfinder = new DjikstraSearcher2d(map, 100);
 
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map);
+        ExampleMover2d exampleMover2d = new ExampleMover2d(map, new ChebyshevHeuristic2d(), true);
 
         Objective2d objective2d = new Objective2d() {
             @Override

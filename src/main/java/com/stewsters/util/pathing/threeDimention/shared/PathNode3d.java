@@ -4,34 +4,17 @@ package com.stewsters.util.pathing.threeDimention.shared;
  * A single PathNode in the search graph
  */
 public class PathNode3d implements Comparable<PathNode3d> {
-    /**
-     * The x coordinate of the node
-     */
+
     public int x;
-    /**
-     * The y coordinate of the node
-     */
     public int y;
-    /**
-     * The z coordinate of the node
-     */
     public int z;
-    /**
-     * The path cost for this node
-     */
+
     public float cost;
-    /**
-     * The parent of this node, how we reached it in the search
-     */
     public PathNode3d parent;
-    /**
-     * The heuristic cost of this node
-     */
     public float heuristic;
-    /**
-     * The search depth of this node
-     */
     public int depth;
+
+    public boolean closed;
 
     /**
      * Create a new node
@@ -44,6 +27,7 @@ public class PathNode3d implements Comparable<PathNode3d> {
         this.x = x;
         this.y = y;
         this.z = z;
+        this.closed = false;
     }
 
     /**
@@ -70,6 +54,10 @@ public class PathNode3d implements Comparable<PathNode3d> {
         if (f < of) {
             return -1;
         } else if (f > of) {
+            return 1;
+        } else if (cost > other.cost) {
+            return -1;
+        } else if (cost < other.cost) {
             return 1;
         } else {
             return 0;

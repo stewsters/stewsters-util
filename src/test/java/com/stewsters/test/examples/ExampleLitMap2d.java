@@ -7,8 +7,6 @@ import com.stewsters.util.shadow.twoDimention.LitMap2d;
  */
 public class ExampleLitMap2d extends ExampleMap2d implements LitMap2d {
 
-    private final int width;
-    private final int height;
     public float resistance[][];
     public float lightLevel[][];
     private int turnCounter;
@@ -17,8 +15,6 @@ public class ExampleLitMap2d extends ExampleMap2d implements LitMap2d {
     public ExampleLitMap2d(int width, int height, ExampleCellType cellType) {
         super(width, height, cellType);
         turnCounter = Integer.MIN_VALUE;
-        this.width = width;
-        this.height = height;
 
         turnLastUpdated = new int[width][height];
         resistance = new float[width][height];

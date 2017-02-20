@@ -1,5 +1,6 @@
 package com.stewsters.util.pathing.twoDimention.shared;
 
+import com.stewsters.util.pathing.twoDimention.pathfinder.AStarHeuristic2d;
 
 /**
  * <p>
@@ -23,5 +24,9 @@ public interface Mover2d {
     boolean canOccupy(int tx, int ty);
 
     float getCost(int sx, int sy, int tx, int ty);
+
+    AStarHeuristic2d getHeuristic();
+
+    boolean getDiagonal();
 
 }

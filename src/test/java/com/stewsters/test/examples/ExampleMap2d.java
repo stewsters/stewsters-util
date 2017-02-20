@@ -7,18 +7,18 @@ import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
  */
 public class ExampleMap2d implements TileBasedMap2d {
 
-    private final int width;
-    private final int height;
+    private final int xSize;
+    private final int ySize;
     public ExampleCellType[][] ground;
 
-    public ExampleMap2d(int width, int height, ExampleCellType baseType) {
-        this.width = width;
-        this.height = height;
+    public ExampleMap2d(int xSize, int ySize, ExampleCellType baseType) {
+        this.xSize = xSize;
+        this.ySize = ySize;
 
-        ground = new ExampleCellType[width][height];
+        ground = new ExampleCellType[xSize][ySize];
 
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
+        for (int x = 0; x < xSize; x++) {
+            for (int y = 0; y < ySize; y++) {
 
                 ground[x][y] = baseType;
             }
@@ -28,17 +28,12 @@ public class ExampleMap2d implements TileBasedMap2d {
 
     @Override
     public int getXSize() {
-        return width;
+        return xSize;
     }
 
     @Override
     public int getYSize() {
-        return height;
-    }
-
-    @Override
-    public void pathFinderVisited(int x, int y) {
-
+        return ySize;
     }
 
     public boolean isBlocked(int x, int y) {
@@ -46,6 +41,11 @@ public class ExampleMap2d implements TileBasedMap2d {
             return false;
 
         return ground[x][y].isBlocking();
+    }
+
+    @Override
+    public boolean isOutside(int x, int y) {
+        return x < 0 || y < 0 || x >= xSize || y >= ySize ;
     }
 
 }

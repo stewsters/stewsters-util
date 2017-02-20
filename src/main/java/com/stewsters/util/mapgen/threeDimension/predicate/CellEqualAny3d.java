@@ -4,13 +4,13 @@ package com.stewsters.util.mapgen.threeDimension.predicate;
 import com.stewsters.util.mapgen.CellType;
 import com.stewsters.util.mapgen.threeDimension.GeneratedMap3d;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public class CellEqualAny3d implements CellPredicate3d {
 
-    LinkedList<CellType> tileTypes;
+    List<CellType> tileTypes;
 
-    public CellEqualAny3d(LinkedList<CellType> tileTypes) {
+    public CellEqualAny3d(List<CellType> tileTypes) {
         this.tileTypes = tileTypes;
     }
 

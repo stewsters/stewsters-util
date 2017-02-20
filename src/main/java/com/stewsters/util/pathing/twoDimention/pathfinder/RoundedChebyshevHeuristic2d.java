@@ -16,7 +16,8 @@ public class RoundedChebyshevHeuristic2d implements AStarHeuristic2d {
         int dx = Math.abs(tx - x);
         int dy = Math.abs(ty - y);
 
-        return Math.max(dx, dy) + (0.41421356237f) * Math.min(dx, dy);
+        return (0.70710678118f * Math.max(dx, dy)) +
+                (0.29289321881f * Math.min(dx, dy));
     }
 
 }

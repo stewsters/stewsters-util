@@ -4,13 +4,13 @@ package com.stewsters.util.mapgen.twoDimension.predicate;
 import com.stewsters.util.mapgen.CellType;
 import com.stewsters.util.mapgen.twoDimension.GeneratedMap2d;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public class CellEqualAny2d implements CellPredicate2d {
 
-    LinkedList<CellType> tileTypes;
+    List<CellType> tileTypes;
 
-    public CellEqualAny2d(LinkedList<CellType> tileTypes) {
+    public CellEqualAny2d(List<CellType> tileTypes) {
         this.tileTypes = tileTypes;
     }
 

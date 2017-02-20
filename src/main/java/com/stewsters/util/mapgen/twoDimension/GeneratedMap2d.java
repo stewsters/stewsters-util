@@ -12,4 +12,6 @@ public interface GeneratedMap2d {
     CellType getCellTypeAt(int x, int y);
 
     void setCellTypeAt(int x, int y, CellType cellType);
+
+    boolean isOutside(int x, int y);
 }

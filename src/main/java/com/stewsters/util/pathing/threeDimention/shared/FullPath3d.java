@@ -1,6 +1,7 @@
 package com.stewsters.util.pathing.threeDimention.shared;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A path determined by some path finding algorithm. A series of steps from
@@ -106,6 +107,9 @@ public class FullPath3d {
         return steps.contains(new Step(x, y, z));
     }
 
+    public void reverse() {
+        Collections.reverse(steps);
+    }
 
     /**
      * A single step within the path

@@ -5,7 +5,6 @@ import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
-import java.util.HashSet;
 import java.util.PriorityQueue;
 
 /**
@@ -15,69 +14,43 @@ import java.util.PriorityQueue;
  * @author Kevin Glass
  */
 public class AStarPathFinder2d implements PathFinder2d {
-    /**
-     * The set of nodes that have been searched through
-     */
-    private HashSet<PathNode2d> closed = new HashSet<>();
-    /**
-     * The set of nodes that we do not yet consider fully searched
-     */
+
+    // The set of nodes that we do not yet consider fully searched
     private PriorityQueue<PathNode2d> open = new PriorityQueue<>();
 
-    /**
-     * The map being searched
-     */
+    // The map being searched
     private TileBasedMap2d map;
-    /**
-     * The maximum depth of search we're willing to accept before giving up
-     */
+
+    // The maximum depth of search we're willing to accept before giving up
     private int maxSearchDistance;
 
-    /**
-     * The complete set of nodes across the map
-     */
+    // The complete set of nodes across the map
     private PathNode2d[][] nodes;
-    /**
-     * True if we allow diagonal movement
-     */
-    private boolean allowDiagMovement;
-    /**
-     * The heuristic we're applying to determine which nodes to search first
-     */
-    private AStarHeuristic2d heuristic;
-
-    /**
-     * Create a path finder with the default heuristic - closest to target.
-     *
-     * @param map               The map to be searched
-     * @param maxSearchDistance The maximum depth we'll search before giving up
-     * @param allowDiagMovement True if the search should try diagonal movement
-     */
-    public AStarPathFinder2d(TileBasedMap2d map, int maxSearchDistance, boolean allowDiagMovement) {
-
-        this(map, maxSearchDistance, allowDiagMovement,
-                allowDiagMovement ? new RoundedChebyshevHeuristic2d() : new ManhattanHeuristic2d());
-    }
 
     /**
      * Create a path finder
      *
-     * @param heuristic         The heuristic used to determine the search order of the map
      * @param map               The map to be searched
      * @param maxSearchDistance The maximum depth we'll search before giving up
-     * @param allowDiagMovement True if the search should try diagonal movement
      */
-    public AStarPathFinder2d(TileBasedMap2d map, int maxSearchDistance,
-                             boolean allowDiagMovement, AStarHeuristic2d heuristic) {
-        this.heuristic = heuristic;
+    public AStarPathFinder2d(TileBasedMap2d map, int maxSearchDistance) {
+
         this.map = map;
         this.maxSearchDistance = maxSearchDistance;
-        this.allowDiagMovement = allowDiagMovement;
 
         nodes = new PathNode2d[map.getXSize()][map.getYSize()];
         for (int x = 0; x < map.getXSize(); x++) {
             for (int y = 0; y < map.getYSize(); y++) {
                 nodes[x][y] = new PathNode2d(x, y);
+            }
+        }
+    }
+
+    public void reset() {
+        open.clear();
+        for (int x = 0; x < map.getXSize(); x++) {
+            for (int y = 0; y < map.getYSize(); y++) {
+                nodes[x][y].closed = false;
             }
         }
     }
@@ -92,12 +65,15 @@ public class AStarPathFinder2d implements PathFinder2d {
             return null;
         }
 
+        AStarHeuristic2d heuristic = mover.getHeuristic();
+        boolean allowDiagMovement = mover.getDiagonal();
+
+        reset();
+
         // initial state for A*. The closed group is empty. Only the starting
         // tile is in the open list and it's already there
         nodes[sx][sy].cost = 0;
         nodes[sx][sy].depth = 0;
-        closed.clear();
-        open.clear();
         open.add(nodes[sx][sy]);
 
         nodes[tx][ty].parent = null;
@@ -108,18 +84,14 @@ public class AStarPathFinder2d implements PathFinder2d {
             // pull out the first PathNode in our open list, this is determined to
             // be the most likely to be the next step based on our heuristic
 
-            PathNode2d current = open.peek();
+            PathNode2d current = open.poll();
             if (current == nodes[tx][ty]) {
                 break;
             }
 
-            open.remove(current);
-            closed.add(current);
+            current.closed = true;
 
-            // search through all the neighbors of the current PathNode evaluating
-
-            // them as next steps
-
+            // search through all the neighbors of the current PathNode evaluating them as next steps
             for (int x = -1; x < 2; x++) {
                 for (int y = -1; y < 2; y++) {
                     // not a neighbour, its the current tile
@@ -149,7 +121,6 @@ public class AStarPathFinder2d implements PathFinder2d {
 
                         float nextStepCost = current.cost + mover.getCost(current.x, current.y, xp, yp);
                         PathNode2d neighbour = nodes[xp][yp];
-                        map.pathFinderVisited(xp, yp);
 
                         // if the new cost we've determined for this PathNode is lower than
                         // it has been previously,
@@ -160,16 +131,14 @@ public class AStarPathFinder2d implements PathFinder2d {
                             if (open.contains(neighbour)) {
                                 open.remove(neighbour);
                             }
-                            if (closed.contains(neighbour)) {
-                                closed.remove(neighbour);
-                            }
+                            neighbour.closed = false;
                         }
 
                         // if the PathNode hasn't already been processed and discarded then
                         // reset it's cost to our current cost and add it as a next possible
                         // step (i.e. to the open list)
 
-                        if (!open.contains(neighbour) && !(closed.contains(neighbour))) {
+                        if (!open.contains(neighbour) && !neighbour.closed) {
                             neighbour.cost = nextStepCost;
                             neighbour.heuristic = heuristic.getCost(map, xp, yp, tx, ty);
                             maxDepth = Math.max(maxDepth, neighbour.setParent(current));
@@ -194,10 +163,11 @@ public class AStarPathFinder2d implements PathFinder2d {
         FullPath2d path = new FullPath2d();
         PathNode2d target = nodes[tx][ty];
         while (target != nodes[sx][sy]) {
-            path.prependStep(target.x, target.y);
+            path.appendStep(target.x, target.y);
             target = target.parent;
         }
-        path.prependStep(sx, sy);
+        path.appendStep(sx, sy);
+        path.reverse();
 
         // That's it, we have our path
         return path;
