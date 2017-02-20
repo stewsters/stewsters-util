@@ -8,29 +8,19 @@ import java.util.PriorityQueue;
 
 public class DjikstraMap3d implements PathingMap3d {
 
-    /**
-     * The set of nodes that we do not yet consider fully searched
-     */
+    // The set of nodes that we do not yet consider fully searched
     private PriorityQueue<PathNode3d> open = new PriorityQueue<>();
 
-    /**
-     * The map being searched
-     */
+    // The map being searched
     private TileBasedMap3d map;
-    /**
-     * The maximum depth of search we're willing to accept before giving up
-     */
+
+    // The maximum depth of search we're willing to accept before giving up
     private int maxSearchDistance;
 
-    /**
-     * The complete set of nodes across the map
-     */
+    // The complete set of nodes across the map
     private PathNode3d[][][] nodes;
 
-
-    /**
-     * True if we allow diagonal movement
-     */
+    // True if we allow diagonal movement
     private boolean allowDiagMovement;
 
     public DjikstraMap3d(TileBasedMap3d map, int maxSearchDistance, boolean allowDiagMovement) {

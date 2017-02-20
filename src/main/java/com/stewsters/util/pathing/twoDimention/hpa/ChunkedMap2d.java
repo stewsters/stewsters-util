@@ -7,5 +7,4 @@ import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
  */
 public interface ChunkedMap2d extends TileBasedMap2d {
 
-    boolean isOutsideMap(int tx, int ty);
 }

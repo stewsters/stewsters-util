@@ -35,7 +35,7 @@ public class Bresenham3dTest {
                     });
 
                     ArrayList<Point3i> arrayList = Bresenham3d.getArray(x, y, z, 4, 4, 4);
-                    assert arrayList.size()>=1;
+                    assert arrayList.size() >= 1;
                 }
             }
         }

@@ -55,6 +55,7 @@ public class MapGen3d {
         }
     }
 
+    // TODO: performance tests on floodfills
 
     /**
      * Flood fills on things that fit the predicate

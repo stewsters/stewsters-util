@@ -19,7 +19,7 @@ public class ExampleChunkedMover2d implements Mover2d {
     @Override
     public boolean canTraverse(int sx, int sy, int tx, int ty) {
 
-        return !overworldExample.isOutsideMap(tx, ty) && !overworldExample.isBlocking(tx, ty);
+        return !overworldExample.isOutside(tx, ty) && !overworldExample.isBlocking(tx, ty);
     }
 
     @Override

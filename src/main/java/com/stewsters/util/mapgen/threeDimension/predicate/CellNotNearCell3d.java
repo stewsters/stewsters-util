@@ -18,6 +18,10 @@ public class CellNotNearCell3d implements CellPredicate3d {
                 for (int iz = -1; iz <= 1; iz++) {
                     if (ix == 0 && iy == 0 && iz == 0)
                         continue;
+
+                    if (generatedMap3d.isOutside(x + ix, y + iy, z + iz))
+                        continue;
+
                     if (generatedMap3d.getCellTypeAt(x + ix, y + iy, z + iz) == cellType)
                         return false;
                 }

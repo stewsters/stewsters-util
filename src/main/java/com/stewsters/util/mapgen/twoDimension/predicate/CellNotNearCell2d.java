@@ -17,12 +17,14 @@ public class CellNotNearCell2d implements CellPredicate2d {
             for (int iy = -1; iy <= 1; iy++) {
                 if (ix == 0 && iy == 0)
                     continue;
+
+                if (generatedMap2d.isOutside(x + ix, y + iy))
+                    continue;
+
                 if (generatedMap2d.getCellTypeAt(x + ix, y + iy) == cellType)
                     return false;
             }
         }
         return true;
     }
-
-
 }

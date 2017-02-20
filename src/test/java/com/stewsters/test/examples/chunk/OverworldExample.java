@@ -34,7 +34,7 @@ public class OverworldExample implements ChunkedMap2d {
     }
 
     @Override
-    public boolean isOutsideMap(int tx, int ty) {
+    public boolean isOutside(int tx, int ty) {
         return (tx < 0 || ty < 0 || tx >= getXSize() || ty >= getYSize());
     }
 

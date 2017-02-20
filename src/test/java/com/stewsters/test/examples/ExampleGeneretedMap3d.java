@@ -18,4 +18,5 @@ public class ExampleGeneretedMap3d extends ExampleMap3d implements GeneratedMap3
     public void setCellTypeAt(int x, int y, int z, CellType cellType) {
         ground[x][y][z] = (ExampleCellType) cellType;
     }
+
 }

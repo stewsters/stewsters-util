@@ -9,17 +9,17 @@ public class GeometryTest {
     public void Rectangle() {
 
         Rect r1 = new Rect(10, 20, 20, 25);
-        Rect r2 = new Rect( 1, 1, 11,21);
-        Rect r3 = new Rect( 1, 1, 5,5);
-        Rect r4 = new Rect(0,0,100,100);
+        Rect r2 = new Rect(1, 1, 11, 21);
+        Rect r3 = new Rect(1, 1, 5, 5);
+        Rect r4 = new Rect(0, 0, 100, 100);
 
-        assert r1.contains(10,20);
-        assert r1.contains(20,25);
+        assert r1.contains(10, 20);
+        assert r1.contains(20, 25);
 
-        assert !r1.contains(10,19);
-        assert !r1.contains(9,20);
-        assert !r1.contains(21,25);
-        assert !r1.contains(20,26);
+        assert !r1.contains(10, 19);
+        assert !r1.contains(9, 20);
+        assert !r1.contains(21, 25);
+        assert !r1.contains(20, 26);
 
         assert r1.center().x == 15;
         assert r1.center().y == 22;

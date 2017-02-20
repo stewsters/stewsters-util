@@ -97,6 +97,10 @@ public class ExampleChunk implements Chunk2d {
         return xOffset + ", " + yOffset;
     }
 
+    @Override
+    public boolean isOutside(int tx, int ty) {
+        return (tx < 0 || ty < 0 || tx >= getXSize() || ty >= getYSize());
+    }
 
     @Override
     public int getXOffset() {
