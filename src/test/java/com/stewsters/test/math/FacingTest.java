@@ -3,6 +3,9 @@ package com.stewsters.test.math;
 import com.stewsters.util.math.Facing2d;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class FacingTest {
 
     @Test
@@ -74,6 +77,18 @@ public class FacingTest {
         assert Facing2d.SOUTHWEST.reverse() == Facing2d.NORTHEAST;
         assert Facing2d.WEST.reverse() == Facing2d.EAST;
         assert Facing2d.NORTHWEST.reverse() == Facing2d.SOUTHEAST;
+    }
+
+    @Test
+    public void testRandoms() {
+        List<Facing2d> cardinals = Arrays.asList(Facing2d.EAST, Facing2d.NORTH, Facing2d.SOUTH, Facing2d.WEST);
+        List<Facing2d> others = Arrays.asList(Facing2d.NORTHEAST, Facing2d.SOUTHEAST, Facing2d.SOUTHWEST, Facing2d.NORTHWEST);
+
+        assert cardinals.contains(Facing2d.randomCardinal());
+
+        Facing2d f = Facing2d.randomDiagonal();
+        assert cardinals.contains(f) || others.contains(f);
+
     }
 
 }

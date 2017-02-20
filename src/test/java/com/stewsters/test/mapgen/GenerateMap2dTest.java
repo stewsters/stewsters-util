@@ -2,22 +2,31 @@ package com.stewsters.test.mapgen;
 
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleGeneretedMap2d;
+import com.stewsters.util.mapgen.CellType;
 import com.stewsters.util.mapgen.terrain.NoiseFunction2d;
 import com.stewsters.util.mapgen.twoDimension.MapGen2d;
 import com.stewsters.util.mapgen.twoDimension.brush.DrawCell2d;
 import com.stewsters.util.mapgen.twoDimension.predicate.AndPredicate2d;
+import com.stewsters.util.mapgen.twoDimension.predicate.CellEqualAny2d;
 import com.stewsters.util.mapgen.twoDimension.predicate.CellEquals2d;
+import com.stewsters.util.mapgen.twoDimension.predicate.CellNearCell2d;
 import com.stewsters.util.mapgen.twoDimension.predicate.CellNearEdge2d;
+import com.stewsters.util.mapgen.twoDimension.predicate.CellNotNearCell2d;
 import com.stewsters.util.mapgen.twoDimension.predicate.NoiseGreaterThan2d;
 import com.stewsters.util.mapgen.twoDimension.predicate.NotPredicate2d;
+import com.stewsters.util.mapgen.twoDimension.predicate.OrPredicate2d;
+import com.stewsters.util.math.Point2i;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GenerateMap2dTest {
 
     static final ExampleCellType unknown = new ExampleCellType('?', true);
     static final ExampleCellType wall = new ExampleCellType('X', true);
     static final ExampleCellType floor = new ExampleCellType('.', false);
-
+    static final ExampleCellType grass = new ExampleCellType(',', false);
 
     @Test
     public void testGenerationOfBoxViaPredicates() {
@@ -53,6 +62,56 @@ public class GenerateMap2dTest {
 
         System.out.println("Gen trees 2");
         printMap(em);
+    }
+
+
+    @Test
+    public void testOr() {
+        ExampleGeneretedMap2d em = new ExampleGeneretedMap2d(10, 10, unknown);
+
+        List<CellType> cellTypes = new ArrayList<>();
+        cellTypes.add(grass);
+        cellTypes.add(floor);
+
+        MapGen2d.fill(em,
+                new OrPredicate2d(
+                        new CellEqualAny2d(cellTypes),
+                        new CellNearCell2d(wall),
+                        new CellNotNearCell2d(wall)
+                ),
+                new DrawCell2d(wall));
+    }
+
+    @Test
+    public void testFloodFill() {
+        ExampleGeneretedMap2d em = new ExampleGeneretedMap2d(10, 10, unknown);
+
+        Point2i center = new Point2i(5, 5);
+
+        List<Point2i> wallPoints = center.mooreNeighborhood();
+
+        //Draw a wall
+        MapGen2d.fill(em, (map, x, y) -> wallPoints.contains(new Point2i(x, y)), new DrawCell2d(wall));
+
+        assert em.getCellTypeAt(5, 5) == unknown;
+
+        for (Point2i wallPoint : wallPoints) {
+            assert em.getCellTypeAt(wallPoint.x, wallPoint.y) == wall;
+        }
+
+
+        // Floodfill inside that wall and make sure it doesnt escape
+        MapGen2d.floodFill(em, center, new CellEquals2d(unknown), (map, x, y) -> {
+            map.setCellTypeAt(x, y, floor);
+        });
+
+        assert em.getCellTypeAt(5, 5) == floor;
+        for (Point2i wallPoint : wallPoints) {
+            assert em.getCellTypeAt(wallPoint.x, wallPoint.y) == wall;
+        }
+
+        assert em.getCellTypeAt(0, 0) == unknown;
+
     }
 
 

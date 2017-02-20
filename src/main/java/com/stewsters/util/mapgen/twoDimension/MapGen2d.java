@@ -5,8 +5,10 @@ import com.stewsters.util.mapgen.twoDimension.brush.Brush2d;
 import com.stewsters.util.mapgen.twoDimension.predicate.CellPredicate2d;
 import com.stewsters.util.math.Point2i;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashSet;
-import java.util.LinkedList;
 
 /**
  * http://www.roguebasin.com/index.php?title=Designing_Flexible,_Reusable_Algorithms
@@ -59,8 +61,8 @@ public class MapGen2d {
      */
     public static void floodFill(GeneratedMap2d map, Point2i start, CellPredicate2d predicate, Brush2d brush2d) {
 
-        LinkedList<Point2i> todo = new LinkedList<Point2i>();
-        LinkedList<Point2i> match = new LinkedList<Point2i>();
+        Deque<Point2i> todo = new ArrayDeque<Point2i>();
+        ArrayList<Point2i> match = new ArrayList<>();
         HashSet<Point2i> done = new HashSet<Point2i>();
 
         todo.push(start);

@@ -5,8 +5,10 @@ import com.stewsters.util.mapgen.threeDimension.brush.Brush3d;
 import com.stewsters.util.mapgen.threeDimension.predicate.CellPredicate3d;
 import com.stewsters.util.math.Point3i;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashSet;
-import java.util.LinkedList;
 
 /**
  * http://www.roguebasin.com/index.php?title=Designing_Flexible,_Reusable_Algorithms
@@ -67,8 +69,8 @@ public class MapGen3d {
      */
     public static void floodFill(GeneratedMap3d map, Point3i start, CellPredicate3d predicate, Brush3d brush3d) {
 
-        LinkedList<Point3i> todo = new LinkedList<Point3i>();
-        LinkedList<Point3i> match = new LinkedList<Point3i>();
+        Deque<Point3i> todo = new ArrayDeque<Point3i>();
+        ArrayList<Point3i> match = new ArrayList<>();
         HashSet<Point3i> done = new HashSet<Point3i>();
 
         todo.push(start);
@@ -81,7 +83,6 @@ public class MapGen3d {
 
                 match.add(p);
 
-                //todo: done list?
                 if (p.x > 0)
                     todo.push(new Point3i(p.x - 1, p.y, p.z));
                 if (p.x < map.getXSize() - 1)

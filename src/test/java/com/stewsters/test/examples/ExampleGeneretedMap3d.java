@@ -5,8 +5,8 @@ import com.stewsters.util.mapgen.threeDimension.GeneratedMap3d;
 
 public class ExampleGeneretedMap3d extends ExampleMap3d implements GeneratedMap3d {
 
-    public ExampleGeneretedMap3d(int width, int height, int depth, ExampleCellType cellType) {
-        super(width, height, depth, cellType);
+    public ExampleGeneretedMap3d(int xSize, int ySize, int zSize, ExampleCellType cellType) {
+        super(xSize, ySize, zSize, cellType);
     }
 
     @Override

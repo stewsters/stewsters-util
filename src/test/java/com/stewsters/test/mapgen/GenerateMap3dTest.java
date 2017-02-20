@@ -24,7 +24,7 @@ public class GenerateMap3dTest {
     ExampleCellType unknown = new ExampleCellType('?', true);
     ExampleCellType wall = new ExampleCellType('X', true);
     ExampleCellType floor = new ExampleCellType('.', false);
-    ExampleCellType grass = new ExampleCellType('.', false);
+    ExampleCellType grass = new ExampleCellType(',', false);
 
     @Test
     public void testGenerationOfBoxViaPredicates() {
