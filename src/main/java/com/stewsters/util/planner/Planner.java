@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.PriorityQueue;
 
-public class Planner<W> {
+public class Planner {
 
-    public static Optional<List<Action>> plan(WorldState startingState, Fitness fitness, ArrayList<Action> actions, int maxCost) {
+    public static Optional<List<Action>> plan(WorldState startingState, Fitness fitness, List<Action> actions, int maxCost) {
 
         ArrayList<WorldState> endState = new ArrayList<>();
 
