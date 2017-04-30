@@ -1,16 +1,12 @@
 package com.stewsters.util.planner;
 
 
-public class WorldState implements Comparable<WorldState> {
-
-    public WorldState parentState;
-    public Action parentAction;
+public class WorldState extends BaseWorldState implements Comparable<WorldState>, World {
 
     public boolean atAirship;
     public boolean robotHasGear;
     public int scoredGears;
     public float cost;
-
 
     public WorldState() {
 
@@ -24,14 +20,22 @@ public class WorldState implements Comparable<WorldState> {
 
     }
 
-    public WorldState(WorldState old) {
-        atAirship = old.atAirship;
-        robotHasGear = old.robotHasGear;
-        scoredGears = old.scoredGears;
-        cost = old.cost;
+    public WorldState getNext() {
+        WorldState newOne = new WorldState();
 
-        parentState = old;
-        parentAction = null;
+        newOne.atAirship = atAirship;
+        newOne.robotHasGear = robotHasGear;
+        newOne.scoredGears = scoredGears;
+        newOne.cost = cost;
+
+        newOne.parentState = this;
+        newOne.parentAction = null;
+        return newOne;
+    }
+
+    @Override
+    public boolean meetsPrerequisite(Prerequisite prerequisite) {
+        return prerequisite.has(this);
     }
 
     @Override

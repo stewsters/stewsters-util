@@ -1,6 +1,6 @@
 package com.stewsters.util.planner;
 
-public interface Prerequisite {
+public interface Prerequisite<W> {
 
-    boolean has(WorldState worldState);
+    boolean has(W worldState);
 }

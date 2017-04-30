@@ -6,27 +6,27 @@ import java.util.List;
 import java.util.Optional;
 import java.util.PriorityQueue;
 
-public class Planner {
+public class Planner<W extends World> {
 
-    public static Optional<List<Action>> plan(WorldState startingState, Fitness fitness, List<Action> actions, int maxCost) {
+    public Optional<List<Action>> plan(W startingState, Fitness<W> fitness, List<Action<W>> actions, int maxCost) {
 
-        ArrayList<WorldState> endState = new ArrayList<>();
+        ArrayList<W> endState = new ArrayList<>();
 
-        PriorityQueue<WorldState> openList = new PriorityQueue<>();
+        PriorityQueue<W> openList = new PriorityQueue<>();
         openList.add(startingState);
 
         // while we have a worldstate in the open
         while (openList.size() > 0) {
-            WorldState current = openList.poll();
+            World<W> current = openList.poll();
             actions.stream()
-                    .filter(it -> it.getPrerequisite().has(current))
+                    .filter(it ->  current.meetsPrerequisite(it.getPrerequisite()))
                     .forEach(action -> {
-                        WorldState next = new WorldState(current);
+                        W next = current.getNext();
                         action.getEffect().doIt(next);
-                        next.cost = current.cost + action.getCost(); //TODO: this may want to be in the effect
-                        next.parentAction = action;
-                        next.parentState = current;
-                        if (next.cost <= maxCost) {
+                        next.setCost(current.getCost() + action.getCost()); //TODO: this may want to be in the effect
+                        next.setParentAction(action);
+                        next.setParentState(current);
+                        if (next.getCost() <= maxCost) {
                             openList.add(next);
                         } else {
                             endState.add(next);
@@ -34,17 +34,17 @@ public class Planner {
                     });
         }
 
-        Optional<WorldState> optimalState = endState.stream()
+        Optional<W> optimalState = endState.stream()
                 .max((thing1, thing2) -> Float.compare(fitness.fitness(thing1), fitness.fitness(thing2)));
 
         if (optimalState.isPresent()) {
 
-            WorldState w = optimalState.get();
-            ArrayList<Action> plan = new ArrayList<Action>();
+            World<W> w = optimalState.get();
+            ArrayList<Action> plan = new ArrayList<>();
 
-            while (w.parentState != null) {
-                plan.add(w.parentAction);
-                w = w.parentState;
+            while (w.getParentState() != null) {
+                plan.add(w.getParentAction());
+                w = w.getParentState();
             }
             Collections.reverse(plan);
 

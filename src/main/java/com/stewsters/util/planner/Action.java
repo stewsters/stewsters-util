@@ -1,13 +1,13 @@
 package com.stewsters.util.planner;
 
-public class Action {
+public class Action<W> {
 
     private String name;
-    private Prerequisite prerequisite;
-    private Effect effect;
+    private Prerequisite<W> prerequisite;
+    private Effect<W> effect;
     private float cost;
 
-    public Action(String name, Prerequisite prerequisite, Effect effect, float cost) {
+    public Action(String name, Prerequisite<W> prerequisite, Effect<W> effect, float cost) {
 
         this.name = name;
         this.prerequisite = prerequisite;
@@ -20,7 +20,7 @@ public class Action {
         return name;
     }
 
-    public Prerequisite getPrerequisite() {
+    public Prerequisite<W> getPrerequisite() {
         return prerequisite;
     }
 

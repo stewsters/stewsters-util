@@ -1,7 +1,7 @@
 package com.stewsters.util.planner;
 
-public interface Effect {
+public interface Effect<W> {
 
-    WorldState doIt(WorldState worldState);
+    WorldState doIt(W worldState);
 
 }

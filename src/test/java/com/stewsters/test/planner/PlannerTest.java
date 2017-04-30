@@ -1,12 +1,14 @@
 package com.stewsters.test.planner;
 
 import com.stewsters.util.planner.Action;
+import com.stewsters.util.planner.Fitness;
 import com.stewsters.util.planner.Planner;
 import com.stewsters.util.planner.WorldState;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class PlannerTest {
 
@@ -18,8 +20,8 @@ public class PlannerTest {
         startingWorldState.robotHasGear = true;
         int maxCost = 100;
 
-        List<Action> actions = Arrays.asList(
-                new Action(
+        List<Action<WorldState>> actions = Arrays.asList(
+                new Action<>(
                         "Load Gear",
                         (WorldState w) -> {
                             return !w.robotHasGear && !w.atAirship;
@@ -30,7 +32,7 @@ public class PlannerTest {
                         },
                         10),
 
-                new Action(
+                new Action<>(
                         "Place Gear",
                         (WorldState w) -> {
                             return w.robotHasGear && w.atAirship;
@@ -42,7 +44,7 @@ public class PlannerTest {
                         },
                         10),
 
-                new Action(
+                new Action<>(
                         "Go To Airship",
                         (WorldState w) -> {
                             return !w.atAirship;
@@ -53,7 +55,7 @@ public class PlannerTest {
                         },
                         10),
 
-                new Action(
+                new Action<>(
                         "Go To Loading",
                         (WorldState w) -> {
                             return w.atAirship;
@@ -65,15 +67,28 @@ public class PlannerTest {
                         10)
         );
 
+        Planner p = new Planner<WorldState>();
 
-        Planner.plan(startingWorldState,
-                (WorldState w) -> w.scoredGears,
+        Optional<List<Action>> plan = p.plan(startingWorldState,
+                new Fitness<WorldState>() {
+                    @Override
+                    public float fitness(WorldState worldState) {
+                        return worldState.scoredGears;
+                    }
+                },
                 actions,
                 maxCost
-        ).get()
-                .stream()
-                .map(Action::getName)
-                .forEach(System.out::println);
+        );
+
+        if (plan.isPresent()) {
+            plan.get().stream()
+                    .map(Action::getName)
+                    .forEach(System.out::println);
+        } else {
+            System.out.println("Nope");
+        }
+
+
     }
 
 }

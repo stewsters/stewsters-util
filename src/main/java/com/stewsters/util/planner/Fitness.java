@@ -1,7 +1,7 @@
 package com.stewsters.util.planner;
 
-public interface Fitness {
+public interface Fitness<W extends World> {
 
-    float fitness(WorldState worldState);
+    float fitness(W worldState);
 
 }
