@@ -7,13 +7,15 @@ public interface World<W extends World> {
 
     void setCost(float cost);
 
-    void setParentAction(Action<W> action);
+    W getParentState();
 
     void setParentState(World<W> current);
 
-    W getParentState();
-
     Action getParentAction();
 
+    void setParentAction(Action<W> action);
+
     boolean meetsPrerequisite(Prerequisite<W> prerequisite);
+
+    void addCost(float cost);
 }

@@ -1,14 +1,17 @@
-package com.stewsters.util.planner;
+package com.stewsters.test.examples.plan;
 
 
-public class WorldState extends BaseWorldState implements Comparable<WorldState>, World {
+import com.stewsters.util.planner.BaseWorldState;
+import com.stewsters.util.planner.Prerequisite;
+import com.stewsters.util.planner.World;
+
+public class AirShipWorldState extends BaseWorldState implements Comparable<AirShipWorldState>, World {
 
     public boolean atAirship;
     public boolean robotHasGear;
     public int scoredGears;
-    public float cost;
 
-    public WorldState() {
+    public AirShipWorldState() {
 
         parentState = null;
         parentAction = null;
@@ -20,8 +23,8 @@ public class WorldState extends BaseWorldState implements Comparable<WorldState>
 
     }
 
-    public WorldState getNext() {
-        WorldState newOne = new WorldState();
+    public AirShipWorldState getNext() {
+        AirShipWorldState newOne = new AirShipWorldState();
 
         newOne.atAirship = atAirship;
         newOne.robotHasGear = robotHasGear;
@@ -39,7 +42,7 @@ public class WorldState extends BaseWorldState implements Comparable<WorldState>
     }
 
     @Override
-    public int compareTo(WorldState o) {
+    public int compareTo(AirShipWorldState o) {
         return Float.compare(cost, o.cost);
     }
 }

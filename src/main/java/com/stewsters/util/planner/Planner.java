@@ -19,11 +19,10 @@ public class Planner<W extends World> {
         while (openList.size() > 0) {
             World<W> current = openList.poll();
             actions.stream()
-                    .filter(it ->  current.meetsPrerequisite(it.getPrerequisite()))
+                    .filter(it -> current.meetsPrerequisite(it.getPrerequisite()))
                     .forEach(action -> {
                         W next = current.getNext();
                         action.getEffect().doIt(next);
-                        next.setCost(current.getCost() + action.getCost()); //TODO: this may want to be in the effect
                         next.setParentAction(action);
                         next.setParentState(current);
                         if (next.getCost() <= maxCost) {

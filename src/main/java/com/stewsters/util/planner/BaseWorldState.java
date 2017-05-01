@@ -18,8 +18,8 @@ public abstract class BaseWorldState implements World {
     }
 
     @Override
-    public void setParentAction(Action action) {
-        this.parentAction = action;
+    public World getParentState() {
+        return parentState;
     }
 
     @Override
@@ -28,13 +28,17 @@ public abstract class BaseWorldState implements World {
     }
 
     @Override
-    public World getParentState() {
-        return parentState;
-    }
-
-    @Override
     public Action getParentAction() {
         return parentAction;
     }
 
+    @Override
+    public void setParentAction(Action action) {
+        this.parentAction = action;
+    }
+
+    @Override
+    public void addCost(float cost) {
+        this.cost += cost;
+    }
 }

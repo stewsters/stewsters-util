@@ -5,14 +5,12 @@ public class Action<W> {
     private String name;
     private Prerequisite<W> prerequisite;
     private Effect<W> effect;
-    private float cost;
 
-    public Action(String name, Prerequisite<W> prerequisite, Effect<W> effect, float cost) {
+    public Action(String name, Prerequisite<W> prerequisite, Effect<W> effect) {
 
         this.name = name;
         this.prerequisite = prerequisite;
         this.effect = effect;
-        this.cost = cost;
 
     }
 
@@ -26,10 +24,6 @@ public class Action<W> {
 
     public Effect getEffect() {
         return effect;
-    }
-
-    public float getCost() {
-        return cost;
     }
 
 }
