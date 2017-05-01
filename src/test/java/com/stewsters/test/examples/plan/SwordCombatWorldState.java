@@ -12,7 +12,6 @@ public class SwordCombatWorldState extends BaseWorldState implements Comparable<
     public boolean hasSword;
 
     public SwordCombatWorldState() {
-
         parentState = null;
         parentAction = null;
         cost = 0;

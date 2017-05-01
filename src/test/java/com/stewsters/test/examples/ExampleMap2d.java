@@ -45,7 +45,7 @@ public class ExampleMap2d implements TileBasedMap2d {
 
     @Override
     public boolean isOutside(int x, int y) {
-        return x < 0 || y < 0 || x >= xSize || y >= ySize ;
+        return x < 0 || y < 0 || x >= xSize || y >= ySize;
     }
 
 }

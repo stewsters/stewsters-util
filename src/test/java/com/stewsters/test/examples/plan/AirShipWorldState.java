@@ -12,15 +12,13 @@ public class AirShipWorldState extends BaseWorldState implements Comparable<AirS
     public int scoredGears;
 
     public AirShipWorldState() {
-
         parentState = null;
         parentAction = null;
+        cost = 0;
 
         atAirship = true;
         robotHasGear = false;
         scoredGears = 0;
-        cost = 0;
-
     }
 
     public AirShipWorldState getNext() {

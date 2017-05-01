@@ -87,6 +87,7 @@ public class PlannerTest {
                     .forEach(System.out::println);
         } else {
             System.out.println("Nope");
+            assert false;
         }
 
     }
@@ -96,7 +97,7 @@ public class PlannerTest {
     public void testPlannerSwordUsage() {
 
         SwordCombatWorldState startingWorldState = new SwordCombatWorldState();
-        int maxCost = 400;
+        int maxCost = 100;
 
         List<Action<SwordCombatWorldState>> actions = Arrays.asList(
                 new Action<>(
@@ -143,7 +144,7 @@ public class PlannerTest {
                 new Action<>(
                         "Le Nap",
                         (SwordCombatWorldState w) -> {
-                            return w.opponentsHp <=0;
+                            return w.opponentsHp <= 0;
                         },
                         (SwordCombatWorldState w) -> {
                             w.addCost(10);
@@ -170,9 +171,9 @@ public class PlannerTest {
                     .forEach(System.out::println);
         } else {
             System.out.println("Nope");
+            assert false;
         }
 
     }
-
 
 }

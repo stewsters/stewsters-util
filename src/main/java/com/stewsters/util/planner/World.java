@@ -1,11 +1,14 @@
 package com.stewsters.util.planner;
 
 public interface World<W extends World> {
+
     W getNext();
 
     float getCost();
 
     void setCost(float cost);
+
+    void addCost(float cost);
 
     W getParentState();
 
@@ -17,5 +20,4 @@ public interface World<W extends World> {
 
     boolean meetsPrerequisite(Prerequisite<W> prerequisite);
 
-    void addCost(float cost);
 }
