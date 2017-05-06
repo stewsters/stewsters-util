@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.PriorityQueue;
+import java.util.stream.Collectors;
 
 public class Planner<W extends World> {
 
@@ -18,19 +19,24 @@ public class Planner<W extends World> {
         // while we have a worldstate in the open
         while (openList.size() > 0) {
             World<W> current = openList.poll();
-            actions.stream()
-                    .filter(it -> current.meetsPrerequisite(it.getPrerequisite()))
-                    .forEach(action -> {
-                        W next = current.getNext();
-                        action.getEffect().doIt(next);
-                        next.setParentAction(action);
-                        next.setParentState(current);
-                        if (next.getCost() <= maxCost) {
-                            openList.add(next);
-                        } else {
-                            endState.add(next);
-                        }
-                    });
+            List<Action<W>> viableActions = actions.stream().filter(it -> current.meetsPrerequisite(it.getPrerequisite())).collect(Collectors.toList());
+
+            if (viableActions.size() == 0) {
+                endState.add((W) current);
+                continue;
+            }
+
+            viableActions.forEach(action -> {
+                W next = current.getNext();
+                action.getEffect().doIt(next);
+                next.setParentAction(action);
+                next.setParentState(current);
+                if (next.getCost() <= maxCost) {
+                    openList.add(next);
+                } else {
+                    endState.add(next);
+                }
+            });
         }
 
         Optional<W> optimalState = endState.stream()
