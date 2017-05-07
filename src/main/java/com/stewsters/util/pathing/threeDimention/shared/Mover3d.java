@@ -1,7 +1,7 @@
 package com.stewsters.util.pathing.threeDimention.shared;
 
 
-import com.stewsters.util.pathing.threeDimention.pathfinder.AStarHeuristic3d;
+import com.stewsters.util.pathing.threeDimention.heuristic.AStarHeuristic3d;
 
 /**
  * <p>

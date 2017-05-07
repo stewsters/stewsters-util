@@ -3,9 +3,9 @@ package com.stewsters.test.pathfinding;
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap3d;
 import com.stewsters.test.examples.ExampleMover3d;
+import com.stewsters.util.pathing.threeDimention.heuristic.ChebyshevHeuristic3d;
+import com.stewsters.util.pathing.threeDimention.heuristic.ManhattanHeuristic3d;
 import com.stewsters.util.pathing.threeDimention.pathfinder.AStarPathFinder3d;
-import com.stewsters.util.pathing.threeDimention.pathfinder.ChebyshevHeuristic3d;
-import com.stewsters.util.pathing.threeDimention.pathfinder.ManhattanHeuristic3d;
 import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
 import org.junit.Test;
 

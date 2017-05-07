@@ -1,9 +1,9 @@
 package com.stewsters.test.examples.chunk;
 
 import com.stewsters.util.math.Point2i;
+import com.stewsters.util.pathing.twoDimention.heuristic.AStarHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.hpa.OverworldEdge;
 import com.stewsters.util.pathing.twoDimention.hpa.OverworldPathNode;
-import com.stewsters.util.pathing.twoDimention.pathfinder.AStarHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 
 import java.util.ArrayList;

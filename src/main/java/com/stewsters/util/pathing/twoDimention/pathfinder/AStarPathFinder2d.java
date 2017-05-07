@@ -1,5 +1,6 @@
 package com.stewsters.util.pathing.twoDimention.pathfinder;
 
+import com.stewsters.util.pathing.twoDimention.heuristic.AStarHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
 import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;

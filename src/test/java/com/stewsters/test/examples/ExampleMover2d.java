@@ -1,6 +1,6 @@
 package com.stewsters.test.examples;
 
-import com.stewsters.util.pathing.twoDimention.pathfinder.AStarHeuristic2d;
+import com.stewsters.util.pathing.twoDimention.heuristic.AStarHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 
 public class ExampleMover2d implements Mover2d {

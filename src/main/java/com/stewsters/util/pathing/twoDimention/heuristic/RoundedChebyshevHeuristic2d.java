@@ -1,4 +1,4 @@
-package com.stewsters.util.pathing.twoDimention.pathfinder;
+package com.stewsters.util.pathing.twoDimention.heuristic;
 
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
@@ -9,7 +9,7 @@ import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
  */
 public class RoundedChebyshevHeuristic2d implements AStarHeuristic2d {
     /**
-     * @see com.stewsters.util.pathing.twoDimention.pathfinder.AStarHeuristic2d#getCost(com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d, int, int, int, int)
+     * @see AStarHeuristic2d#getCost(com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d, int, int, int, int)
      */
     public float getCost(TileBasedMap2d map, int x, int y, int tx, int ty) {
 

@@ -1,4 +1,4 @@
-package com.stewsters.util.pathing.twoDimention.pathfinder;
+package com.stewsters.util.pathing.twoDimention.heuristic;
 
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 

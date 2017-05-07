@@ -5,8 +5,8 @@ import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap3d;
 import com.stewsters.test.examples.ExampleMover3d;
 import com.stewsters.util.pathing.threeDimention.djikstraMap.DjikstraMap3d;
-import com.stewsters.util.pathing.threeDimention.pathfinder.ChebyshevHeuristic3d;
-import com.stewsters.util.pathing.threeDimention.pathfinder.ManhattanHeuristic3d;
+import com.stewsters.util.pathing.threeDimention.heuristic.ChebyshevHeuristic3d;
+import com.stewsters.util.pathing.threeDimention.heuristic.ManhattanHeuristic3d;
 import org.junit.Test;
 
 public class DjikstraMap3dTest {

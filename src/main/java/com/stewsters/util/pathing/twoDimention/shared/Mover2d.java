@@ -1,6 +1,6 @@
 package com.stewsters.util.pathing.twoDimention.shared;
 
-import com.stewsters.util.pathing.twoDimention.pathfinder.AStarHeuristic2d;
+import com.stewsters.util.pathing.twoDimention.heuristic.AStarHeuristic2d;
 
 /**
  * <p>

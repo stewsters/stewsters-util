@@ -1,6 +1,6 @@
 package com.stewsters.test.examples;
 
-import com.stewsters.util.pathing.threeDimention.pathfinder.AStarHeuristic3d;
+import com.stewsters.util.pathing.threeDimention.heuristic.AStarHeuristic3d;
 import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
 
 public class ExampleMover3d implements Mover3d {

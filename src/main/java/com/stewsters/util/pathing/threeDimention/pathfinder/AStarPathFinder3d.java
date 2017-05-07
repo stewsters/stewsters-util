@@ -1,5 +1,8 @@
 package com.stewsters.util.pathing.threeDimention.pathfinder;
 
+import com.stewsters.util.pathing.threeDimention.heuristic.AStarHeuristic3d;
+import com.stewsters.util.pathing.threeDimention.heuristic.ManhattanHeuristic3d;
+import com.stewsters.util.pathing.threeDimention.heuristic.RoundedChebyshevHeuristic3d;
 import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
 import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
 import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;

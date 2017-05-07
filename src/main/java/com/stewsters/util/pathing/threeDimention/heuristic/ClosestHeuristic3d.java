@@ -1,4 +1,4 @@
-package com.stewsters.util.pathing.threeDimention.pathfinder;
+package com.stewsters.util.pathing.threeDimention.heuristic;
 
 import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
