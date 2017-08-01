@@ -7,10 +7,12 @@ import static com.stewsters.util.math.MatUtils.rand;
 public class MarkovModel<T> {
 
     private Map<T, ArrayList<T>> markovChain;
+    final int order;
     final T start;
     final T end;
 
-    public MarkovModel(T start, T end) {
+    public MarkovModel(int order, T start, T end) {
+        this.order = order;
         this.start = start;
         this.end = end;
 

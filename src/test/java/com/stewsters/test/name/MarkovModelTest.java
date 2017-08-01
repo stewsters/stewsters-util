@@ -19,7 +19,7 @@ public class MarkovModelTest {
 
     @Test
     public void testMarkovModelWithCharacters() {
-        MarkovModel<Character> markovMaleModel = new MarkovModel<>('+', '-');
+        MarkovModel<Character> markovMaleModel = new MarkovModel<>(2,'+', '-');
 
         Path path = Paths.get("build/resources/main/corpus/greekMaleNames.txt");
 
@@ -40,7 +40,7 @@ public class MarkovModelTest {
 
     @Test
     public void testMarkovModelWithStrings() throws IOException {
-        MarkovModel<String> markovModel = new MarkovModel<>("+", "-");
+        MarkovModel<String> markovModel = new MarkovModel<>(2,"+", "-");
 
         Path path = Paths.get("build/resources/main/corpus/grimms.txt");
 
