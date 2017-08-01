@@ -3,9 +3,9 @@ package com.stewsters.test.examples;
 import com.stewsters.util.mapgen.CellType;
 import com.stewsters.util.mapgen.twoDimension.GeneratedMap2d;
 
-public class ExampleGeneretedMap2d extends ExampleMap2d implements GeneratedMap2d {
+public class ExampleGeneratedMap2d extends ExampleMap2d implements GeneratedMap2d {
 
-    public ExampleGeneretedMap2d(int xSize, int ySize, ExampleCellType cellType) {
+    public ExampleGeneratedMap2d(int xSize, int ySize, ExampleCellType cellType) {
         super(xSize, ySize, cellType);
     }
 
