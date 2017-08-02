@@ -3,13 +3,15 @@ package com.stewsters.test.pathfinding;
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap2d;
 import com.stewsters.test.examples.ExampleMover2d;
+import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.heuristic.ChebyshevHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.heuristic.ClosestHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.heuristic.ManhattanHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.pathfinder.AStarPathFinder2d;
-import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
 import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -28,13 +30,13 @@ public class AStarPathfinder2dTest {
 
         ExampleMover2d exampleMover2d = new ExampleMover2d(map, new ManhattanHeuristic2d(), false);
 
-        FullPath2d fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 8, 8);
+        List<Point2i> fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 8, 8).get();
 
-        for (int i = 0; i < fullPath2d.getLength(); i++) {
-            System.out.println("x:" + fullPath2d.getStep(i).getX() + " y:" + fullPath2d.getStep(i).getY());
+        for (int i = 0; i < fullPath2d.size(); i++) {
+            System.out.println("x:" + fullPath2d.get(i).x + " y:" + fullPath2d.get(i).y);
         }
 
-        assertEquals(15, fullPath2d.getLength());
+        assertEquals(15, fullPath2d.size());
 
     }
 
@@ -54,14 +56,14 @@ public class AStarPathfinder2dTest {
 
         ExampleMover2d exampleMover2d = new ExampleMover2d(map, new ManhattanHeuristic2d(), false, 2, 2);
 
-        FullPath2d fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 8, 1);
+        List<Point2i> fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 8, 1).get();
 
-        for (int i = 0; i < fullPath2d.getLength(); i++) {
-            System.out.println("x:" + fullPath2d.getStep(i).getX() + " y:" + fullPath2d.getStep(i).getY());
+        for (int i = 0; i < fullPath2d.size(); i++) {
+            System.out.println("x:" + fullPath2d.get(i).x + " y:" + fullPath2d.get(i).y);
         }
 
 
-        assertEquals(22, fullPath2d.getLength());
+        assertEquals(22, fullPath2d.size());
 
     }
 
@@ -75,14 +77,13 @@ public class AStarPathfinder2dTest {
 
         ExampleMover2d exampleMover2d = new ExampleMover2d(map, new ChebyshevHeuristic2d(), true);
 
-        FullPath2d fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 8, 8);
+        List<Point2i> fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 8, 8).get();
 
-
-        for (int i = 0; i < fullPath2d.getLength(); i++) {
-            System.out.println("x:" + fullPath2d.getStep(i).getX() + " y:" + fullPath2d.getStep(i).getY());
+        for (int i = 0; i < fullPath2d.size(); i++) {
+            System.out.println("x:" + fullPath2d.get(i).x + " y:" + fullPath2d.get(i).y);
         }
 
-        assertEquals(8, fullPath2d.getLength());
+        assertEquals(8, fullPath2d.size());
 
     }
 
@@ -97,14 +98,13 @@ public class AStarPathfinder2dTest {
 
         Mover2d exampleMover2d = new ExampleMover2d(map, new ClosestHeuristic2d(), true);
 
-        FullPath2d fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 9, 19);
+        List<Point2i> fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 9, 19).get();
 
-
-        for (int i = 0; i < fullPath2d.getLength(); i++) {
-            System.out.println("x:" + fullPath2d.getStep(i).getX() + " y:" + fullPath2d.getStep(i).getY());
+        for (int i = 0; i < fullPath2d.size(); i++) {
+            System.out.println("x:" + fullPath2d.get(i).x + " y:" + fullPath2d.get(i).y);
         }
 
-        assertEquals(19, fullPath2d.getLength());
+        assertEquals(19, fullPath2d.size());
 
     }
 
@@ -119,13 +119,13 @@ public class AStarPathfinder2dTest {
 
         ExampleMover2d exampleMover2d = new ExampleMover2d(map, new ChebyshevHeuristic2d(), true);
 
-        FullPath2d fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 1999, 1999);
+        List<Point2i> fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 1999, 1999).get();
 
 //        for (int i = 0; i < fullPath2d.getLength(); i++) {
 //            System.out.println("x:" + fullPath2d.getStep(i).getX() + " y:" + fullPath2d.getStep(i).getY());
 //        }
 
-        assertEquals(1999, fullPath2d.getLength());
+        assertEquals(1999, fullPath2d.size());
 
     }
 }

@@ -1,8 +1,11 @@
 package com.stewsters.util.pathing.threeDimention.pathfinder;
 
 
-import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
+import com.stewsters.util.math.Point3i;
 import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * A description of an implementation that can find a path from one
@@ -30,5 +33,5 @@ public interface PathFinder3d {
      * @param tz    The z coordinate of the target location
      * @return The path found from start to end, or null if no path can be found.
      */
-    FullPath3d findPath(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz);
+    Optional<List<Point3i>> findPath(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz);
 }

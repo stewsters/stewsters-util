@@ -12,6 +12,7 @@ class GroovyPlannerTest {
     /*
     * Groovy closures are different here, testing that they work
      */
+
     @Test
     public void testPlannerSwordUsage() {
 

@@ -22,7 +22,7 @@ public class Action<W> {
         return prerequisite;
     }
 
-    public Effect getEffect() {
+    public Effect<W> getEffect() {
         return effect;
     }
 

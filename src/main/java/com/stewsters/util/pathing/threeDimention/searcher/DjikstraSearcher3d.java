@@ -1,10 +1,14 @@
 package com.stewsters.util.pathing.threeDimention.searcher;
 
-import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
+import com.stewsters.util.math.Point3i;
 import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
 import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
 import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.PriorityQueue;
 
 public class DjikstraSearcher3d implements Searcher3d {
@@ -51,7 +55,7 @@ public class DjikstraSearcher3d implements Searcher3d {
     }
 
     @Override
-    public FullPath3d search(Mover3d mover, int sx, int sy, int sz, Objective3d objective) {
+    public Optional<List<Point3i>> search(Mover3d mover, int sx, int sy, int sz, Objective3d objective) {
         reset();
 
         nodes[sx][sy][sz].cost = 0;
@@ -137,7 +141,7 @@ public class DjikstraSearcher3d implements Searcher3d {
 
         // since we'e've run out of search, there was no path. Just return null
         if (target == null) {
-            return null;
+            return Optional.empty();
         }
 
         /* At this point we've definitely found a path so we can use the parent
@@ -145,16 +149,16 @@ public class DjikstraSearcher3d implements Searcher3d {
          * to the start recording the nodes on the way.
         */
 
-        FullPath3d path = new FullPath3d();
+        List<Point3i> path = new ArrayList<>();
         while (target != nodes[sx][sy][sz]) {
-            path.appendStep(target.x, target.y, target.z);
+            path.add(new Point3i(target.x, target.y, target.z));
             target = target.parent;
         }
-        path.appendStep(sx, sy, sz);
-        path.reverse();
+        path.add(new Point3i(sx, sy, sz));
+        Collections.reverse(path);
 
         // thats it, we have our path
-        return path;
+        return Optional.of(path);
     }
 
 

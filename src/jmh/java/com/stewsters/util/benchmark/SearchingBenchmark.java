@@ -5,20 +5,22 @@ import com.stewsters.test.examples.ExampleMap2d;
 import com.stewsters.test.examples.ExampleMap3d;
 import com.stewsters.test.examples.ExampleMover2d;
 import com.stewsters.test.examples.ExampleMover3d;
+import com.stewsters.util.math.Point2i;
+import com.stewsters.util.math.Point3i;
 import com.stewsters.util.pathing.threeDimention.heuristic.ChebyshevHeuristic3d;
 import com.stewsters.util.pathing.threeDimention.searcher.DjikstraSearcher3d;
 import com.stewsters.util.pathing.threeDimention.searcher.Objective3d;
-import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
 import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
 import com.stewsters.util.pathing.twoDimention.heuristic.ChebyshevHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.searcher.DjikstraSearcher2d;
 import com.stewsters.util.pathing.twoDimention.searcher.Objective2d;
-import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
+
+import java.util.List;
 
 @State(Scope.Thread)
 public class SearchingBenchmark {
@@ -59,15 +61,15 @@ public class SearchingBenchmark {
 
     @Benchmark
     public void timeSearching2d() {
-        FullPath2d fullPath2d = searcher2d.search(exampleMover2d, 0, 0, objective2d);
+        List<Point2i> fullPath2d = searcher2d.search(exampleMover2d, 0, 0, objective2d).get();
         assert fullPath2d != null;
-        assert fullPath2d.getLength() == 198;
+        assert fullPath2d.size() == 198;
     }
 
     @Benchmark
     public void timeSearching3d() {
-        FullPath3d fullPath3d = searcher3d.search(exampleMover3d, 0, 0, 0, objective3d);
+        List<Point3i> fullPath3d = searcher3d.search(exampleMover3d, 0, 0, 0, objective3d).get();
         assert fullPath3d != null;
-        assert fullPath3d.getLength() == 198;
+        assert fullPath3d.size() == 198;
     }
 }

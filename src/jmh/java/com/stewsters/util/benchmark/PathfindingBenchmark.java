@@ -5,16 +5,18 @@ import com.stewsters.test.examples.ExampleMap2d;
 import com.stewsters.test.examples.ExampleMap3d;
 import com.stewsters.test.examples.ExampleMover2d;
 import com.stewsters.test.examples.ExampleMover3d;
+import com.stewsters.util.math.Point2i;
+import com.stewsters.util.math.Point3i;
 import com.stewsters.util.pathing.threeDimention.heuristic.ChebyshevHeuristic3d;
 import com.stewsters.util.pathing.threeDimention.pathfinder.AStarPathFinder3d;
-import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
 import com.stewsters.util.pathing.twoDimention.heuristic.ChebyshevHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.pathfinder.AStarPathFinder2d;
-import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
+
+import java.util.List;
 
 @State(Scope.Thread)
 public class PathfindingBenchmark {
@@ -45,15 +47,15 @@ public class PathfindingBenchmark {
     //======== benchmarks ========//
     @Benchmark
     public void timePathing2d() {
-        FullPath2d fullPath2d = pathfinder2d.findPath(exampleMover2d, 0, 0, 99, 99);
+        List<Point2i> fullPath2d = pathfinder2d.findPath(exampleMover2d, 0, 0, 99, 99).get();
         assert fullPath2d != null;
-        assert fullPath2d.getLength() == 198;
+        assert fullPath2d.size() == 198;
     }
 
     @Benchmark
     public void timePathing3d() {
-        FullPath3d fullPath3d = pathfinder3d.findPath(exampleMover3d, 0, 0, 0, 99, 99, 99);
+        List<Point3i> fullPath3d = pathfinder3d.findPath(exampleMover3d, 0, 0, 0, 99, 99, 99).get();
         assert fullPath3d != null;
-        assert fullPath3d.getLength() == 198;
+        assert fullPath3d.size() == 198;
     }
 }

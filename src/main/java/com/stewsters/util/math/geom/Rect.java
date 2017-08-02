@@ -5,12 +5,11 @@ import com.stewsters.util.math.Point2i;
 /**
  * int rectangle
  */
-public class Rect {
+public class Rect implements Container2d {
     public int x1;
     public int x2;
     public int y1;
     public int y2;
-
 
     public Rect(int x1, int y1, int x2, int y2) {
         this.x1 = x1;

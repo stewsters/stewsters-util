@@ -1,8 +1,11 @@
 package com.stewsters.util.pathing.twoDimention.pathfinder;
 
 
-import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
+import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * A description of an implementation that can find a path from one
@@ -28,5 +31,5 @@ public interface PathFinder2d {
      * @param ty    Teh y coordinate of the target location
      * @return The path found from start to end, or null if no path can be found.
      */
-    FullPath2d findPath(Mover2d mover, int sx, int sy, int tx, int ty);
+    Optional<List<Point2i>> findPath(Mover2d mover, int sx, int sy, int tx, int ty);
 }

@@ -3,11 +3,13 @@ package com.stewsters.test.pathfinding;
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap3d;
 import com.stewsters.test.examples.ExampleMover3d;
+import com.stewsters.util.math.Point3i;
 import com.stewsters.util.pathing.threeDimention.heuristic.ChebyshevHeuristic3d;
 import com.stewsters.util.pathing.threeDimention.heuristic.ManhattanHeuristic3d;
 import com.stewsters.util.pathing.threeDimention.pathfinder.AStarPathFinder3d;
-import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,13 +28,13 @@ public class AStarPathfinder3dTest {
         ExampleMover3d exampleMover3d = new ExampleMover3d(map, new ManhattanHeuristic3d(), false);
 
 
-        FullPath3d fullPath3d = pathfinder.findPath(exampleMover3d, 1, 1, 1, 8, 8, 8);
+        List<Point3i> fullPath3d = pathfinder.findPath(exampleMover3d, 1, 1, 1, 8, 8, 8).get();
 
-        for (int i = 0; i < fullPath3d.getLength(); i++) {
-            System.out.println("x:" + fullPath3d.getStep(i).getX() + " y:" + fullPath3d.getStep(i).getY() + " z:" + fullPath3d.getStep(i).getZ());
+        for (int i = 0; i < fullPath3d.size(); i++) {
+            System.out.println("x:" + fullPath3d.get(i).x + " y:" + fullPath3d.get(i).y + " z:" + fullPath3d.get(i).z);
         }
 
-        assertEquals(fullPath3d.getLength(), 22);
+        assertEquals(fullPath3d.size(), 22);
 
     }
 
@@ -45,14 +47,14 @@ public class AStarPathfinder3dTest {
 
         ExampleMover3d exampleMover3d = new ExampleMover3d(map, new ChebyshevHeuristic3d(), true);
 
-        FullPath3d fullPath3d = pathfinder.findPath(exampleMover3d, 1, 1, 1, 8, 8, 8);
+        List<Point3i> fullPath3d = pathfinder.findPath(exampleMover3d, 1, 1, 1, 8, 8, 8).get();
 
 
-        for (int i = 0; i < fullPath3d.getLength(); i++) {
-            System.out.println("x:" + fullPath3d.getStep(i).getX() + " y:" + fullPath3d.getStep(i).getY() + " z:" + fullPath3d.getStep(i).getZ());
+        for (int i = 0; i < fullPath3d.size(); i++) {
+            System.out.println("x:" + fullPath3d.get(i).x + " y:" + fullPath3d.get(i).y + " z:" + fullPath3d.get(i).x);
         }
 
-        assertEquals(fullPath3d.getLength(), 8);
+        assertEquals(fullPath3d.size(), 8);
 
     }
 
