@@ -1,3 +1,5 @@
+package com.stewsters.test
+
 import com.stewsters.util.math.Point2i
 import com.stewsters.util.math.Point3i
 import groovy.transform.CompileStatic
