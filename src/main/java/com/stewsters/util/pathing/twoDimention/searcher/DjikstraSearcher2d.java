@@ -1,10 +1,14 @@
 package com.stewsters.util.pathing.twoDimention.searcher;
 
-import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
+import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.PriorityQueue;
 
 public class DjikstraSearcher2d implements Searcher2d {
@@ -45,7 +49,7 @@ public class DjikstraSearcher2d implements Searcher2d {
     }
 
     @Override
-    public FullPath2d search(Mover2d mover, int sx, int sy, Objective2d objective) {
+    public Optional<List<Point2i>> search(Mover2d mover, int sx, int sy, Objective2d objective) {
         reset();
 
         boolean allowDiagMovement = mover.getDiagonal();
@@ -138,7 +142,7 @@ public class DjikstraSearcher2d implements Searcher2d {
         // there was no path. Just return null
 
         if (target == null) {
-            return null;
+            return Optional.empty();
         }
 
         // At this point we've definitely found a path so we can uses the parent
@@ -146,16 +150,16 @@ public class DjikstraSearcher2d implements Searcher2d {
         // references of the nodes to find out way from the target location back
 
         // to the start recording the nodes on the way.
-        FullPath2d path = new FullPath2d();
+        List<Point2i> path = new ArrayList<>();
         while (target != nodes[sx][sy]) {
-            path.appendStep(target.x, target.y);
+            path.add(new Point2i(target.x, target.y));
             target = target.parent;
         }
-        path.appendStep(sx, sy);
-        path.reverse();
+        path.add(new Point2i(sx, sy));
+        Collections.reverse(path);
 
         // thats it, we have our path
-        return path;
+        return Optional.of(path);
     }
 
     /**

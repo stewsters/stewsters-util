@@ -4,12 +4,14 @@ package com.stewsters.test.pathfinding;
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap2d;
 import com.stewsters.test.examples.ExampleMover2d;
+import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.heuristic.ChebyshevHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.searcher.DjikstraSearcher2d;
 import com.stewsters.util.pathing.twoDimention.searcher.Objective2d;
-import com.stewsters.util.pathing.twoDimention.shared.FullPath2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -31,13 +33,13 @@ public class DjikstraSearcher2dTest {
             }
         };
 
-        FullPath2d fullPath2d = pathfinder.search(exampleMover2d, 1, 1, objective2d);
+        List<Point2i> fullPath2d = pathfinder.search(exampleMover2d, 1, 1, objective2d).get();
 
-        for (int i = 0; i < fullPath2d.getLength(); i++) {
-            System.out.println("x:" + fullPath2d.getStep(i).getX() + " y:" + fullPath2d.getStep(i).getY());
+        for (int i = 0; i < fullPath2d.size(); i++) {
+            System.out.println("x:" + fullPath2d.get(i).x + " y:" + fullPath2d.get(i).y);
         }
 
-        assertEquals(fullPath2d.getLength(), 15);
+        assertEquals(fullPath2d.size(), 15);
     }
 
     @Test
@@ -56,13 +58,13 @@ public class DjikstraSearcher2dTest {
             }
         };
 
-        FullPath2d fullPath2d = pathfinder.search(exampleMover2d, 1, 1, objective2d);
+        List<Point2i> fullPath2d = pathfinder.search(exampleMover2d, 1, 1, objective2d).get();
 
-        for (int i = 0; i < fullPath2d.getLength(); i++) {
-            System.out.println("x:" + fullPath2d.getStep(i).getX() + " y:" + fullPath2d.getStep(i).getY());
+        for (int i = 0; i < fullPath2d.size(); i++) {
+            System.out.println("x:" + fullPath2d.get(i).x + " y:" + fullPath2d.get(i).y);
         }
 
-        assertEquals(fullPath2d.getLength(), 8);
+        assertEquals(fullPath2d.size(), 8);
     }
 
 }

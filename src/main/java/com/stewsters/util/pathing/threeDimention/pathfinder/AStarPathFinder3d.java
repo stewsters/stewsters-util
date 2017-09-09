@@ -1,13 +1,17 @@
 package com.stewsters.util.pathing.threeDimention.pathfinder;
 
+import com.stewsters.util.math.Point3i;
 import com.stewsters.util.pathing.threeDimention.heuristic.AStarHeuristic3d;
 import com.stewsters.util.pathing.threeDimention.heuristic.ManhattanHeuristic3d;
 import com.stewsters.util.pathing.threeDimention.heuristic.RoundedChebyshevHeuristic3d;
-import com.stewsters.util.pathing.threeDimention.shared.FullPath3d;
 import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
 import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
 import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.PriorityQueue;
 
 /**
@@ -96,7 +100,7 @@ public class AStarPathFinder3d implements PathFinder3d {
     /**
      * @see PathFinder3d#findPath(com.stewsters.util.pathing.threeDimention.shared.Mover3d, int, int, int, int, int, int)
      */
-    public FullPath3d findPath(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
+    public Optional<List<Point3i>> findPath(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
         // easy first check, if the destination is blocked, we can't get there
 
         if (!mover.canOccupy(tx, ty, tz)) {
@@ -190,22 +194,23 @@ public class AStarPathFinder3d implements PathFinder3d {
         // since we'e've run out of search
         // there was no path. Just return null
         if (nodes[tx][ty][tz].parent == null) {
-            return null;
+            return Optional.empty();
         }
 
         // At this point we've definitely found a path so we can uses the parent  references of the nodes to find out
         // way from the target location back to the start recording the nodes on the way.
-        FullPath3d path = new FullPath3d();
+        List<Point3i> path = new ArrayList<>();
         PathNode3d target = nodes[tx][ty][tz];
         while (target != nodes[sx][sy][sz]) {
-            path.appendStep(target.x, target.y, target.z);
+            path.add(new Point3i(target.x, target.y, target.z));
             target = target.parent;
         }
-        path.appendStep(sx, sy, sz);
-        path.reverse();
+        path.add(new Point3i(sx, sy, sz));
+
+        Collections.reverse(path);
 
         // thats it, we have our path
-        return path;
+        return Optional.of(path);
     }
 
     /**
