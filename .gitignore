@@ -9,4 +9,5 @@
 *.iml
 gradle.properties
 build/
+out/
 !gradle/wrapper/gradle-wrapper.jar
