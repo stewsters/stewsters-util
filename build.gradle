@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-        classpath "me.champeau.gradle:jmh-gradle-plugin:0.3.1"
+        classpath "me.champeau.gradle:jmh-gradle-plugin:0.4.4"
     }
 }
 plugins {
@@ -16,8 +16,8 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id "com.jfrog.bintray" version "1.7.3"
-    id "me.champeau.gradle.jmh" version "0.3.1"
-    id "net.saliman.cobertura" version "2.4.0"
+    id "me.champeau.gradle.jmh" version "0.4.4"
+    id "net.saliman.cobertura" version "2.5.0"
 }
 repositories {
     mavenCentral()
@@ -36,12 +36,12 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 group = 'com.stewsters.util'
-version = '0.18'
+version = '0.19'
 
 dependencies {
     testCompile 'junit:junit:4.12'
-    testCompile "org.codehaus.groovy:groovy-all:2.4.8"
-    testRuntime 'org.slf4j:slf4j-nop:1.7.12' // for cobertura
+    testCompile "org.codehaus.groovy:groovy-all:2.4.12"
+    testRuntime 'org.slf4j:slf4j-nop:1.7.25' // for cobertura
 }
 
 if (!project.hasProperty('bintray_net_user')) {
@@ -112,8 +112,8 @@ bintray {
 
         //Optional version descriptor
         version {
-            name = "0.18" //Bintray logical version name
-            vcsTag = "0.18"
+            name = "0.19" //Bintray logical version name
+            vcsTag = "0.19"
         }
     }
 
@@ -124,7 +124,7 @@ jmh {
     fork = 5
     warmupIterations = 5
 
-    jmhVersion = '1.17.3'
+    jmhVersion = '1.19'
 }
 
 cobertura {
