@@ -1,81 +1,69 @@
 package com.stewsters.util.name;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Random;
 
-import static com.stewsters.util.math.MatUtils.rand;
+public class MarkovModel<K> {
 
-public class MarkovModel<T> {
+    private Random rand = new Random();     // initial prefix
+    private final int prefixLength;    // size of prefix
+    private final K NONWORD; // "word" that can't appear
 
-    private Map<T, ArrayList<T>> markovChain;
-    final int order;
-    final T start;
-    final T end;
+    private Hashtable<Prefix<K>, ArrayList<K>> statetab;
 
-    public MarkovModel(int order, T start, T end) {
-        this.order = order;
-        this.start = start;
-        this.end = end;
+    // Prefix to Suffix
+    private Prefix<K> prefix;
 
-        markovChain = new Hashtable<>();
-        markovChain.put(start, new ArrayList<T>());
+    public MarkovModel(K nonword, int prefixLength) {
+        NONWORD = nonword;
+        this.prefixLength = prefixLength;
+        statetab = new Hashtable<>();
+        prefix = new Prefix<K>(prefixLength, NONWORD);
     }
 
-    public void addSample(List<T> sample) {
-
-        for (int i = 0; i < sample.size(); i++) {
-
-            if (i == 0) {
-                ArrayList<T> startWords = markovChain.get(start);
-                startWords.add(sample.get(0));
-
-            } else {
-                ArrayList<T> suffix = markovChain.get(sample.get(i));
-                if (suffix == null) {
-                    suffix = new ArrayList<T>();
-                    markovChain.put(sample.get(i), suffix);
-                }
-
-                if (i == sample.size() - 1) {
-                    suffix.add(end);
-                } else
-                    suffix.add(sample.get(i + 1));
-            }
+    public void addSample(K[] list) {
+        prefix = new Prefix<K>(prefixLength, NONWORD);
+        for (K k : list) {
+            add(k);
         }
-
+        add(NONWORD);
     }
 
-    public ArrayList<T> generateSample(int min, int max) {
-
-        ArrayList<T> newPhrase = new ArrayList<T>();
-        T nextWord = rand(markovChain.get(start));
-
-        // Keep looping through the words until we've reached the end
-        while (true) {
-
-            newPhrase.add(nextWord);
-            ArrayList<T> nextOptions = markovChain.get(nextWord);
-
-            if (nextOptions == null || nextOptions.size() <= 0)
-                break;
-
-            if ( newPhrase.size() < min) {
-                nextOptions = (ArrayList<T>) nextOptions.clone();
-                nextOptions.removeAll(Collections.singleton(end));
-            }
-
-            if (newPhrase.size() >= max)
-                break;
-
-            try {
-                nextWord = rand(nextOptions);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-            if (nextWord == end) {
-                break;
-            }
+    // Chain add: add word to suffix list, update prefix
+    private void add(K word) {
+        ArrayList<K> suf = statetab.get(prefix);
+        if (suf == null) {
+            suf = new ArrayList<K>();
+            statetab.put(new Prefix<K>(prefix), suf);
         }
+        suf.add(word);
+        prefix.pref.remove(0);
+        prefix.pref.add(word);
+    }
 
-        return newPhrase;
+    // Chain generate: generate output words
+    public List<K> generate(int maxLength) {
+        List<K> output = new ArrayList<>();
+
+        prefix = new Prefix(prefixLength, NONWORD);
+        for (int i = 0; i < maxLength; i++) {
+            ArrayList<K> possibleSuffixes = statetab.get(prefix);
+            if (possibleSuffixes == null) {
+                System.err.println("Markov: internal error: no state");
+                System.exit(1);
+            }
+            int r = Math.abs(rand.nextInt()) % possibleSuffixes.size();
+            K suf = possibleSuffixes.get(r);
+            if (suf.equals(NONWORD)) {
+                break;
+            }
+            output.add(suf);
+
+            prefix.pref.remove(0);
+            prefix.pref.add(suf);
+        }
+        return output;
     }
 }

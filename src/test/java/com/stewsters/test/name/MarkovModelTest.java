@@ -14,17 +14,18 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.stewsters.util.name.ModernNameGen.capitalize;
+import static com.stewsters.util.name.StringUtils.stringToCharacterArray;
 
 public class MarkovModelTest {
 
     @Test
     public void testMarkovModelWithCharacters() {
-        MarkovModel<Character> markovMaleModel = new MarkovModel<>(2,'+', '-');
+        MarkovModel<Character> markovMaleModel = new MarkovModel<Character>('+', 2);
 
-        Path path = Paths.get("build/resources/main/corpus/greekMaleNames.txt");
+        Path path = Paths.get("build/resources/test/corpus/greekMaleNames.txt");
 
         try (Stream<String> stream = Files.lines(path)) {
-            stream.forEach(string -> markovMaleModel.addSample(stringToCharacterList(string)));
+            stream.forEach(string -> markovMaleModel.addSample(stringToCharacterArray(string)));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -32,7 +33,7 @@ public class MarkovModelTest {
 
         for (int i = 0; i < 10; i++) {
             System.out.println(
-                    markovMaleModel.generateSample(5, 8).stream()
+                    markovMaleModel.generate( 8).stream()
                             .map(e -> e.toString()).collect(Collectors.joining()));
         }
 
@@ -40,9 +41,9 @@ public class MarkovModelTest {
 
     @Test
     public void testMarkovModelWithStrings() throws IOException {
-        MarkovModel<String> markovModel = new MarkovModel<>(2,"+", "-");
+        MarkovModel<String> markovModel = new MarkovModel<String>("+",2);
 
-        Path path = Paths.get("build/resources/main/corpus/grimms.txt");
+        Path path = Paths.get("build/resources/test/corpus/grimms.txt");
 
         String fullText = Files.readAllLines(path)
                 .stream()
@@ -53,16 +54,14 @@ public class MarkovModelTest {
                 .split("\\."));
 
         sentences.forEach(sentence ->
-                markovModel.addSample(Arrays.asList(sentence.trim().split("\\s+")))
+                markovModel.addSample(sentence.trim().split("\\s+"))
         );
 
         for (int i = 0; i < 20; i++) {
             System.out.println(
-                    capitalize(markovModel.generateSample(3, 12).stream().collect(Collectors.joining(" "))) + ". ");
+                    capitalize(markovModel.generate( 12).stream().collect(Collectors.joining(" "))) + ". ");
         }
     }
 
-    private ArrayList<Character> stringToCharacterList(String string) {
-        return new ArrayList<>(string.chars().mapToObj(e -> (char) e).collect(Collectors.toList()));
-    }
+
 }
