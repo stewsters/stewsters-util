@@ -1,10 +1,10 @@
 package com.stewsters.util.pathing.twoDimention.searcher;
 
 import com.stewsters.util.math.Point2i;
+import com.stewsters.util.pathing.twoDimention.shared.BoundingBox2d;
 import com.stewsters.util.pathing.twoDimention.shared.CanTraverse2d;
 import com.stewsters.util.pathing.twoDimention.shared.MovementCost2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
-import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,7 +18,7 @@ public class DjikstraSearcher2d implements Searcher2d {
     private PriorityQueue<PathNode2d> open = new PriorityQueue<>();
 
     // The map being searched
-    private TileBasedMap2d map;
+    private BoundingBox2d map;
 
     // The maximum depth of search we're willing to accept before giving up
     private int maxSearchDistance;
@@ -27,7 +27,7 @@ public class DjikstraSearcher2d implements Searcher2d {
     private PathNode2d[][] nodes;
 
 
-    public DjikstraSearcher2d(TileBasedMap2d map, int maxSearchDistance) {
+    public DjikstraSearcher2d(BoundingBox2d map, int maxSearchDistance) {
         this.map = map;
         this.maxSearchDistance = maxSearchDistance;
 
@@ -171,16 +171,16 @@ public class DjikstraSearcher2d implements Searcher2d {
     /**
      * Check if a given location is valid for the supplied mover
      *
-     * @param mover The mover that would hold a given location
-     * @param sx    The starting x coordinate
-     * @param sy    The starting y coordinate
-     * @param tx    The x coordinate of the location to check
-     * @param ty    The y coordinate of the location to check
+     * @param canTraverse2d The mover that would hold a given location
+     * @param sx            The starting x coordinate
+     * @param sy            The starting y coordinate
+     * @param tx            The x coordinate of the location to check
+     * @param ty            The y coordinate of the location to check
      * @return True if the location is valid for the given mover
      */
-    protected boolean isValidLocation(CanTraverse2d mover, int sx, int sy, int tx, int ty) {
+    protected boolean isValidLocation(CanTraverse2d canTraverse2d, int sx, int sy, int tx, int ty) {
         return !((tx < 0) || (ty < 0)
                 || (tx >= map.getXSize()) || (ty >= map.getYSize()))
-                && mover.canTraverse(sx, sy, tx, ty);
+                && canTraverse2d.canTraverse(sx, sy, tx, ty);
     }
 }

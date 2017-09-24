@@ -1,10 +1,10 @@
 package com.stewsters.util.pathing.threeDimention.searcher;
 
 import com.stewsters.util.math.Point3i;
+import com.stewsters.util.pathing.threeDimention.shared.BoundingBox3d;
 import com.stewsters.util.pathing.threeDimention.shared.CanTraverse3d;
 import com.stewsters.util.pathing.threeDimention.shared.MovementCost3d;
 import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
-import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,7 +18,7 @@ public class DjikstraSearcher3d implements Searcher3d {
     private PriorityQueue<PathNode3d> open = new PriorityQueue<>();
 
     // The map being searched
-    private TileBasedMap3d map;
+    private BoundingBox3d map;
 
     // The maximum depth of search we're willing to accept before giving up
     private int maxSearchDistance;
@@ -26,7 +26,7 @@ public class DjikstraSearcher3d implements Searcher3d {
     // The complete set of nodes across the map
     private PathNode3d[][][] nodes;
 
-    public DjikstraSearcher3d(TileBasedMap3d map, int maxSearchDistance) {
+    public DjikstraSearcher3d(BoundingBox3d map, int maxSearchDistance) {
         this.map = map;
         this.maxSearchDistance = maxSearchDistance;
 
@@ -170,18 +170,18 @@ public class DjikstraSearcher3d implements Searcher3d {
     /**
      * Check if a given location is valid for the supplied mover
      *
-     * @param mover The mover that would hold a given location
-     * @param sx    The starting x coordinate
-     * @param sy    The starting y coordinate
-     * @param sz    The starting z coordinate
-     * @param tx    The x coordinate of the location to check
-     * @param ty    The y coordinate of the location to check
-     * @param tz    The z coordinate of the location to check
+     * @param canTraverse3d The mover that would hold a given location
+     * @param sx            The starting x coordinate
+     * @param sy            The starting y coordinate
+     * @param sz            The starting z coordinate
+     * @param tx            The x coordinate of the location to check
+     * @param ty            The y coordinate of the location to check
+     * @param tz            The z coordinate of the location to check
      * @return True if the location is valid for the given mover
      */
-    protected boolean isValidLocation(CanTraverse3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
+    protected boolean isValidLocation(CanTraverse3d canTraverse3d, int sx, int sy, int sz, int tx, int ty, int tz) {
         return !((tx < 0) || (ty < 0) || (tz < 0)
                 || (tx >= map.getXSize()) || (ty >= map.getYSize()) || (tz >= map.getZSize()))
-                && mover.canTraverse(sx, sy, sz, tx, ty, tz);
+                && canTraverse3d.canTraverse(sx, sy, sz, tx, ty, tz);
     }
 }

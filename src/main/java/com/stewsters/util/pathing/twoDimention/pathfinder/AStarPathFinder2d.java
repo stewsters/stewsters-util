@@ -2,11 +2,11 @@ package com.stewsters.util.pathing.twoDimention.pathfinder;
 
 import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.heuristic.AStarHeuristic2d;
+import com.stewsters.util.pathing.twoDimention.shared.BoundingBox2d;
 import com.stewsters.util.pathing.twoDimention.shared.CanOccupy2d;
 import com.stewsters.util.pathing.twoDimention.shared.CanTraverse2d;
 import com.stewsters.util.pathing.twoDimention.shared.MovementCost2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
-import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +26,7 @@ public class AStarPathFinder2d implements PathFinder2d {
     private PriorityQueue<PathNode2d> open = new PriorityQueue<>();
 
     // The map being searched
-    private TileBasedMap2d map;
+    private BoundingBox2d map;
 
     // The maximum depth of search we're willing to accept before giving up
     private int maxSearchDistance;
@@ -40,7 +40,7 @@ public class AStarPathFinder2d implements PathFinder2d {
      * @param map               The map to be searched
      * @param maxSearchDistance The maximum depth we'll search before giving up
      */
-    public AStarPathFinder2d(TileBasedMap2d map, int maxSearchDistance) {
+    public AStarPathFinder2d(BoundingBox2d map, int maxSearchDistance) {
 
         this.map = map;
         this.maxSearchDistance = maxSearchDistance;

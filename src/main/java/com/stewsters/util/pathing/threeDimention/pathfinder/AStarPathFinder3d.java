@@ -2,11 +2,11 @@ package com.stewsters.util.pathing.threeDimention.pathfinder;
 
 import com.stewsters.util.math.Point3i;
 import com.stewsters.util.pathing.threeDimention.heuristic.AStarHeuristic3d;
+import com.stewsters.util.pathing.threeDimention.shared.BoundingBox3d;
 import com.stewsters.util.pathing.threeDimention.shared.CanOccupy3d;
 import com.stewsters.util.pathing.threeDimention.shared.CanTraverse3d;
 import com.stewsters.util.pathing.threeDimention.shared.MovementCost3d;
 import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
-import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +30,7 @@ public class AStarPathFinder3d implements PathFinder3d {
     /**
      * The map being searched
      */
-    private TileBasedMap3d map;
+    private BoundingBox3d map;
     /**
      * The maximum depth of search we're willing to accept before giving up
      */
@@ -41,7 +41,7 @@ public class AStarPathFinder3d implements PathFinder3d {
      */
     private PathNode3d[][][] nodes;
 
-    public AStarPathFinder3d(TileBasedMap3d map, int maxSearchDistance) {
+    public AStarPathFinder3d(BoundingBox3d map, int maxSearchDistance) {
         this.map = map;
         this.maxSearchDistance = maxSearchDistance;
 

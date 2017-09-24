@@ -1,9 +1,9 @@
 package com.stewsters.util.pathing.twoDimention.djikstraMap;
 
+import com.stewsters.util.pathing.twoDimention.shared.BoundingBox2d;
 import com.stewsters.util.pathing.twoDimention.shared.CanTraverse2d;
 import com.stewsters.util.pathing.twoDimention.shared.MovementCost2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
-import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
 import java.util.PriorityQueue;
 
@@ -13,7 +13,7 @@ public class DjikstraMap2d implements PathingMap2d {
     private PriorityQueue<PathNode2d> open = new PriorityQueue<>();
 
     // The map being searched
-    private TileBasedMap2d map;
+    private BoundingBox2d map;
 
     // The maximum depth of search we're willing to accept before giving up
     private int maxSearchDistance;
@@ -22,7 +22,7 @@ public class DjikstraMap2d implements PathingMap2d {
     private PathNode2d[][] nodes;
 
 
-    public DjikstraMap2d(TileBasedMap2d map, int maxSearchDistance) {
+    public DjikstraMap2d(BoundingBox2d map, int maxSearchDistance) {
         this.map = map;
         this.maxSearchDistance = maxSearchDistance;
 

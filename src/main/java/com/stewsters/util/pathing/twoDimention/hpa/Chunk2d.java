@@ -1,8 +1,8 @@
 package com.stewsters.util.pathing.twoDimention.hpa;
 
-import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
+import com.stewsters.util.pathing.twoDimention.shared.BoundingBox2d;
 
-public interface Chunk2d extends TileBasedMap2d {
+public interface Chunk2d extends BoundingBox2d {
 
     int getXOffset();
 

@@ -1,11 +1,8 @@
 package com.stewsters.test.examples;
 
-import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
+import com.stewsters.util.pathing.threeDimention.shared.BoundingBox3d;
 
-/**
- *
- */
-public class ExampleMap3d implements TileBasedMap3d {
+public class ExampleMap3d implements BoundingBox3d {
 
     private final int xSize;
     private final int ySize;
@@ -51,11 +48,6 @@ public class ExampleMap3d implements TileBasedMap3d {
         if (x < 0 || x >= getXSize() || y < 0 || y >= getYSize() || z < 0 || z >= getZSize())
             return false;
         return ground[x][y][z].isBlocking();
-    }
-
-    @Override
-    public boolean isOutside(int x, int y, int z) {
-        return x < 0 || y < 0 || z < 0 || x >= xSize || y >= ySize || z >= zSize;
     }
 
 }

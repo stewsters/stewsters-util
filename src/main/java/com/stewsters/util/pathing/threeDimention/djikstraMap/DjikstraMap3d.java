@@ -1,9 +1,9 @@
 package com.stewsters.util.pathing.threeDimention.djikstraMap;
 
+import com.stewsters.util.pathing.threeDimention.shared.BoundingBox3d;
 import com.stewsters.util.pathing.threeDimention.shared.CanTraverse3d;
 import com.stewsters.util.pathing.threeDimention.shared.MovementCost3d;
 import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
-import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
 import java.util.PriorityQueue;
 
@@ -13,7 +13,7 @@ public class DjikstraMap3d implements PathingMap3d {
     private PriorityQueue<PathNode3d> open = new PriorityQueue<>();
 
     // The map being searched
-    private TileBasedMap3d map;
+    private BoundingBox3d map;
 
     // The maximum depth of search we're willing to accept before giving up
     private int maxSearchDistance;
@@ -22,7 +22,7 @@ public class DjikstraMap3d implements PathingMap3d {
     private PathNode3d[][][] nodes;
 
 
-    public DjikstraMap3d(TileBasedMap3d map, int maxSearchDistance) {
+    public DjikstraMap3d(BoundingBox3d map, int maxSearchDistance) {
         this.map = map;
         this.maxSearchDistance = maxSearchDistance;
 
