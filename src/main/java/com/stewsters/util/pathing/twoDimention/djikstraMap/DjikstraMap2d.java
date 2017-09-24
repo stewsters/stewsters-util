@@ -1,7 +1,7 @@
 package com.stewsters.util.pathing.twoDimention.djikstraMap;
 
-import com.stewsters.util.pathing.twoDimention.shared.CanTraverse;
-import com.stewsters.util.pathing.twoDimention.shared.MovementCost;
+import com.stewsters.util.pathing.twoDimention.shared.CanTraverse2d;
+import com.stewsters.util.pathing.twoDimention.shared.MovementCost2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
@@ -45,8 +45,8 @@ public class DjikstraMap2d implements PathingMap2d {
     }
 
     @Override
-    public void recalculate(CanTraverse canTraverse,
-                            MovementCost movementCost,
+    public void recalculate(CanTraverse2d canTraverse2d,
+                            MovementCost2d movementCost2d,
                             boolean allowDiagMovement,
                             int sX, int sY) {
         reset();
@@ -88,13 +88,13 @@ public class DjikstraMap2d implements PathingMap2d {
                     int xp = x + current.x;
                     int yp = y + current.y;
 
-                    if (!isValidLocation(canTraverse, current.x, current.y, xp, yp))
+                    if (!isValidLocation(canTraverse2d, current.x, current.y, xp, yp))
                         continue;
 
                     // the cost to get to this PathNode is cost the current plus the movement
                     // cost to reach this node. Note that the heuristic value is only used
                     // in the sorted open list
-                    float nextStepCost = current.cost + movementCost.getCost(current.x, current.y, xp, yp);
+                    float nextStepCost = current.cost + movementCost2d.getCost(current.x, current.y, xp, yp);
                     PathNode2d neighbour = nodes[xp][yp];
 
                     // if the new cost we've determined for this PathNode is lower than
@@ -124,11 +124,11 @@ public class DjikstraMap2d implements PathingMap2d {
 
     }
 
-    protected boolean isValidLocation(CanTraverse canTraverse, int sx, int sy, int tx, int ty) {
+    protected boolean isValidLocation(CanTraverse2d canTraverse2d, int sx, int sy, int tx, int ty) {
         if ((tx < 0) || (ty < 0) || (tx >= map.getXSize()) || (ty >= map.getYSize())) {
             return false;
         }
-        return canTraverse.canTraverse(sx, sy, tx, ty);
+        return canTraverse2d.canTraverse(sx, sy, tx, ty);
     }
 
     public float getDistanceAt(int x, int y) {

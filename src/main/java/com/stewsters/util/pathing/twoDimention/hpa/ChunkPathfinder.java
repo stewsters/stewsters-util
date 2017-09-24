@@ -2,9 +2,9 @@ package com.stewsters.util.pathing.twoDimention.hpa;
 
 import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.heuristic.AStarHeuristic2d;
-import com.stewsters.util.pathing.twoDimention.shared.CanOccupy;
-import com.stewsters.util.pathing.twoDimention.shared.CanTraverse;
-import com.stewsters.util.pathing.twoDimention.shared.MovementCost;
+import com.stewsters.util.pathing.twoDimention.shared.CanOccupy2d;
+import com.stewsters.util.pathing.twoDimention.shared.CanTraverse2d;
+import com.stewsters.util.pathing.twoDimention.shared.MovementCost2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 
 import java.util.ArrayList;
@@ -23,12 +23,12 @@ public class ChunkPathfinder {
         }
     }
 
-    public ArrayList<Point2i> getPath(CanTraverse canTraverse, CanOccupy canOccupy, MovementCost movementCost, Chunk2d chunk, int sx, int sy, int tx, int ty, AStarHeuristic2d heuristic, float maxSearchDistance, boolean allowDiag) {
+    public ArrayList<Point2i> getPath(CanTraverse2d canTraverse2d, CanOccupy2d canOccupy2d, MovementCost2d movementCost2d, Chunk2d chunk, int sx, int sy, int tx, int ty, AStarHeuristic2d heuristic, float maxSearchDistance, boolean allowDiag) {
 
         if (heuristic == null)
             return null;
 
-        if (!canOccupy.canOccupy(tx, ty))
+        if (!canOccupy2d.canOccupy(tx, ty))
             return null;
 
         PriorityQueue<PathNode2d> open = new PriorityQueue<>();
@@ -77,13 +77,13 @@ public class ChunkPathfinder {
                     if (xp < 0 || yp < 0 || xp >= chunk.getXSize() || yp >= chunk.getYSize())
                         continue;
 
-                    if (!canTraverse.canTraverse(sx, sy, xp, yp))
+                    if (!canTraverse2d.canTraverse(sx, sy, xp, yp))
                         continue;
                     // the cost to get to this PathNode is cost the current plus the movement
                     // cost to reach this node. Note that the heuristic value is only used
                     // in the sorted open list
 
-                    float nextStepCost = current.cost + movementCost.getCost(current.x, current.y, xp, yp);
+                    float nextStepCost = current.cost + movementCost2d.getCost(current.x, current.y, xp, yp);
                     PathNode2d neighbour = nodes[xp][yp];
 
                     // if the new cost we've determined for this PathNode is lower than

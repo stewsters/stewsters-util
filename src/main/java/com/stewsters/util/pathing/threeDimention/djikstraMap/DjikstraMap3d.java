@@ -1,6 +1,7 @@
 package com.stewsters.util.pathing.threeDimention.djikstraMap;
 
-import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
+import com.stewsters.util.pathing.threeDimention.shared.CanTraverse3d;
+import com.stewsters.util.pathing.threeDimention.shared.MovementCost3d;
 import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
 import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
@@ -20,13 +21,10 @@ public class DjikstraMap3d implements PathingMap3d {
     // The complete set of nodes across the map
     private PathNode3d[][][] nodes;
 
-    // True if we allow diagonal movement
-    private boolean allowDiagMovement;
 
-    public DjikstraMap3d(TileBasedMap3d map, int maxSearchDistance, boolean allowDiagMovement) {
+    public DjikstraMap3d(TileBasedMap3d map, int maxSearchDistance) {
         this.map = map;
         this.maxSearchDistance = maxSearchDistance;
-        this.allowDiagMovement = allowDiagMovement;
 
         nodes = new PathNode3d[map.getXSize()][map.getYSize()][map.getZSize()];
         for (int x = 0; x < map.getXSize(); x++) {
@@ -51,7 +49,11 @@ public class DjikstraMap3d implements PathingMap3d {
     }
 
     @Override
-    public void recalculate(int sX, int sY, int sZ, Mover3d mover) {
+    public void recalculate(
+            CanTraverse3d canTraverse3d,
+            MovementCost3d movementCost3d,
+            boolean allowDiagMovement,
+            int sX, int sY, int sZ) {
         reset();
 
         nodes[sX][sY][sZ].cost = 0;
@@ -93,13 +95,13 @@ public class DjikstraMap3d implements PathingMap3d {
                         int yp = y + current.y;
                         int zp = z + current.z;
 
-                        if (!isValidLocation(mover, current.x, current.y, current.z, xp, yp, zp))
+                        if (!isValidLocation(canTraverse3d, current.x, current.y, current.z, xp, yp, zp))
                             continue;
 
                         // the cost to get to this PathNode is cost the current plus the movement
                         // cost to reach this node. Note that the heuristic value is only used
                         // in the sorted open list
-                        float nextStepCost = current.cost + mover.getCost(current.x, current.y, current.z, xp, yp, zp);
+                        float nextStepCost = current.cost + movementCost3d.getCost(current.x, current.y, current.z, xp, yp, zp);
                         PathNode3d neighbour = nodes[xp][yp][zp];
 
                         // if the new cost we've determined for this PathNode is lower than
@@ -131,11 +133,11 @@ public class DjikstraMap3d implements PathingMap3d {
 
     }
 
-    protected boolean isValidLocation(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
+    protected boolean isValidLocation(CanTraverse3d canTraverse3d, int sx, int sy, int sz, int tx, int ty, int tz) {
         if ((tx < 0) || (ty < 0) || (tz < 0) || (tx >= map.getXSize()) || (ty >= map.getYSize()) || (tz >= map.getZSize())) {
             return false;
         }
-        return mover.canTraverse(sx, sy, sz, tx, ty, tz);
+        return canTraverse3d.canTraverse(sx, sy, sz, tx, ty, tz);
     }
 
     public float getDistanceAt(int x, int y, int z) {

@@ -1,7 +1,8 @@
 package com.stewsters.util.pathing.threeDimention.searcher;
 
 import com.stewsters.util.math.Point3i;
-import com.stewsters.util.pathing.threeDimention.shared.Mover3d;
+import com.stewsters.util.pathing.threeDimention.shared.CanTraverse3d;
+import com.stewsters.util.pathing.threeDimention.shared.MovementCost3d;
 import com.stewsters.util.pathing.threeDimention.shared.PathNode3d;
 import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
 
@@ -25,13 +26,9 @@ public class DjikstraSearcher3d implements Searcher3d {
     // The complete set of nodes across the map
     private PathNode3d[][][] nodes;
 
-    // True if we allow diagonal movement
-    private boolean allowDiagMovement;
-
-    public DjikstraSearcher3d(TileBasedMap3d map, int maxSearchDistance, boolean allowDiagMovement) {
+    public DjikstraSearcher3d(TileBasedMap3d map, int maxSearchDistance) {
         this.map = map;
         this.maxSearchDistance = maxSearchDistance;
-        this.allowDiagMovement = allowDiagMovement;
 
         nodes = new PathNode3d[map.getXSize()][map.getYSize()][map.getZSize()];
         for (int x = 0; x < map.getXSize(); x++) {
@@ -55,7 +52,13 @@ public class DjikstraSearcher3d implements Searcher3d {
     }
 
     @Override
-    public Optional<List<Point3i>> search(Mover3d mover, int sx, int sy, int sz, Objective3d objective) {
+    public Optional<List<Point3i>> search(
+            Objective3d objective,
+            CanTraverse3d canTraverse3d,
+            MovementCost3d movementCost3d,
+            boolean allowDiagMovement,
+            int sx, int sy, int sz) {
+
         reset();
 
         nodes[sx][sy][sz].cost = 0;
@@ -106,14 +109,14 @@ public class DjikstraSearcher3d implements Searcher3d {
                         int yp = y + current.y;
                         int zp = z + current.z;
 
-                        if (!isValidLocation(mover, sx, sy, sz, xp, yp, zp)) {
+                        if (!isValidLocation(canTraverse3d, sx, sy, sz, xp, yp, zp)) {
                             continue;
                         }
 
                         // the cost to get to this PathNode is cost the current plus the movement
                         // cost to reach this node. Note that the heuristic value is only used
                         // in the sorted open list
-                        float nextStepCost = current.cost + mover.getCost(current.x, current.y, current.z, xp, yp, zp);
+                        float nextStepCost = current.cost + movementCost3d.getCost(current.x, current.y, current.z, xp, yp, zp);
                         PathNode3d neighbour = nodes[xp][yp][zp];
 
                         // if the new cost we've determined for this PathNode is lower than
@@ -176,7 +179,7 @@ public class DjikstraSearcher3d implements Searcher3d {
      * @param tz    The z coordinate of the location to check
      * @return True if the location is valid for the given mover
      */
-    protected boolean isValidLocation(Mover3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
+    protected boolean isValidLocation(CanTraverse3d mover, int sx, int sy, int sz, int tx, int ty, int tz) {
         return !((tx < 0) || (ty < 0) || (tz < 0)
                 || (tx >= map.getXSize()) || (ty >= map.getYSize()) || (tz >= map.getZSize()))
                 && mover.canTraverse(sx, sy, sz, tx, ty, tz);

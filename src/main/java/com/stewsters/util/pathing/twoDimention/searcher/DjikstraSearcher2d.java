@@ -1,8 +1,8 @@
 package com.stewsters.util.pathing.twoDimention.searcher;
 
 import com.stewsters.util.math.Point2i;
-import com.stewsters.util.pathing.twoDimention.shared.CanTraverse;
-import com.stewsters.util.pathing.twoDimention.shared.MovementCost;
+import com.stewsters.util.pathing.twoDimention.shared.CanTraverse2d;
+import com.stewsters.util.pathing.twoDimention.shared.MovementCost2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
@@ -52,8 +52,8 @@ public class DjikstraSearcher2d implements Searcher2d {
     @Override
     public Optional<List<Point2i>> search(
             Objective2d objective,
-            CanTraverse canTraverse,
-            MovementCost movementCost,
+            CanTraverse2d canTraverse2d,
+            MovementCost2d movementCost2d,
             boolean allowDiagMovement,
             int sx, int sy) {
 
@@ -73,7 +73,6 @@ public class DjikstraSearcher2d implements Searcher2d {
             // be the most likely to be the next step based on our heuristic
 
             PathNode2d current = open.poll();
-
 
             if (objective.satisfiedBy(current)) {
                 //TODO: this should set the answer location
@@ -108,14 +107,14 @@ public class DjikstraSearcher2d implements Searcher2d {
                     int xp = x + current.x;
                     int yp = y + current.y;
 
-                    if (!isValidLocation(canTraverse, sx, sy, xp, yp))
+                    if (!isValidLocation(canTraverse2d, sx, sy, xp, yp))
                         continue;
 
                     // the cost to get to this PathNode is cost the current plus the movement
                     // cost to reach this node. Note that the heuristic value is only used
                     // in the sorted open list
 
-                    float nextStepCost = current.cost + movementCost.getCost(current.x, current.y, xp, yp);
+                    float nextStepCost = current.cost + movementCost2d.getCost(current.x, current.y, xp, yp);
                     PathNode2d neighbour = nodes[xp][yp];
 
                     // if the new cost we've determined for this PathNode is lower than
@@ -179,7 +178,7 @@ public class DjikstraSearcher2d implements Searcher2d {
      * @param ty    The y coordinate of the location to check
      * @return True if the location is valid for the given mover
      */
-    protected boolean isValidLocation(CanTraverse mover, int sx, int sy, int tx, int ty) {
+    protected boolean isValidLocation(CanTraverse2d mover, int sx, int sy, int tx, int ty) {
         return !((tx < 0) || (ty < 0)
                 || (tx >= map.getXSize()) || (ty >= map.getYSize()))
                 && mover.canTraverse(sx, sy, tx, ty);

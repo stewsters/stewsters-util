@@ -2,9 +2,9 @@ package com.stewsters.util.pathing.twoDimention.pathfinder;
 
 import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.heuristic.AStarHeuristic2d;
-import com.stewsters.util.pathing.twoDimention.shared.CanOccupy;
-import com.stewsters.util.pathing.twoDimention.shared.CanTraverse;
-import com.stewsters.util.pathing.twoDimention.shared.MovementCost;
+import com.stewsters.util.pathing.twoDimention.shared.CanOccupy2d;
+import com.stewsters.util.pathing.twoDimention.shared.CanTraverse2d;
+import com.stewsters.util.pathing.twoDimention.shared.MovementCost2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
@@ -64,16 +64,16 @@ public class AStarPathFinder2d implements PathFinder2d {
 
     @Override
     public Optional<List<Point2i>> findPath(
-            CanTraverse canTraverse,
-            CanOccupy canOccupy,
-            MovementCost movementCost,
+            CanTraverse2d canTraverse2d,
+            CanOccupy2d canOccupy2d,
+            MovementCost2d movementCost2d,
             AStarHeuristic2d heuristic,
             boolean allowDiagMovement,
             int sx, int sy, int tx, int ty) {
         // easy first check, if the destination is blocked, we can't get there
 
-        if (!canOccupy.canOccupy(tx, ty)) {
-            return null;
+        if (!canOccupy2d.canOccupy(tx, ty)) {
+            return Optional.empty();
         }
 
         reset();
@@ -122,14 +122,14 @@ public class AStarPathFinder2d implements PathFinder2d {
                     int xp = x + current.x;
                     int yp = y + current.y;
 
-                    if (!isValidLocation(canTraverse, sx, sy, xp, yp))
+                    if (!isValidLocation(canTraverse2d, sx, sy, xp, yp))
                         continue;
 
                     // the cost to get to this PathNode is cost the current plus the movement
                     // cost to reach this node. Note that the heuristic value is only used
                     // in the sorted open list
 
-                    float nextStepCost = current.cost + movementCost.getCost(current.x, current.y, xp, yp);
+                    float nextStepCost = current.cost + movementCost2d.getCost(current.x, current.y, xp, yp);
                     PathNode2d neighbour = nodes[xp][yp];
 
                     // if the new cost we've determined for this PathNode is lower than
@@ -187,11 +187,11 @@ public class AStarPathFinder2d implements PathFinder2d {
     /**
      * Check if a given location is valid for the supplied mover
      */
-    protected boolean isValidLocation(CanTraverse canTraverse, int sx, int sy, int tx, int ty) {
+    protected boolean isValidLocation(CanTraverse2d canTraverse2d, int sx, int sy, int tx, int ty) {
         if ((tx < 0) || (ty < 0) || (tx >= map.getXSize()) || (ty >= map.getYSize())) {
             return false;
         }
-        return canTraverse.canTraverse(sx, sy, tx, ty);
+        return canTraverse2d.canTraverse(sx, sy, tx, ty);
     }
 
 }
