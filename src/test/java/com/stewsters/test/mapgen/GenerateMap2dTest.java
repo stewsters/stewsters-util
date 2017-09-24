@@ -22,7 +22,6 @@ import com.stewsters.util.pathing.twoDimention.heuristic.AStarHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.heuristic.ManhattanHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.pathfinder.AStarPathFinder2d;
 import com.stewsters.util.pathing.twoDimention.pathfinder.PathFinder2d;
-import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -199,47 +198,29 @@ public class GenerateMap2dTest {
         int yCenterLast = 0;
 
         AStarHeuristic2d aStarHeuristic2d = new ManhattanHeuristic2d();
-        Mover2d mover = new Mover2d() {
-            @Override
-            public boolean canTraverse(int sx, int sy, int tx, int ty) {
-                return true;
-            }
 
-            @Override
-            public boolean canOccupy(int tx, int ty) {
-                return true;
-            }
-
-            @Override
-            public float getCost(int sx, int sy, int tx, int ty) {
-
-                CellType cellType = em.getCellTypeAt(tx, ty);
-
-                if (cellType == wall)
-                    return 10;
-                else if (cellType == floor)
-                    return 2;
-                else if (cellType == grass)
-                    return 1;
-                else if (cellType == forest)
-                    return 2;
-                else if (cellType == water)
-                    return 30;
-                return 1;
-            }
-
-            @Override
-            public AStarHeuristic2d getHeuristic() {
-                return aStarHeuristic2d;
-            }
-
-            @Override
-            public boolean getDiagonal() {
-                return false;
-            }
-        };
         for (Point2i center : centers) {
-            Optional<List<Point2i>> path = pathFinder2d.findPath(mover, xCenterLast, yCenterLast, center.x, center.y);
+            Optional<List<Point2i>> path = pathFinder2d.findPath(
+                    (int sx, int sy, int tx, int ty) -> true,
+                    (int tx, int ty) -> true,
+                    (int sx, int sy, int tx, int ty) -> {
+                        CellType cellType = em.getCellTypeAt(tx, ty);
+
+                        if (cellType == wall)
+                            return 10;
+                        else if (cellType == floor)
+                            return 2;
+                        else if (cellType == grass)
+                            return 1;
+                        else if (cellType == forest)
+                            return 2;
+                        else if (cellType == water)
+                            return 30;
+                        return 1;
+                    },
+                    aStarHeuristic2d,
+                    false,
+                    xCenterLast, yCenterLast, center.x, center.y);
             xCenterLast = center.x;
             yCenterLast = center.y;
 

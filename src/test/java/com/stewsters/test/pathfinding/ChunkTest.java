@@ -2,7 +2,6 @@ package com.stewsters.test.pathfinding;
 
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.chunk.ExampleChunk;
-import com.stewsters.test.examples.chunk.ExampleChunkedMover2d;
 import com.stewsters.test.examples.chunk.OverworldExample;
 import com.stewsters.test.examples.chunk.OverworldPathfinder;
 import com.stewsters.util.math.Point2i;
@@ -10,7 +9,6 @@ import com.stewsters.util.pathing.twoDimention.heuristic.ManhattanHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.hpa.Chunk2d;
 import com.stewsters.util.pathing.twoDimention.hpa.ChunkPathfinder;
 import com.stewsters.util.pathing.twoDimention.hpa.OverworldPathNode;
-import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -55,9 +53,12 @@ public class ChunkTest {
         ChunkPathfinder chunkPathfinder = new ChunkPathfinder(chunk.getXSize(), chunk.getYSize());
         chunk.recalculate();
 
-        ExampleChunkedMover2d testMover = new ExampleChunkedMover2d(overworldExample, new ManhattanHeuristic2d(), false);
-
-        ArrayList<Point2i> points = chunkPathfinder.getPath(chunk, 0, 0, chunk.getXSize() - 1, chunk.getYSize() - 1, testMover, 1000);
+        ArrayList<Point2i> points = chunkPathfinder.getPath(
+                (int sx, int sy, int tx, int ty) -> !overworldExample.isBlocking(tx, ty),
+                (int tx, int ty) -> !overworldExample.isBlocking(tx, ty),
+                (int sx, int sy, int tx, int ty) -> 1.0f,
+                chunk, 0, 0, chunk.getXSize() - 1, chunk.getYSize() - 1, new ManhattanHeuristic2d(),
+                1000, false);
 
         assert points != null;
         assert points.size() == 31;
@@ -120,11 +121,14 @@ public class ChunkTest {
         OverworldPathfinder pathfinder = new OverworldPathfinder();
         pathfinder.buildEntrances(overworldExample);
 
-        Mover2d mover2d = new ExampleChunkedMover2d(overworldExample, new ManhattanHeuristic2d(), false);
-
-        ArrayList<Point2i> path = pathfinder.getPath(overworldExample,
+        ArrayList<Point2i> path = pathfinder.getPath(
+                (int sx, int sy, int tx, int ty) -> !overworldExample.isBlocking(tx, ty),
+                (int x, int y) -> !overworldExample.isBlocking(x, y),
+                (int sx, int sy, int tx, int ty) -> 1.0f,
+                overworldExample,
                 1, 1, overworldExample.getXSize() - 1, overworldExample.getYSize() - 1,
-                mover2d, 1000);
+                new ManhattanHeuristic2d(),
+                1000);
 
         assert path != null;
         assert path.get(0).x == 1;

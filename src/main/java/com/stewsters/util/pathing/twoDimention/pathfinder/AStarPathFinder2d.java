@@ -2,7 +2,9 @@ package com.stewsters.util.pathing.twoDimention.pathfinder;
 
 import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.heuristic.AStarHeuristic2d;
-import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
+import com.stewsters.util.pathing.twoDimention.shared.CanOccupy;
+import com.stewsters.util.pathing.twoDimention.shared.CanTraverse;
+import com.stewsters.util.pathing.twoDimention.shared.MovementCost;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
@@ -60,18 +62,19 @@ public class AStarPathFinder2d implements PathFinder2d {
         }
     }
 
-    /**
-     * @see PathFinder2d#findPath(com.stewsters.util.pathing.twoDimention.shared.Mover2d, int, int, int, int)
-     */
-    public Optional<List<Point2i>> findPath(Mover2d mover, int sx, int sy, int tx, int ty) {
+    @Override
+    public Optional<List<Point2i>> findPath(
+            CanTraverse canTraverse,
+            CanOccupy canOccupy,
+            MovementCost movementCost,
+            AStarHeuristic2d heuristic,
+            boolean allowDiagMovement,
+            int sx, int sy, int tx, int ty) {
         // easy first check, if the destination is blocked, we can't get there
 
-        if (!mover.canOccupy(tx, ty)) {
+        if (!canOccupy.canOccupy(tx, ty)) {
             return null;
         }
-
-        AStarHeuristic2d heuristic = mover.getHeuristic();
-        boolean allowDiagMovement = mover.getDiagonal();
 
         reset();
 
@@ -119,37 +122,39 @@ public class AStarPathFinder2d implements PathFinder2d {
                     int xp = x + current.x;
                     int yp = y + current.y;
 
-                    if (isValidLocation(mover, sx, sy, xp, yp)) {
-                        // the cost to get to this PathNode is cost the current plus the movement
-                        // cost to reach this node. Note that the heuristic value is only used
-                        // in the sorted open list
+                    if (!isValidLocation(canTraverse, sx, sy, xp, yp))
+                        continue;
 
-                        float nextStepCost = current.cost + mover.getCost(current.x, current.y, xp, yp);
-                        PathNode2d neighbour = nodes[xp][yp];
+                    // the cost to get to this PathNode is cost the current plus the movement
+                    // cost to reach this node. Note that the heuristic value is only used
+                    // in the sorted open list
 
-                        // if the new cost we've determined for this PathNode is lower than
-                        // it has been previously,
-                        // there might have been a better path to get to
-                        // this PathNode so it needs to be re-evaluated
+                    float nextStepCost = current.cost + movementCost.getCost(current.x, current.y, xp, yp);
+                    PathNode2d neighbour = nodes[xp][yp];
 
-                        if (nextStepCost < neighbour.cost) {
-                            if (open.contains(neighbour)) {
-                                open.remove(neighbour);
-                            }
-                            neighbour.closed = false;
+                    // if the new cost we've determined for this PathNode is lower than
+                    // it has been previously,
+                    // there might have been a better path to get to
+                    // this PathNode so it needs to be re-evaluated
+
+                    if (nextStepCost < neighbour.cost) {
+                        if (open.contains(neighbour)) {
+                            open.remove(neighbour);
                         }
-
-                        // if the PathNode hasn't already been processed and discarded then
-                        // reset it's cost to our current cost and add it as a next possible
-                        // step (i.e. to the open list)
-
-                        if (!open.contains(neighbour) && !neighbour.closed) {
-                            neighbour.cost = nextStepCost;
-                            neighbour.heuristic = heuristic.getCost(map, xp, yp, tx, ty);
-                            maxDepth = Math.max(maxDepth, neighbour.setParent(current));
-                            open.add(neighbour);
-                        }
+                        neighbour.closed = false;
                     }
+
+                    // if the PathNode hasn't already been processed and discarded then
+                    // reset it's cost to our current cost and add it as a next possible
+                    // step (i.e. to the open list)
+
+                    if (!open.contains(neighbour) && !neighbour.closed) {
+                        neighbour.cost = nextStepCost;
+                        neighbour.heuristic = heuristic.getCost(map, xp, yp, tx, ty);
+                        maxDepth = Math.max(maxDepth, neighbour.setParent(current));
+                        open.add(neighbour);
+                    }
+
                 }
             }
 
@@ -181,19 +186,12 @@ public class AStarPathFinder2d implements PathFinder2d {
 
     /**
      * Check if a given location is valid for the supplied mover
-     *
-     * @param mover The mover that would hold a given location
-     * @param sx    The starting x coordinate
-     * @param sy    The starting y coordinate
-     * @param tx    The x coordinate of the location to check
-     * @param ty    The y coordinate of the location to check
-     * @return True if the location is valid for the given mover
      */
-    protected boolean isValidLocation(Mover2d mover, int sx, int sy, int tx, int ty) {
+    protected boolean isValidLocation(CanTraverse canTraverse, int sx, int sy, int tx, int ty) {
         if ((tx < 0) || (ty < 0) || (tx >= map.getXSize()) || (ty >= map.getYSize())) {
             return false;
         }
-        return mover.canTraverse(sx, sy, tx, ty);
+        return canTraverse.canTraverse(sx, sy, tx, ty);
     }
 
 }

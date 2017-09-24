@@ -2,13 +2,11 @@ package com.stewsters.test.pathfinding;
 
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap2d;
-import com.stewsters.test.examples.ExampleMover2d;
 import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.heuristic.ChebyshevHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.heuristic.ClosestHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.heuristic.ManhattanHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.pathfinder.AStarPathFinder2d;
-import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
 import org.junit.Test;
 
 import java.util.List;
@@ -28,9 +26,13 @@ public class AStarPathfinder2dTest {
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100);
 
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map, new ManhattanHeuristic2d(), false);
-
-        List<Point2i> fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 8, 8).get();
+        List<Point2i> fullPath2d = pathfinder.findPath(
+                (int sx, int sy, int tx, int ty) -> !map.isBlocked(tx, ty),
+                (int tx, int ty) -> !map.isBlocked(tx, ty),
+                (int sx, int sy, int tx, int ty) -> 1.0f,
+                new ManhattanHeuristic2d(),
+                false,
+                1, 1, 8, 8).get();
 
         for (int i = 0; i < fullPath2d.size(); i++) {
             System.out.println("x:" + fullPath2d.get(i).x + " y:" + fullPath2d.get(i).y);
@@ -54,9 +56,25 @@ public class AStarPathfinder2dTest {
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100);
 
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map, new ManhattanHeuristic2d(), false, 2, 2);
+        int xSize = 2;
+        int ySize = 2;
 
-        List<Point2i> fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 8, 1).get();
+        List<Point2i> fullPath2d = pathfinder.findPath(
+                (int sx, int sy, int tx, int ty) -> {
+                    for (int x = 0; x < xSize; x++) {
+                        for (int y = 0; y < ySize; y++) {
+                            if (map.isBlocked(tx + x, ty + y)) {
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
+                },
+                (int tx, int ty) -> !map.isBlocked(tx, ty),
+                (int sx, int sy, int tx, int ty) -> 1.0f,
+                new ManhattanHeuristic2d(),
+                false,
+                1, 1, 8, 1).get();
 
         for (int i = 0; i < fullPath2d.size(); i++) {
             System.out.println("x:" + fullPath2d.get(i).x + " y:" + fullPath2d.get(i).y);
@@ -75,9 +93,13 @@ public class AStarPathfinder2dTest {
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100);
 
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map, new ChebyshevHeuristic2d(), true);
-
-        List<Point2i> fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 8, 8).get();
+        List<Point2i> fullPath2d = pathfinder.findPath(
+                (int sx, int sy, int tx, int ty) -> !map.isBlocked(tx, ty),
+                (int tx, int ty) -> !map.isBlocked(tx, ty),
+                (int sx, int sy, int tx, int ty) -> 1.0f,
+                new ChebyshevHeuristic2d(),
+                true,
+                1, 1, 8, 8).get();
 
         for (int i = 0; i < fullPath2d.size(); i++) {
             System.out.println("x:" + fullPath2d.get(i).x + " y:" + fullPath2d.get(i).y);
@@ -96,9 +118,13 @@ public class AStarPathfinder2dTest {
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 100);
 
-        Mover2d exampleMover2d = new ExampleMover2d(map, new ClosestHeuristic2d(), true);
-
-        List<Point2i> fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 9, 19).get();
+        List<Point2i> fullPath2d = pathfinder.findPath(
+                (int sx, int sy, int tx, int ty) -> !map.isBlocked(tx, ty),
+                (int tx, int ty) -> !map.isBlocked(tx, ty),
+                (int sx, int sy, int tx, int ty) -> 1.0f,
+                new ClosestHeuristic2d(),
+                true,
+                1, 1, 9, 19).get();
 
         for (int i = 0; i < fullPath2d.size(); i++) {
             System.out.println("x:" + fullPath2d.get(i).x + " y:" + fullPath2d.get(i).y);
@@ -117,9 +143,13 @@ public class AStarPathfinder2dTest {
 
         AStarPathFinder2d pathfinder = new AStarPathFinder2d(map, 1000000);
 
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map, new ChebyshevHeuristic2d(), true);
-
-        List<Point2i> fullPath2d = pathfinder.findPath(exampleMover2d, 1, 1, 1999, 1999).get();
+        List<Point2i> fullPath2d = pathfinder.findPath(
+                (int sx, int sy, int tx, int ty) -> !map.isBlocked(tx, ty),
+                (int tx, int ty) -> !map.isBlocked(tx, ty),
+                (int sx, int sy, int tx, int ty) -> 1.0f,
+                new ChebyshevHeuristic2d(),
+                true,
+                1, 1, 1999, 1999).get();
 
 //        for (int i = 0; i < fullPath2d.getLength(); i++) {
 //            System.out.println("x:" + fullPath2d.getStep(i).getX() + " y:" + fullPath2d.getStep(i).getY());

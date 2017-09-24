@@ -155,37 +155,38 @@ public class AStarPathFinder3d implements PathFinder3d {
                         int yp = y + current.y;
                         int zp = z + current.z;
 
-                        if (isValidLocation(mover, sx, sy, sz, xp, yp, zp)) {
-                            // the cost to get to this PathNode is cost the current plus the movement
-                            // cost to reach this node. Note that the heuristic value is only used
-                            // in the sorted open list
+                        if (!isValidLocation(mover, sx, sy, sz, xp, yp, zp))
+                            continue;
+                        // the cost to get to this PathNode is cost the current plus the movement
+                        // cost to reach this node. Note that the heuristic value is only used
+                        // in the sorted open list
 
-                            float nextStepCost = current.cost + mover.getCost(current.x, current.y, current.z, xp, yp, zp);
-                            PathNode3d neighbour = nodes[xp][yp][zp];
+                        float nextStepCost = current.cost + mover.getCost(current.x, current.y, current.z, xp, yp, zp);
+                        PathNode3d neighbour = nodes[xp][yp][zp];
 
-                            // if the new cost we've determined for this PathNode is lower than
-                            // it has been previously,
-                            // there might have been a better path to get to
-                            // this PathNode so it needs to be re-evaluated
+                        // if the new cost we've determined for this PathNode is lower than
+                        // it has been previously,
+                        // there might have been a better path to get to
+                        // this PathNode so it needs to be re-evaluated
 
-                            if (nextStepCost < neighbour.cost) {
-                                if (open.contains(neighbour)) {
-                                    open.remove(neighbour);
-                                }
-                                neighbour.closed = false;
+                        if (nextStepCost < neighbour.cost) {
+                            if (open.contains(neighbour)) {
+                                open.remove(neighbour);
                             }
-
-                            // if the PathNode hasn't already been processed and discarded then
-                            // reset it's cost to our current cost and add it as a next possible
-                            // step (i.e. to the open list)
-
-                            if (!open.contains(neighbour) && !neighbour.closed) {
-                                neighbour.cost = nextStepCost;
-                                neighbour.heuristic = heuristic.getCost(map, xp, yp, zp, tx, ty, tz);
-                                maxDepth = Math.max(maxDepth, neighbour.setParent(current));
-                                open.add(neighbour);
-                            }
+                            neighbour.closed = false;
                         }
+
+                        // if the PathNode hasn't already been processed and discarded then
+                        // reset it's cost to our current cost and add it as a next possible
+                        // step (i.e. to the open list)
+
+                        if (!open.contains(neighbour) && !neighbour.closed) {
+                            neighbour.cost = nextStepCost;
+                            neighbour.heuristic = heuristic.getCost(map, xp, yp, zp, tx, ty, tz);
+                            maxDepth = Math.max(maxDepth, neighbour.setParent(current));
+                            open.add(neighbour);
+                        }
+
                     }
                 }
             }

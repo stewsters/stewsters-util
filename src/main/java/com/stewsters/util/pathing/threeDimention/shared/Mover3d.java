@@ -18,6 +18,7 @@ import com.stewsters.util.pathing.threeDimention.heuristic.AStarHeuristic3d;
  *
  * @author Kevin Glass
  */
+@Deprecated
 public interface Mover3d {
 
     boolean canTraverse(int sx, int sy, int sz, int tx, int ty, int tz);

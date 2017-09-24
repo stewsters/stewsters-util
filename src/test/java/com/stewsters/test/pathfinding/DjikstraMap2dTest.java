@@ -3,7 +3,6 @@ package com.stewsters.test.pathfinding;
 
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap2d;
-import com.stewsters.test.examples.ExampleMover2d;
 import com.stewsters.util.pathing.twoDimention.djikstraMap.DjikstraMap2d;
 import org.junit.Test;
 
@@ -18,9 +17,13 @@ public class DjikstraMap2dTest {
         ExampleMap2d map = new ExampleMap2d(11, 11, floor);
 
         DjikstraMap2d djikstraMap2d = new DjikstraMap2d(map, 100);
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map, null, false);
 
-        djikstraMap2d.recalculate(5, 5, exampleMover2d);
+        djikstraMap2d.recalculate(
+                (int sx, int sy, int tx, int ty) -> !map.isBlocked(tx, ty),
+                (int sx, int sy, int tx, int ty) -> 1.0f,
+                false,
+                5, 5
+        );
 
         for (int x = 0; x < map.getXSize(); x++) {
             for (int y = 0; y < map.getYSize(); y++) {
@@ -44,9 +47,12 @@ public class DjikstraMap2dTest {
         ExampleMap2d map = new ExampleMap2d(10, 10, floor);
 
         DjikstraMap2d djikstraMap2d = new DjikstraMap2d(map, 100);
-        ExampleMover2d exampleMover2d = new ExampleMover2d(map, null, true);
 
-        djikstraMap2d.recalculate(5, 5, exampleMover2d);
+        djikstraMap2d.recalculate(
+                (int sx, int sy, int tx, int ty) -> !map.isBlocked(tx, ty),
+                (int sx, int sy, int tx, int ty) -> 1.0f,
+                true,
+                5, 5);
 
         assert djikstraMap2d.getDistanceAt(5, 5) == 0;
         assert djikstraMap2d.getDistanceAt(6, 6) == 1;

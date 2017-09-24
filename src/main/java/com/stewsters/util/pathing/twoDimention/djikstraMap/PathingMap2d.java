@@ -1,10 +1,14 @@
 package com.stewsters.util.pathing.twoDimention.djikstraMap;
 
-import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
+import com.stewsters.util.pathing.twoDimention.shared.CanTraverse;
+import com.stewsters.util.pathing.twoDimention.shared.MovementCost;
 
 public interface PathingMap2d {
 
-    void recalculate(int sX, int sY, Mover2d mover);
+    void recalculate(CanTraverse canTraverse,
+                     MovementCost movementCost,
+                     boolean allowDiagMovement,
+                     int sX, int sY);
 
     float getDistanceAt(int x, int y);
 }
