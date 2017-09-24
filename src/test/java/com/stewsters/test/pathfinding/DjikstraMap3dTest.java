@@ -3,10 +3,7 @@ package com.stewsters.test.pathfinding;
 
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap3d;
-import com.stewsters.test.examples.ExampleMover3d;
 import com.stewsters.util.pathing.threeDimention.djikstraMap.DjikstraMap3d;
-import com.stewsters.util.pathing.threeDimention.heuristic.ChebyshevHeuristic3d;
-import com.stewsters.util.pathing.threeDimention.heuristic.ManhattanHeuristic3d;
 import org.junit.Test;
 
 public class DjikstraMap3dTest {
@@ -19,10 +16,13 @@ public class DjikstraMap3dTest {
 
         ExampleMap3d map = new ExampleMap3d(11, 11, 11, floor);
 
-        DjikstraMap3d djikstraMap3d = new DjikstraMap3d(map, 100, false);
-        ExampleMover3d exampleMover3d = new ExampleMover3d(map, new ManhattanHeuristic3d(), false);
+        DjikstraMap3d djikstraMap3d = new DjikstraMap3d(map, 100);
 
-        djikstraMap3d.recalculate(5, 5, 5, exampleMover3d);
+        djikstraMap3d.recalculate(
+                (int sx, int sy, int szm, int tx, int ty, int tz) -> !map.isBlocked(tx, ty, tz),
+                (int sx, int sy, int szm, int tx, int ty, int tz) -> 1.0f,
+                false,
+                5, 5, 5);
 
         for (int x = 0; x < map.getXSize(); x++) {
             for (int y = 0; y < map.getYSize(); y++) {
@@ -48,10 +48,13 @@ public class DjikstraMap3dTest {
 
         ExampleMap3d map = new ExampleMap3d(10, 10, 10, floor);
 
-        DjikstraMap3d djikstraMap3d = new DjikstraMap3d(map, 100, true);
-        ExampleMover3d exampleMover3d = new ExampleMover3d(map, new ChebyshevHeuristic3d(), true);
+        DjikstraMap3d djikstraMap3d = new DjikstraMap3d(map, 100);
 
-        djikstraMap3d.recalculate(5, 5, 5, exampleMover3d);
+        djikstraMap3d.recalculate(
+                (int sx, int sy, int szm, int tx, int ty, int tz) -> !map.isBlocked(tx, ty, tz),
+                (int sx, int sy, int szm, int tx, int ty, int tz) -> 1.0f,
+                true,
+                5, 5, 5);
 
         assert djikstraMap3d.getDistanceAt(5, 5, 5) == 0;
         assert djikstraMap3d.getDistanceAt(6, 6, 5) == 1;

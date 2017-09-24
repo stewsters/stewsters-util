@@ -1,6 +1,6 @@
 package com.stewsters.util.pathing.threeDimention.heuristic;
 
-import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
+import com.stewsters.util.pathing.threeDimention.shared.BoundingBox3d;
 
 /**
  * A heuristic that uses Chebyshev Distance, but with a sqrt of 2 as the diagonal cost
@@ -9,7 +9,7 @@ import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
  */
 public class RoundedChebyshevHeuristic3d implements AStarHeuristic3d {
 
-    public float getCost(TileBasedMap3d map, int x, int y, int z, int tx, int ty, int tz) {
+    public float getCost(BoundingBox3d map, int x, int y, int z, int tx, int ty, int tz) {
 
         int dx = Math.abs(tx - x);
         int dy = Math.abs(ty - y);

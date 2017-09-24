@@ -2,7 +2,6 @@ package com.stewsters.test.pathfinding;
 
 import com.stewsters.test.examples.ExampleCellType;
 import com.stewsters.test.examples.ExampleMap3d;
-import com.stewsters.test.examples.ExampleMover3d;
 import com.stewsters.util.math.Point3i;
 import com.stewsters.util.pathing.threeDimention.heuristic.ChebyshevHeuristic3d;
 import com.stewsters.util.pathing.threeDimention.heuristic.ManhattanHeuristic3d;
@@ -23,12 +22,16 @@ public class AStarPathfinder3dTest {
 
         ExampleMap3d map = new ExampleMap3d(10, 10, 10, floor);
 
-        AStarPathFinder3d pathfinder = new AStarPathFinder3d(map, 100, false);
-
-        ExampleMover3d exampleMover3d = new ExampleMover3d(map, new ManhattanHeuristic3d(), false);
+        AStarPathFinder3d pathfinder = new AStarPathFinder3d(map, 100);
 
 
-        List<Point3i> fullPath3d = pathfinder.findPath(exampleMover3d, 1, 1, 1, 8, 8, 8).get();
+        List<Point3i> fullPath3d = pathfinder.findPath(
+                (int sx, int sy, int sz, int tx, int ty, int tz) -> !map.isBlocked(tx, ty, tz),
+                (int tx, int ty, int tz) -> !map.isBlocked(tx, ty, tz),
+                (int sx, int sy, int sz, int tx, int ty, int tz) -> 1.0f,
+                new ManhattanHeuristic3d(),
+                false,
+                1, 1, 1, 8, 8, 8).get();
 
         for (int i = 0; i < fullPath3d.size(); i++) {
             System.out.println("x:" + fullPath3d.get(i).x + " y:" + fullPath3d.get(i).y + " z:" + fullPath3d.get(i).z);
@@ -43,11 +46,15 @@ public class AStarPathfinder3dTest {
 
         ExampleMap3d map = new ExampleMap3d(10, 10, 10, floor);
 
-        AStarPathFinder3d pathfinder = new AStarPathFinder3d(map, 1000, true);
+        AStarPathFinder3d pathfinder = new AStarPathFinder3d(map, 1000);
 
-        ExampleMover3d exampleMover3d = new ExampleMover3d(map, new ChebyshevHeuristic3d(), true);
-
-        List<Point3i> fullPath3d = pathfinder.findPath(exampleMover3d, 1, 1, 1, 8, 8, 8).get();
+        List<Point3i> fullPath3d = pathfinder.findPath(
+                (int sx, int sy, int sz, int tx, int ty, int tz) -> !map.isBlocked(tx, ty, tz),
+                (int tx, int ty, int tz) -> !map.isBlocked(tx, ty, tz),
+                (int sx, int sy, int sz, int tx, int ty, int tz) -> 1.0f,
+                new ChebyshevHeuristic3d(),
+                true,
+                1, 1, 1, 8, 8, 8).get();
 
 
         for (int i = 0; i < fullPath3d.size(); i++) {

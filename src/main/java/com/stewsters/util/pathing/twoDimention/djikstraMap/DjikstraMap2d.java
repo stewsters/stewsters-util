@@ -1,8 +1,9 @@
 package com.stewsters.util.pathing.twoDimention.djikstraMap;
 
-import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
+import com.stewsters.util.pathing.twoDimention.shared.BoundingBox2d;
+import com.stewsters.util.pathing.twoDimention.shared.CanTraverse2d;
+import com.stewsters.util.pathing.twoDimention.shared.MovementCost2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
-import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
 
 import java.util.PriorityQueue;
 
@@ -12,7 +13,7 @@ public class DjikstraMap2d implements PathingMap2d {
     private PriorityQueue<PathNode2d> open = new PriorityQueue<>();
 
     // The map being searched
-    private TileBasedMap2d map;
+    private BoundingBox2d map;
 
     // The maximum depth of search we're willing to accept before giving up
     private int maxSearchDistance;
@@ -21,7 +22,7 @@ public class DjikstraMap2d implements PathingMap2d {
     private PathNode2d[][] nodes;
 
 
-    public DjikstraMap2d(TileBasedMap2d map, int maxSearchDistance) {
+    public DjikstraMap2d(BoundingBox2d map, int maxSearchDistance) {
         this.map = map;
         this.maxSearchDistance = maxSearchDistance;
 
@@ -44,10 +45,12 @@ public class DjikstraMap2d implements PathingMap2d {
     }
 
     @Override
-    public void recalculate(int sX, int sY, Mover2d mover) {
+    public void recalculate(CanTraverse2d canTraverse2d,
+                            MovementCost2d movementCost2d,
+                            boolean allowDiagMovement,
+                            int sX, int sY) {
         reset();
 
-        boolean allowDiagMovement = mover.getDiagonal();
         nodes[sX][sY].cost = 0;
         nodes[sX][sY].depth = 0;
         open.add(nodes[sX][sY]);
@@ -85,49 +88,47 @@ public class DjikstraMap2d implements PathingMap2d {
                     int xp = x + current.x;
                     int yp = y + current.y;
 
-                    if (isValidLocation(mover, current.x, current.y, xp, yp)) {
-                        // the cost to get to this PathNode is cost the current plus the movement
-                        // cost to reach this node. Note that the heuristic value is only used
-                        // in the sorted open list
+                    if (!isValidLocation(canTraverse2d, current.x, current.y, xp, yp))
+                        continue;
 
-                        float nextStepCost = current.cost + mover.getCost(current.x, current.y, xp, yp);
-                        PathNode2d neighbour = nodes[xp][yp];
+                    // the cost to get to this PathNode is cost the current plus the movement
+                    // cost to reach this node. Note that the heuristic value is only used
+                    // in the sorted open list
+                    float nextStepCost = current.cost + movementCost2d.getCost(current.x, current.y, xp, yp);
+                    PathNode2d neighbour = nodes[xp][yp];
 
-                        // if the new cost we've determined for this PathNode is lower than
-                        // it has been previously,
-                        // there might have been a better path to get to
-                        // this PathNode so it needs to be re-evaluated
-
-                        if (nextStepCost < neighbour.cost) {
-                            if (open.contains(neighbour)) {
-                                open.remove(neighbour);
-                            }
-                            neighbour.closed = false;
+                    // if the new cost we've determined for this PathNode is lower than
+                    // it has been previously,
+                    // there might have been a better path to get to
+                    // this PathNode so it needs to be re-evaluated
+                    if (nextStepCost < neighbour.cost) {
+                        if (open.contains(neighbour)) {
+                            open.remove(neighbour);
                         }
-
-                        // if the PathNode hasn't already been processed and discarded then
-                        // reset it's cost to our current cost and add it as a next possible
-                        // step (i.e. to the open list)
-
-                        if (!open.contains(neighbour) && !neighbour.closed) {
-                            neighbour.cost = nextStepCost;
-                            neighbour.heuristic = 0;
-                            maxDepth = Math.max(maxDepth, neighbour.setParent(current));
-                            open.add(neighbour);
-                        }
-
+                        neighbour.closed = false;
                     }
+
+                    // if the PathNode hasn't already been processed and discarded then
+                    // reset it's cost to our current cost and add it as a next possible
+                    // step (i.e. to the open list)
+                    if (!open.contains(neighbour) && !neighbour.closed) {
+                        neighbour.cost = nextStepCost;
+                        neighbour.heuristic = 0;
+                        maxDepth = Math.max(maxDepth, neighbour.setParent(current));
+                        open.add(neighbour);
+                    }
+
                 }
             }
         }
 
     }
 
-    protected boolean isValidLocation(Mover2d mover, int sx, int sy, int tx, int ty) {
+    protected boolean isValidLocation(CanTraverse2d canTraverse2d, int sx, int sy, int tx, int ty) {
         if ((tx < 0) || (ty < 0) || (tx >= map.getXSize()) || (ty >= map.getYSize())) {
             return false;
         }
-        return mover.canTraverse(sx, sy, tx, ty);
+        return canTraverse2d.canTraverse(sx, sy, tx, ty);
     }
 
     public float getDistanceAt(int x, int y) {

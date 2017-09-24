@@ -4,7 +4,9 @@ import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.heuristic.AStarHeuristic2d;
 import com.stewsters.util.pathing.twoDimention.hpa.OverworldEdge;
 import com.stewsters.util.pathing.twoDimention.hpa.OverworldPathNode;
-import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
+import com.stewsters.util.pathing.twoDimention.shared.CanOccupy2d;
+import com.stewsters.util.pathing.twoDimention.shared.CanTraverse2d;
+import com.stewsters.util.pathing.twoDimention.shared.MovementCost2d;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,13 +15,15 @@ import java.util.PriorityQueue;
 
 public class OverworldPathfinder {
 
-    public ArrayList<Point2i> getPath(OverworldExample overworld, int globalStartingX, int globalStartingY,
-                                      int globalDestinationX, int globalDestinationY, Mover2d mover2d, float maxSearchCost) {
+    public ArrayList<Point2i> getPath(
+            CanTraverse2d canTraverse2d,
+            CanOccupy2d canOccupy2d,
+            MovementCost2d movementCost2d,
+            OverworldExample overworld, int globalStartingX, int globalStartingY,
+            int globalDestinationX, int globalDestinationY,
+            AStarHeuristic2d heuristic, float maxSearchCost) {
 
-        AStarHeuristic2d heuristic = mover2d.getHeuristic();
-//        boolean allowDiag = mover2d.getDiagonal();
-
-        if (!mover2d.canOccupy(globalDestinationX, globalDestinationY))
+        if (!canOccupy2d.canOccupy(globalDestinationX, globalDestinationY))
             return null;
 
         int preciseStartingX = globalStartingX % ExampleChunk.xSize;

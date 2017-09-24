@@ -1,6 +1,6 @@
 package com.stewsters.util.pathing.twoDimention.heuristic;
 
-import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
+import com.stewsters.util.pathing.twoDimention.shared.BoundingBox2d;
 
 /**
  * The description of a class providing a cost for a given tile based
@@ -24,5 +24,5 @@ public interface AStarHeuristic2d {
      * @param ty  Teh y coordinate of the target location
      * @return The cost associated with the given tile
      */
-    float getCost(TileBasedMap2d map, int x, int y, int tx, int ty);
+    float getCost(BoundingBox2d map, int x, int y, int tx, int ty);
 }

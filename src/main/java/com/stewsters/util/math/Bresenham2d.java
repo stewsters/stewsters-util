@@ -1,18 +1,18 @@
 package com.stewsters.util.math;
 
 
-import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
-import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
+import com.stewsters.util.pathing.twoDimention.shared.BoundingBox2d;
+import com.stewsters.util.pathing.twoDimention.shared.CanOccupy2d;
 
 public class Bresenham2d {
 
-    TileBasedMap2d map2d;
+    private BoundingBox2d map2d;
 
-    public Bresenham2d(TileBasedMap2d map2d) {
+    public Bresenham2d(BoundingBox2d map2d) {
         this.map2d = map2d;
     }
 
-    public boolean los(Mover2d mover, int x1, int y1, int x2, int y2) {
+    public boolean los(CanOccupy2d canOccupy2d, int x1, int y1, int x2, int y2) {
         int dx = Math.abs(x2 - x1);
         int dy = Math.abs(y2 - y1);
 
@@ -22,7 +22,7 @@ public class Bresenham2d {
         int err = dx - dy;
 
         while (true) {
-            if (!mover.canOccupy(x1, y1))
+            if (!canOccupy2d.canOccupy(x1, y1))
                 return false;
 
             if (x1 == x2 && y1 == y2) {

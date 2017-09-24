@@ -2,7 +2,9 @@ package com.stewsters.util.pathing.twoDimention.hpa;
 
 import com.stewsters.util.math.Point2i;
 import com.stewsters.util.pathing.twoDimention.heuristic.AStarHeuristic2d;
-import com.stewsters.util.pathing.twoDimention.shared.Mover2d;
+import com.stewsters.util.pathing.twoDimention.shared.CanOccupy2d;
+import com.stewsters.util.pathing.twoDimention.shared.CanTraverse2d;
+import com.stewsters.util.pathing.twoDimention.shared.MovementCost2d;
 import com.stewsters.util.pathing.twoDimention.shared.PathNode2d;
 
 import java.util.ArrayList;
@@ -21,20 +23,13 @@ public class ChunkPathfinder {
         }
     }
 
-    public ArrayList<Point2i> getPath(Chunk2d chunk, Point2i start, Point2i end, Mover2d mover2d, float maxSearchDistance) {
-        return getPath(chunk, start.x, start.y, end.x, end.y, mover2d, maxSearchDistance);
-    }
+    public ArrayList<Point2i> getPath(CanTraverse2d canTraverse2d, CanOccupy2d canOccupy2d, MovementCost2d movementCost2d, Chunk2d chunk, int sx, int sy, int tx, int ty, AStarHeuristic2d heuristic, float maxSearchDistance, boolean allowDiag) {
 
-    public ArrayList<Point2i> getPath(Chunk2d chunk, int sx, int sy, int tx, int ty, Mover2d mover2d, float maxSearchDistance) {
-
-        AStarHeuristic2d heuristic = mover2d.getHeuristic();
         if (heuristic == null)
             return null;
 
-        if (!mover2d.canOccupy(tx, ty))
+        if (!canOccupy2d.canOccupy(tx, ty))
             return null;
-
-        boolean allowDiag = mover2d.getDiagonal();
 
         PriorityQueue<PathNode2d> open = new PriorityQueue<>();
 
@@ -82,38 +77,38 @@ public class ChunkPathfinder {
                     if (xp < 0 || yp < 0 || xp >= chunk.getXSize() || yp >= chunk.getYSize())
                         continue;
 
-                    if (mover2d.canTraverse(sx, sy, xp, yp)) {
-                        // the cost to get to this PathNode is cost the current plus the movement
-                        // cost to reach this node. Note that the heuristic value is only used
-                        // in the sorted open list
+                    if (!canTraverse2d.canTraverse(sx, sy, xp, yp))
+                        continue;
+                    // the cost to get to this PathNode is cost the current plus the movement
+                    // cost to reach this node. Note that the heuristic value is only used
+                    // in the sorted open list
 
-                        float nextStepCost = current.cost + mover2d.getCost(current.x, current.y, xp, yp);
-                        PathNode2d neighbour = nodes[xp][yp];
+                    float nextStepCost = current.cost + movementCost2d.getCost(current.x, current.y, xp, yp);
+                    PathNode2d neighbour = nodes[xp][yp];
 
-                        // if the new cost we've determined for this PathNode is lower than
-                        // it has been previously,
-                        // there might have been a better path to get to
-                        // this PathNode so it needs to be re-evaluated
+                    // if the new cost we've determined for this PathNode is lower than
+                    // it has been previously,
+                    // there might have been a better path to get to
+                    // this PathNode so it needs to be re-evaluated
 
-                        if (nextStepCost < neighbour.cost) {
-                            if (open.contains(neighbour)) {
-                                open.remove(neighbour);
-                            }
-                            if (neighbour.closed) {
-                                neighbour.closed = false;
-                            }
+                    if (nextStepCost < neighbour.cost) {
+                        if (open.contains(neighbour)) {
+                            open.remove(neighbour);
                         }
-
-                        // if the PathNode hasn't already been processed and discarded then
-                        // reset it's cost to our current cost and add it as a next possible
-                        // step (i.e. to the open list)
-
-                        if (!open.contains(neighbour) && !neighbour.closed) {
-                            neighbour.cost = nextStepCost;
-                            neighbour.heuristic = heuristic.getCost(chunk, xp, yp, tx, ty);
-                            maxDepth = Math.max(maxDepth, neighbour.setParent(current));
-                            open.add(neighbour);
+                        if (neighbour.closed) {
+                            neighbour.closed = false;
                         }
+                    }
+
+                    // if the PathNode hasn't already been processed and discarded then
+                    // reset it's cost to our current cost and add it as a next possible
+                    // step (i.e. to the open list)
+
+                    if (!open.contains(neighbour) && !neighbour.closed) {
+                        neighbour.cost = nextStepCost;
+                        neighbour.heuristic = heuristic.getCost(chunk, xp, yp, tx, ty);
+                        maxDepth = Math.max(maxDepth, neighbour.setParent(current));
+                        open.add(neighbour);
                     }
                 }
             }

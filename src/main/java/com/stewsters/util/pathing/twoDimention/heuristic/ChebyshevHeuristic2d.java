@@ -1,7 +1,7 @@
 package com.stewsters.util.pathing.twoDimention.heuristic;
 
 
-import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
+import com.stewsters.util.pathing.twoDimention.shared.BoundingBox2d;
 
 /**
  * A heuristic that uses Chebyshev Distance
@@ -10,7 +10,7 @@ import com.stewsters.util.pathing.twoDimention.shared.TileBasedMap2d;
  */
 public class ChebyshevHeuristic2d implements AStarHeuristic2d {
 
-    public float getCost(TileBasedMap2d map, int x, int y, int tx, int ty) {
+    public float getCost(BoundingBox2d map, int x, int y, int tx, int ty) {
 
         int dx = Math.abs(tx - x);
         int dy = Math.abs(ty - y);

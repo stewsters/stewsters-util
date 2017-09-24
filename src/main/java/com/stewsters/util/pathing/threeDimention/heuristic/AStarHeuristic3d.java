@@ -1,6 +1,6 @@
 package com.stewsters.util.pathing.threeDimention.heuristic;
 
-import com.stewsters.util.pathing.threeDimention.shared.TileBasedMap3d;
+import com.stewsters.util.pathing.threeDimention.shared.BoundingBox3d;
 
 /**
  * The description of a class providing a cost for a given tile based
@@ -26,5 +26,5 @@ public interface AStarHeuristic3d {
      * @param tz  The z coordinate of the target location
      * @return The cost associated with the given tile
      */
-    float getCost(TileBasedMap3d map, int x, int y, int z, int tx, int ty, int tz);
+    float getCost(BoundingBox3d map, int x, int y, int z, int tx, int ty, int tz);
 }

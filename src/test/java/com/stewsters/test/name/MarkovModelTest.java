@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +32,7 @@ public class MarkovModelTest {
 
         for (int i = 0; i < 10; i++) {
             System.out.println(
-                    markovMaleModel.generate( 8).stream()
+                    markovMaleModel.generate(8).stream()
                             .map(e -> e.toString()).collect(Collectors.joining()));
         }
 
@@ -41,7 +40,7 @@ public class MarkovModelTest {
 
     @Test
     public void testMarkovModelWithStrings() throws IOException {
-        MarkovModel<String> markovModel = new MarkovModel<String>("+",2);
+        MarkovModel<String> markovModel = new MarkovModel<String>("+", 2);
 
         Path path = Paths.get("build/resources/test/corpus/grimms.txt");
 
@@ -59,7 +58,7 @@ public class MarkovModelTest {
 
         for (int i = 0; i < 20; i++) {
             System.out.println(
-                    capitalize(markovModel.generate( 12).stream().collect(Collectors.joining(" "))) + ". ");
+                    capitalize(markovModel.generate(12).stream().collect(Collectors.joining(" "))) + ". ");
         }
     }
 
