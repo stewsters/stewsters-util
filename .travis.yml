@@ -5,4 +5,4 @@ jdk:
   - oraclejdk9
   - oraclejdk10
 
-script: gradle test
+script: ./gradlew test
