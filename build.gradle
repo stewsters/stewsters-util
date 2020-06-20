@@ -7,17 +7,15 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-        classpath "me.champeau.gradle:jmh-gradle-plugin:0.4.4"
+        classpath "me.champeau.gradle:jmh-gradle-plugin:0.5.0"
     }
 }
 plugins {
     id 'groovy'
     id 'idea'
     id 'maven-publish'
-    id "com.jfrog.bintray" version "1.7.3"
-    id "me.champeau.gradle.jmh" version "0.4.4"
-    id "net.saliman.cobertura" version "2.5.0"
+    id "me.champeau.gradle.jmh" version "0.5.0"
+    id "org.myire.quill.cobertura" version "2.4"
 }
 repositories {
     mavenCentral()
@@ -39,9 +37,9 @@ group = 'com.stewsters.util'
 version = '0.19'
 
 dependencies {
-    testCompile 'junit:junit:4.12'
-    testCompile "org.codehaus.groovy:groovy-all:2.5.1"
-    testRuntime 'org.slf4j:slf4j-nop:1.7.25' // for cobertura
+    testCompile 'junit:junit:4.13'
+    testCompile "org.codehaus.groovy:groovy-all:3.0.4"
+    testRuntime 'org.slf4j:slf4j-nop:1.7.30' // for cobertura
 }
 
 if (!project.hasProperty('bintray_net_user')) {
@@ -88,37 +86,6 @@ publishing {
 }
 
 
-bintray {
-    apiUrl = "https://api.bintray.com"
-
-    user = bintray_net_user
-    key = bintray_net_key
-
-    publications = ['mavenJava']
-
-    dryRun = false //Whether to run this as dry-run, without deploying
-    publish = true //If version should be auto published after an upload
-    pkg {
-        repo = 'maven'
-        name = 'stewsters-util'
-        desc = 'A package of Java roguelike utilities.'
-        websiteUrl = 'https://github.com/stewsters/stewsters-util'
-        issueTrackerUrl = 'https://github.com/stewsters/stewsters-util/issues'
-        vcsUrl = 'https://github.com/stewsters/stewsters-util.git'
-        licenses = ['MIT']
-        labels = ['roguelike', 'utilities']
-
-        publicDownloadNumbers = true
-
-        //Optional version descriptor
-        version {
-            name = "0.19" //Bintray logical version name
-            vcsTag = "0.19"
-        }
-    }
-
-}
-
 jmh {
     iterations = 5
     fork = 5
@@ -127,9 +94,3 @@ jmh {
     jmhVersion = '1.19'
 }
 
-cobertura {
-    coverageFormats = ['html']
-    coverageIgnoreTrivial = true
-    coverageIgnores = ['org.slf4j.Logger.*']
-    coverageReportDir = new File("$buildDir/reports/cobertura")
-}
