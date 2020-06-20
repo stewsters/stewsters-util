@@ -20,23 +20,15 @@ public class FantasyNameGen {
         return (name + " " + randomLastName());
     }
 
-    public static String capitalize(String input) {
-        if (input == null || input.length() < 1) {
-            return input;
-        }
-
-        return input.substring(0, 1).toUpperCase() + input.substring(1);
-    }
-
     public static String randomMaleFirstName() {
-        return capitalize(MatUtils.randVal(maleFirstName).toLowerCase());
+        return MatUtils.randVal(maleFirstName).toLowerCase();
     }
 
     public static String randomFemaleFirstName() {
-        return capitalize(MatUtils.randVal(femaleFirstName).toLowerCase());
+        return MatUtils.randVal(femaleFirstName).toLowerCase();
     }
 
     public static String randomLastName() {
-        return capitalize(MatUtils.randVal(aLastName).toLowerCase());
+        return MatUtils.randVal(aLastName).toLowerCase();
     }
 }
