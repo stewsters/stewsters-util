@@ -3,7 +3,7 @@ package com.stewsters.test.name;
 import com.stewsters.util.name.ModernNameGen;
 import org.junit.Test;
 
-public class NameTest {
+public class ModernNameTest {
 
     @Test
     public void testGeneratingName() {
