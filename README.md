@@ -3,7 +3,7 @@ Stewsters-Util
 
 This is a collection of some code that I have pulled out of projects.  It is mostly useful for roguelikes.
 
-[![](https://jitpack.io/v/stewsters/kaiju.svg)](https://jitpack.io/#stewsters/kaiju)
+[![](https://jitpack.io/v/stewsters/stewsters-util.svg)](https://jitpack.io/#stewsters/stewsters-util)
 ![TravisCI](https://travis-ci.org/stewsters/stewsters-util.svg?branch=master)
 
 Old versions located here: [ ![Download](https://api.bintray.com/packages/stewsters/maven/stewsters-util/images/download.svg) ](https://bintray.com/stewsters/maven/stewsters-util/_latestVersion)
