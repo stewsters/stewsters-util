@@ -2,6 +2,7 @@ package com.stewsters.test
 
 import com.stewsters.util.name.MarkovModel
 import groovy.transform.CompileStatic
+import org.junit.Ignore
 import org.junit.Test
 
 import static com.stewsters.util.name.StringUtils.stringToCharacterArray
@@ -11,6 +12,7 @@ class MarkovTest {
     static final int MAX_WORDS_GEN = 10000; // maximum words generated
 
     @Test
+    @Ignore
     void testWordGeneration() {
         MarkovModel<Character> chain = new MarkovModel<>(" " as Character, 3)
         List<String> words = getCorpi(['lovecraft']).join(" ")
